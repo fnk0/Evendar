@@ -1,0 +1,12 @@
+<resources>
+
+    <style name="Theme.ChoresApp" parent="Base.Theme.ChoresApp">
+    </style>
+
+    <style name="Base.Theme.ChoresApp" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
+</resources>
