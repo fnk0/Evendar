@@ -1,15 +1,12 @@
 package com.gabilheri.choresapp.friends_list;
 
-import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.gabilheri.choresapp.BaseFragment;
 import com.gabilheri.choresapp.MockUtils;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FriendAdapter;
@@ -21,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -30,20 +26,12 @@ import butterknife.ButterKnife;
  * @version 1.0
  * @since 7/20/15.
  */
-public class FriendListFragment extends Fragment {
+public class FriendListFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
     RecyclerView recyclerView;
 
     FriendAdapter adapter;
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.list_fragment, container, false);
-        ButterKnife.bind(this, v);
-        return v;
-    }
 
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
@@ -62,5 +50,10 @@ public class FriendListFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
         recyclerView.addItemDecoration(new DividerItemDecorator(recyclerView.getContext(), null));
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.list_fragment;
     }
 }

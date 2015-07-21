@@ -72,6 +72,14 @@ public abstract class BaseDrawerActivity extends BaseActivity {
         startActivity(new Intent(this, FriendListActivity.class));
     }
 
+    protected void enableHamburgerMenu() {
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

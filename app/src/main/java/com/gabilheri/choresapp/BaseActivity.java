@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import butterknife.Bind;
@@ -53,13 +54,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         return R.layout.activity_base;
     }
 
-    protected void enableHamburgerMenu() {
-        if(getSupportActionBar() != null) {
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-    }
-
     protected void enableBackNav() {
         if(getSupportActionBar() != null) {
             getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
@@ -78,4 +72,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container, fragment).addToBackStack(backStack).commit();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }
