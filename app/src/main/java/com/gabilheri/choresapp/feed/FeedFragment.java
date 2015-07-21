@@ -2,11 +2,9 @@ package com.gabilheri.choresapp.feed;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.gabilheri.choresapp.BaseFragment;
+import com.gabilheri.choresapp.BaseListFragment;
 import com.gabilheri.choresapp.MockUtils;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FeedAdapter;
@@ -17,8 +15,6 @@ import com.gabilheri.choresapp.models.Feed;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
  *
@@ -26,10 +22,7 @@ import butterknife.Bind;
  * @version 1.0
  * @since 7/20/15.
  */
-public class FeedFragment extends BaseFragment {
-
-    @Bind(R.id.recyclerview)
-    RecyclerView recyclerView;
+public class FeedFragment extends BaseListFragment {
 
     FeedAdapter adapter;
 
@@ -51,12 +44,8 @@ public class FeedFragment extends BaseFragment {
                 }
             }
         });
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
-        recyclerView.setAdapter(adapter);
+
+        initCardsList(adapter);
     }
 
-    @Override
-    public int getLayoutResource() {
-        return R.layout.list_fragment;
-    }
 }
