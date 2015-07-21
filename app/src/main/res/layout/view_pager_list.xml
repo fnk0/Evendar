@@ -34,7 +34,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
+        app:backgroundTint="@color/primary"
+        app:pressedTranslationZ="6dp"
         android:layout_margin="@dimen/fab_margin"
+        app:layout_behavior="com.gabilheri.choresapp.ui.ScrollAwareFAB"
         android:src="@drawable/ic_add"/>
 
 </android.support.design.widget.CoordinatorLayout>

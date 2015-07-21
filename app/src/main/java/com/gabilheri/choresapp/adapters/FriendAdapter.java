@@ -28,14 +28,25 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
 
     List<User> users;
 
+    ItemCallback callback;
+
     public FriendAdapter(List<User> users) {
         this.users = users;
+    }
+
+    public FriendAdapter(List<User> users, ItemCallback callback) {
+        this.users = users;
+        this.callback = callback;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_friend, parent, false);
-        return new ViewHolder(view);
+        if(callback == null) {
+            return new ViewHolder(view);
+        } else {
+            return new ViewHolder(view, callback);
+        }
     }
 
     @Override
@@ -53,6 +64,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .centerCrop()
                 .crossFade()
                 .into(holder.socialMedia);
+
+        holder.itemView.setTag(user.getName());
     }
 
     @Override
@@ -60,7 +73,14 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         return users.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * Interfce to handle the ItemClick callback
+     */
+    public interface ItemCallback {
+        void onItemClick(View v);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Bind(R.id.userPicture)
         public CircleImageView userPicture;
@@ -71,9 +91,23 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         @Bind(R.id.socialMedia)
         public ImageView socialMedia;
 
+        private ItemCallback callback;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+
+        public ViewHolder(View itemView, ItemCallback callback) {
+            super(itemView);
+            this.callback = callback;
+            ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            callback.onItemClick(v);
         }
     }
 }

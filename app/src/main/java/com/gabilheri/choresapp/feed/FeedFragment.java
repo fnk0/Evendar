@@ -3,7 +3,7 @@ package com.gabilheri.choresapp.feed;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +55,7 @@ public class FeedFragment extends Fragment {
         }
 
         adapter = new FeedAdapter(feedList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
         recyclerView.setAdapter(adapter);
     }
 }

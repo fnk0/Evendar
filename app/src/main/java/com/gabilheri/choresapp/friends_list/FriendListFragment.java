@@ -3,7 +3,8 @@ package com.gabilheri.choresapp.friends_list;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,16 +45,21 @@ public class FriendListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<User> userList = new ArrayList<>();
         for(int i = 0; i < 300; i++) {
             userList.add(MockUtils.getRandomUser());
         }
 
-        adapter = new FriendAdapter(userList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
-        recyclerView.addItemDecoration(new DividerItemDecorator(getActivity(), null));
+        adapter = new FriendAdapter(userList, new FriendAdapter.ItemCallback() {
+            @Override
+            public void onItemClick(View v) {
+                Snackbar.make(v, v.getTag().toString(), Snackbar.LENGTH_LONG).show();
+            }
+        });
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
+        recyclerView.addItemDecoration(new DividerItemDecorator(recyclerView.getContext(), null));
         recyclerView.setAdapter(adapter);
     }
 }
