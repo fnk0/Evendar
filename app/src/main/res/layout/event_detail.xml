@@ -22,27 +22,25 @@
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed|enterAlways">
 
-            <fragment
-                android:id="@+id/map"
-                android:name="com.gabilheri.choresapp.detail_event.DetailActivity"
-                class="com.google.android.gms.maps.SupportMapFragment"
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="-30dp"
                 android:fitsSystemWindows="true"
                 app:cameraZoom="12"
                 app:layout_collapseMode="parallax"
-            />
+                app:liteMode="true"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:elevation="0dp"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:elevation="0dp"
                 />
-
         </android.support.design.widget.CollapsingToolbarLayout>
 
 
@@ -51,18 +49,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:fitsSystemWindows="true"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             android:background="@color/primary"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             />
 
@@ -75,13 +73,13 @@
     </LinearLayout>
 
     <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--android:clickable="true"-->
-        <!--android:src="@drawable/ic_action_favorite"-->
-        <!--android:tint="@color/grey_100"-->
-        <!--app:layout_anchor="@id/appbar"-->
-        <!--app:layout_anchorGravity="bottom|right|end"/>-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="@dimen/fab_margin"-->
+    <!--android:clickable="true"-->
+    <!--android:src="@drawable/ic_action_favorite"-->
+    <!--android:tint="@color/grey_100"-->
+    <!--app:layout_anchor="@id/appbar"-->
+    <!--app:layout_anchorGravity="bottom|right|end"/>-->
 
 </android.support.design.widget.CoordinatorLayout>
