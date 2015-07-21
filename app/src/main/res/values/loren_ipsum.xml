@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="paragraphs_2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis, urna at egestas dapibus, arcu velit tempor quam, nec mattis risus urna ac nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Ut arcu leo, tincidunt et odio ut, semper hendrerit enim. Vestibulum consequat dapibus aliquet. Nunc ultricies risus nec sapien tempus venenatis. Nullam vel risus nec lacus cursus finibus. Mauris euismod sit amet turpis sed lacinia. Sed varius nunc ac risus vehicula posuere. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.\n
+Proin at luctus metus. Nulla eu luctus justo. Nam iaculis vehicula mauris, non pharetra arcu molestie ac. Mauris varius, lectus nec facilisis ultricies, turpis tortor mattis elit, ut luctus risus magna a quam. Aliquam sed mattis lacus, in elementum ante. Nam ligula leo, tempus vel interdum a, ullamcorper eu risus. Cras venenatis iaculis neque at molestie. Vestibulum non rhoncus neque, in vestibulum justo. Vivamus pretium, risus quis efficitur fringilla, turpis arcu dictum nisi, ac varius nisi arcu ac felis. Quisque placerat elit lacus, vel maximus purus sodales quis.</string>
+
+    <string name="paragraph">Aenean egestas erat sit amet ipsum posuere, vitae egestas diam ultrices. Sed eu vestibulum purus, ut convallis nulla. Phasellus laoreet fermentum orci, ac molestie libero ultricies et. Maecenas iaculis nisl et elit vestibulum, mollis maximus lacus semper. In ultricies, metus nec fringilla rhoncus, massa ex eleifend felis, in rutrum magna risus eget ante. Aenean at neque turpis. Donec ac suscipit quam, ac rhoncus risus. Donec quis dictum erat.</string>
+
+</resources>

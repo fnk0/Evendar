@@ -73,13 +73,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         return users.size();
     }
 
-    /**
-     * Interfce to handle the ItemClick callback
-     */
-    public interface ItemCallback {
-        void onItemClick(View v);
-    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @Bind(R.id.userPicture)

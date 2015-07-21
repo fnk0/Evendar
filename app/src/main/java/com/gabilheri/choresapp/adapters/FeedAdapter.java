@@ -8,8 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.gabilheri.choresapp.models.Feed;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.models.Feed;
 
 import java.util.List;
 
@@ -28,18 +28,30 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
     List<Feed> feedList;
 
+    ItemCallback callback;
+
     public FeedAdapter(List<Feed> feedList) {
         this.feedList = feedList;
+    }
+
+    public FeedAdapter(List<Feed> feedList, ItemCallback callback) {
+        this.feedList = feedList;
+        this.callback = callback;
     }
 
     @Override
     public FeedAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_feed, parent, false);
-        return new ViewHolder(view);
+        if(callback == null) {
+            return new ViewHolder(view);
+        } else {
+            return new ViewHolder(view, callback);
+        }
+
     }
 
     @Override
-    public void onBindViewHolder(FeedAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final FeedAdapter.ViewHolder holder, int position) {
         Feed feed = feedList.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(feed.getUserPicUrl())
@@ -57,7 +69,9 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         return feedList.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+
+        ItemCallback callback;
 
         @Bind(R.id.feedTitle)
         public TextView feedTitle;
@@ -88,7 +102,27 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
 
         public ViewHolder(View itemView) {
             super(itemView);
+            init(itemView);
+        }
+
+        public ViewHolder(View itemView, ItemCallback callback) {
+            super(itemView);
+            this.callback = callback;
+            init(itemView);
+        }
+
+        void init(View itemView) {
             ButterKnife.bind(this, itemView);
+            userPicture.setOnClickListener(this);
+            comments.setOnClickListener(this);
+            favorites.setOnClickListener(this);
+            shares.setOnClickListener(this);
+            details.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            callback.onItemClick(v);
         }
     }
 

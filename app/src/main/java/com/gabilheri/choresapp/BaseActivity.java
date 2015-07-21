@@ -25,11 +25,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Nullable
     @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    protected Toolbar toolbar;
 
     @Nullable
     @Bind(R.id.container)
-    FrameLayout containerLayout;
+    protected FrameLayout containerLayout;
 
     protected FragmentManager fragmentManager = null;
 

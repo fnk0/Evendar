@@ -1,6 +1,7 @@
 package com.gabilheri.choresapp.feed;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,11 +13,12 @@ import android.view.ViewGroup;
 import com.gabilheri.choresapp.MockUtils;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FeedAdapter;
+import com.gabilheri.choresapp.adapters.ItemCallback;
+import com.gabilheri.choresapp.detail_event.DetailActivity;
 import com.gabilheri.choresapp.models.Feed;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,8 +37,6 @@ public class FeedFragment extends Fragment {
 
     FeedAdapter adapter;
 
-    Random random = new Random();
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,7 +54,16 @@ public class FeedFragment extends Fragment {
             feedList.add(MockUtils.getRandomFeed());
         }
 
-        adapter = new FeedAdapter(feedList);
+        adapter = new FeedAdapter(feedList, new ItemCallback() {
+            @Override
+            public void onItemClick(View view) {
+                switch (view.getId()) {
+                    case R.id.details:
+                        startActivity(new Intent(getActivity(), DetailActivity.class));
+                        break;
+                }
+            }
+        });
         recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
         recyclerView.setAdapter(adapter);
     }

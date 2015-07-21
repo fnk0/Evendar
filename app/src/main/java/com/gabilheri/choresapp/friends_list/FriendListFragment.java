@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.gabilheri.choresapp.MockUtils;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FriendAdapter;
+import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.models.User;
 import com.gabilheri.choresapp.ui.DividerItemDecorator;
 
@@ -52,7 +53,7 @@ public class FriendListFragment extends Fragment {
             userList.add(MockUtils.getRandomUser());
         }
 
-        adapter = new FriendAdapter(userList, new FriendAdapter.ItemCallback() {
+        adapter = new FriendAdapter(userList, new ItemCallback() {
             @Override
             public void onItemClick(View v) {
                 Snackbar.make(v, v.getTag().toString(), Snackbar.LENGTH_LONG).show();
