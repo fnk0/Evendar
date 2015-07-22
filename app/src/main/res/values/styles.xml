@@ -10,6 +10,26 @@
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 
+    <style name="Theme.DetailActivity" parent="Base.Theme.DetailActivity">
+    </style>
+
+    <style name="Base.Theme.DetailActivity" parent="Base.Theme.ChoresApp">
+        <item name="colorPrimary">@color/purple_400</item>
+        <item name="colorPrimaryDark">@color/purple_600</item>
+        <item name="colorAccent">@color/accent_color</item>
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
+
+    <style name="Theme.FriendsActivity" parent="Base.Theme.DetailActivity">
+    </style>
+
+    <style name="Base.Theme.FriendsActivity" parent="Base.Theme.ChoresApp">
+        <item name="colorPrimary">@color/indigo_500</item>
+        <item name="colorPrimaryDark">@color/indigo_700</item>
+        <item name="colorAccent">@color/orange_A200</item>
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
+
     <style name="Widget.CardContent" parent="android:Widget">
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>

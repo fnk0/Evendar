@@ -120,7 +120,7 @@
             android:padding="8dp"
             android:text="@string/details"
             android:textColor="@android:color/white"
-            android:background="@color/accent_color"
+            android:background="?colorAccent"
             android:drawableLeft="@drawable/ic_left_arrow"
             android:drawableStart="@drawable/ic_left_arrow"
             android:drawablePadding="@dimen/activity_vertical_margin"
