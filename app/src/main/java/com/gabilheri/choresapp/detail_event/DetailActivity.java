@@ -68,7 +68,7 @@ public class DetailActivity extends BaseActivity implements OnMapReadyCallback {
         if(viewPager != null) {
             MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());
             adapter.addFragment(new DetailFragment(), "Details");
-            adapter.addFragment(new DetailFragment(), "Comments");
+            adapter.addFragment(new CommentsFragment(), "Comments");
             viewPager.setAdapter(adapter);
             if (tabLayout != null) {
                 tabLayout.setupWithViewPager(viewPager);

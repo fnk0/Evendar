@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginLeft="@dimen/card_margin"
+    android:layout_marginRight="@dimen/card_margin"
+    android:layout_marginTop="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/userPicture"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/userPicture"
+                android:layout_toLeftOf="@+id/favoritesCount"
+                android:text="Marcus Gabilheri"
+                android:paddingTop="4dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:paddingBottom="4dp"
+                android:textColor="@color/grey_800"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/userName"
+                android:text="January, 26 2015"/>
+
+            <TextView
+                android:id="@+id/favoritesCount"
+                android:text="8"
+                android:textSize="18sp"
+                android:layout_marginRight="2dp"
+                android:layout_toLeftOf="@+id/favorite"
+                android:layout_width="wrap_content"
+                android:gravity="center"
+                android:layout_height="24dp"/>
+
+            <ImageView
+                android:id="@+id/favorite"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_action_favorite"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey_300"/>
+
+        <TextView
+            android:id="@+id/comment"
+            style="@style/Widget.CardContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/comment_stub"/>
+
+        <View
+            android:id="@+id/bottomLine"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/purple_400"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

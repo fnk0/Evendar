@@ -1,5 +1,6 @@
 package com.gabilheri.choresapp;
 
+import com.gabilheri.choresapp.models.Comment;
 import com.gabilheri.choresapp.models.Feed;
 import com.gabilheri.choresapp.models.User;
 
@@ -74,6 +75,57 @@ public class MockUtils {
             "Ryan Dawkins",
             "Aaron Weaver"
     };
+
+    public static String[] smallIpsumStrings = new String[] {
+            "Duis vitae scelerisque lacus. Ut facilisis massa et tortor aliquam suscipit. Nunc et metus turpis. Etiam laoreet, ipsum vel ultricies mollis, odio sem pretium leo, ac tincidunt metus nunc porttitor diam.",
+            "Praesent imperdiet placerat ex, non sollicitudin tortor sagittis et. Nullam porta lacus dui, quis egestas quam lacinia quis. Donec nunc risus, sagittis eu tellus vel, pharetra vehicula sem.",
+            "Nullam a vestibulum diam. Proin tincidunt rutrum venenatis.",
+            "Nam mollis tempor viverra. Nulla velit tortor, rhoncus ut nibh ac, congue aliquet odio. Aliquam porta, urna at sodales sodales, orci enim consectetur ipsum, a eleifend nunc ipsum vel eros.",
+            "Praesent imperdiet placerat ex, non sollicitudin tortor sagittis et.",
+            "Proin eleifend ac libero at placerat. Aliquam lobortis porttitor metus.",
+            "Cras condimentum mi sit amet erat tincidunt, vitae elementum tellus pulvinar. Suspendisse et risus ut orci tincidunt ultricies. Nullam consequat felis ac lorem luctus, vitae vehicula risus laoreet. Integer vitae ligula in lorem posuere euismod.",
+            "Nunc mollis metus vitae erat feugiat, eu condimentum urna luctus. In dictum, leo in luctus consectetur, diam purus aliquam leo.",
+            "In enim arcu, congue vel nulla a, rhoncus porttitor nisi. Vestibulum ac nulla velit. Phasellus facilisis nunc est, at iaculis odio ultrices porttitor.",
+            "Nullam quis elementum nulla, sit amet malesuada justo. Donec lacinia suscipit tempor. Pellentesque sagittis quis justo at semper.",
+            "Aliquam lobortis porttitor metus. Ut eu purus vel felis hendrerit iaculis sed vel erat. Nunc mollis metus vitae erat feugiat, eu condimentum urna luctus. In dictum, leo in luctus consectetur, diam purus aliquam leo, at sollicitudin enim nibh in risus.",
+            "Etiam quis libero aliquet, dictum nibh et, tempor diam. In feugiat vehicula posuere. Vivamus nisl ante, convallis sit amet risus ultricies, porta tincidunt sem.",
+            "Morbi et ex varius, feugiat felis non, suscipit diam. Nunc volutpat velit enim, vel viverra eros interdum in.",
+            "Ut facilisis massa et tortor aliquam suscipit. Nunc et metus turpis. Etiam laoreet, ipsum vel ultricies mollis, odio sem pretium leo, ac tincidunt metus nunc porttitor diam.",
+            "Pellentesque sagittis quis justo at semper.",
+            "nteger vestibulum id metus sed dapibus. Cras molestie mauris lorem, sit amet volutpat eros efficitur sit amet. Vestibulum tempor sem at tortor facilisis posuere.",
+            "Pellentesque et diam aliquam, consequat neque at, molestie nibh. Nullam eget odio sit amet enim pretium fermentum at a lacus.",
+            "Cras condimentum mi sit amet erat tincidunt, vitae elementum tellus pulvinar. Suspendisse et risus ut orci tincidunt ultricies. Nullam consequat felis ac lorem luctus, vitae vehicula risus laoreet. Integer vitae ligula in lorem posuere euismod.",
+            "Morbi et ex varius, feugiat felis non, suscipit diam. Nunc volutpat velit enim, vel viverra eros interdum in.",
+            "Etiam quis libero aliquet, dictum nibh et, tempor diam. In feugiat vehicula posuere. Vivamus nisl ante, convallis sit amet risus ultricies, porta tincidunt sem.",
+            "Aliquam lobortis porttitor metus. Ut eu purus vel felis hendrerit iaculis sed vel erat. Nunc mollis metus vitae erat feugiat, eu condimentum urna luctus.",
+            "Praesent nisi nisl, aliquet id tellus maximus, sagittis hendrerit erat. Curabitur placerat auctor dui, ac tincidunt orci vestibulum at. Morbi et ante vitae nisi mattis dignissim.",
+            "In dolor libero, rutrum quis ligula a, malesuada fringilla ligula. Donec commodo massa nisi. Nunc accumsan dictum libero, at tristique mauris tincidunt nec.",
+            "Suspendisse erat leo, luctus et vestibulum viverra, congue eget quam."
+    };
+
+    public static String[] largeIpsumStrings = new String[] {
+            "Suspendisse dapibus enim facilisis lacus lacinia auctor. Quisque nulla ipsum, maximus nec ante eu, viverra euismod velit. Phasellus gravida nisi in molestie ultricies. Sed at ultrices est, vehicula lobortis purus. Quisque rutrum ex consectetur lobortis sagittis. Proin venenatis magna eget nibh eleifend rutrum. Vestibulum vitae tellus mi. Morbi semper iaculis lacus commodo viverra. Aliquam nec lacus volutpat tortor ultricies maximus id a est. Aliquam sem erat, faucibus vitae tortor eu, pulvinar consectetur ligula. Pellentesque mattis tempus tortor. Maecenas cursus scelerisque nisl, sit amet convallis sapien bibendum vitae. Cras maximus pellentesque nisi vel laoreet.",
+            "Cras vestibulum ligula a magna lacinia porta. Cras cursus quam risus, id posuere lorem hendrerit ullamcorper. Aliquam at massa nisl. Integer mattis, sem ut ornare volutpat, felis nunc finibus est, a commodo ex lorem elementum sapien. Aliquam sed lobortis nisi. Nam luctus ipsum odio, at aliquam sem molestie ut. Curabitur ut commodo mi, sed accumsan nibh. Suspendisse venenatis felis quam, sit amet mattis turpis gravida a. Vestibulum consequat tortor libero, in hendrerit dui placerat vel. Nunc rhoncus justo a ante fringilla, in vehicula quam tempor. Nunc vehicula sapien quis ullamcorper efficitur. Suspendisse in orci gravida, ornare elit vel, suscipit mauris. Ut a varius mauris. Aenean et lectus vel justo posuere congue quis a quam. Interdum et malesuada fames ac ante ipsum primis in faucibus. Duis condimentum dui non magna fermentum, ut eleifend orci tempus.",
+            "Cras aliquam ac est eu eleifend. Vivamus facilisis eu diam non pharetra. Pellentesque laoreet metus in ante bibendum, et cursus lacus faucibus. Duis vel pulvinar elit. Phasellus ultrices felis id mauris lobortis, a sollicitudin enim imperdiet. Duis ac laoreet mauris. Donec eleifend ipsum arcu, sit amet imperdiet metus rhoncus vel. Integer luctus diam quis vehicula sollicitudin. Aliquam nisi nisl, euismod ut nisl id, sodales rhoncus nisi. Nulla facilisi. Suspendisse sed nisi libero. Donec ut velit luctus, sollicitudin nisl convallis, sagittis eros. Fusce libero velit, accumsan sed imperdiet a, consequat sed diam. Aenean consequat felis et ligula sagittis, in blandit erat cursus. Aliquam quis consequat diam. Pellentesque commodo tortor vel neque iaculis, eu congue est sollicitudin.",
+            "Proin eget diam odio. Aenean sed ex posuere, faucibus diam eget, ultricies tortor. Donec consectetur, sem vel convallis faucibus, nisi massa consequat velit, id interdum ipsum quam quis elit. In vel cursus purus. Donec mattis tincidunt nisi, sed ultricies metus mattis in. Praesent at tempus nulla. Etiam fringilla hendrerit est ut ultrices. Proin efficitur nibh quis quam dapibus aliquet.",
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis orci neque, rhoncus sit amet nibh vitae, pretium eleifend est. Fusce cursus velit et ante gravida, sed auctor orci sollicitudin. Proin lacus nulla, suscipit eget venenatis et, faucibus sit amet nibh. Donec eu ligula eu quam ornare viverra eget vitae diam. Mauris aliquam felis sed metus ullamcorper mattis. Sed venenatis et mauris ut malesuada. Nullam blandit odio vel purus euismod, in congue ante sagittis.",
+            "Nam rhoncus odio eros, vel condimentum metus feugiat sed. Sed ullamcorper odio eget magna finibus blandit. Sed id urna eget nunc eleifend dictum. Morbi id scelerisque quam. Vivamus rhoncus arcu vitae ante gravida sollicitudin. Proin varius ut dui in congue. Ut ac mi bibendum, laoreet risus eu, malesuada nulla.",
+            "Donec sit amet justo ac eros posuere eleifend. Vivamus ex ex, bibendum ac est pulvinar, tristique dictum ligula. Nulla cursus pellentesque porta. Nullam consectetur enim enim, id elementum lacus tempus quis. Nulla sed nisi id mauris dictum tempor sed sed erat. Etiam aliquet velit eu odio tristique, eu interdum leo semper. Phasellus non nisl ut orci dictum auctor ut ac lectus. Cras dolor mauris, tempus eget placerat in, pulvinar nec lorem. Donec eget condimentum eros. Praesent nisi nisl, aliquet id tellus maximus, sagittis hendrerit erat. Curabitur placerat auctor dui, ac tincidunt orci vestibulum at. Morbi et ante vitae nisi mattis dignissim.",
+            "Nunc venenatis non erat nec posuere. Cras ligula sapien, hendrerit id vulputate vel, placerat vel ex. Mauris vel nibh consequat elit porta dapibus. Curabitur imperdiet vitae neque commodo blandit. Vivamus ex ante, tempor quis molestie vel, vestibulum in metus. Sed tempor dui enim, ut convallis libero dignissim ac. Maecenas at posuere lacus. Suspendisse interdum ut mauris molestie vestibulum. Donec nunc nisl, imperdiet a blandit sit amet, hendrerit ac orci. Sed eget augue augue.",
+            "In dolor libero, rutrum quis ligula a, malesuada fringilla ligula. Donec commodo massa nisi. Nunc accumsan dictum libero, at tristique mauris tincidunt nec. Nunc quis nibh a erat pharetra porta. Cras non egestas urna, ac fermentum ex. Quisque eleifend, nisi sit amet hendrerit pulvinar, libero erat finibus nisi, et finibus est nulla eu sapien. Sed viverra sed ligula nec lobortis.",
+            "Suspendisse erat leo, luctus et vestibulum viverra, congue eget quam. Nullam facilisis erat nibh, a rutrum nunc sollicitudin id. Nulla eu erat diam. Fusce et nunc neque. Nam ac molestie est. Morbi condimentum interdum augue. Nunc ac viverra orci. Sed dolor erat, semper nec eros vitae, varius scelerisque ligula. Sed porttitor blandit purus. Fusce hendrerit id turpis in dignissim. Quisque eu blandit neque."
+    };
+
+
+    public static Comment getRandomComment() {
+        Comment c = new Comment();
+        c.setUserPicture(userPics[random.nextInt(userPics.length)]);
+        c.setFavoritesCount(random.nextInt(40));
+        c.setComment(smallIpsumStrings[random.nextInt(smallIpsumStrings.length)]);
+        c.setUserName(names[random.nextInt(names.length)]);
+        c.setUserPicture(userPics[random.nextInt(userPics.length)]);
+        return c;
+    }
 
     public static Feed getRandomFeed() {
         Feed f = new Feed();

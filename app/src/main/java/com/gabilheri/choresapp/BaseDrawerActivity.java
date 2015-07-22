@@ -7,11 +7,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
+import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.friends_list.FriendListActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -28,6 +30,9 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     @Bind(R.id.nav_view)
     protected NavigationView navigationView;
 
+    @Bind(R.id.userPicture)
+    CircleImageView userPicture;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +42,7 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private void setupDrawerContent() {
+        ButterKnife.bind(navigationView);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -56,6 +62,12 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                         return true;
                     }
                 });
+
+        Glide.with(this)
+                .load("https://lh6.googleusercontent.com/-PLz-1wFMskM/U1VdxVwcXgI/AAAAAAAAMvw/JUU7tw4CWms/w1674-h1676-no/1397661337286.jpg")
+                .centerCrop()
+                .crossFade()
+                .into(userPicture);
     }
 
     private void startFeedActivity() {

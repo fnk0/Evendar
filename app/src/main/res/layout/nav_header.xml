@@ -1,17 +1,48 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="192dp"
-    android:background="?attr/colorPrimaryDark"
+    android:background="@drawable/drawer_bg"
     android:gravity="bottom"
     android:orientation="vertical"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userPicture"
+        android:src="@mipmap/ic_launcher"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
+    />
+
     <TextView
+        android:id="@+id/userName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        android:text="Marcus Gabilheri"
+        android:layout_toRightOf="@+id/userPicture"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:textSize="22sp"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:textColor="@color/grey_200"
+    />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/userLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Austin, TX"
+        android:layout_toRightOf="@+id/userPicture"
+        android:layout_below="@id/userName"
+        android:layout_marginLeft="@dimen/activity_vertical_margin"
+        android:paddingTop="8dp"
+        android:drawableLeft="@drawable/ic_location"
+        android:drawablePadding="8dp"
+        android:paddingBottom="4dp"
+        android:gravity="center_vertical"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        />
+
+</RelativeLayout>

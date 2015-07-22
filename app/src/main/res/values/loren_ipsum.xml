@@ -6,4 +6,6 @@ Proin at luctus metus. Nulla eu luctus justo. Nam iaculis vehicula mauris, non p
 
     <string name="paragraph">Aenean egestas erat sit amet ipsum posuere, vitae egestas diam ultrices. Sed eu vestibulum purus, ut convallis nulla. Phasellus laoreet fermentum orci, ac molestie libero ultricies et. Maecenas iaculis nisl et elit vestibulum, mollis maximus lacus semper. In ultricies, metus nec fringilla rhoncus, massa ex eleifend felis, in rutrum magna risus eget ante. Aenean at neque turpis. Donec ac suscipit quam, ac rhoncus risus. Donec quis dictum erat.</string>
 
+    <string name="comment_stub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mattis, urna at egestas dapibus, arcu velit tempor quam, nec mattis risus urna ac nisi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; </string>
+
 </resources>

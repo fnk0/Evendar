@@ -47,7 +47,6 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         } else {
             return new ViewHolder(view, callback);
         }
-
     }
 
     @Override

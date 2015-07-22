@@ -30,7 +30,6 @@
                 app:cameraZoom="12"
                 app:layout_collapseMode="parallax"
                 app:liteMode="true"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 />
 
             <android.support.v7.widget.Toolbar
