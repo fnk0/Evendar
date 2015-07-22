@@ -10,23 +10,33 @@
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 
-    <style name="Theme.DetailActivity" parent="Base.Theme.DetailActivity">
+    <style name="Theme.PurpleActivity" parent="Base.Theme.PurpleActivity">
     </style>
 
-    <style name="Base.Theme.DetailActivity" parent="Base.Theme.ChoresApp">
+    <style name="Base.Theme.PurpleActivity" parent="Theme.ChoresApp">
         <item name="colorPrimary">@color/purple_400</item>
         <item name="colorPrimaryDark">@color/purple_600</item>
         <item name="colorAccent">@color/accent_color</item>
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 
-    <style name="Theme.FriendsActivity" parent="Base.Theme.DetailActivity">
+    <style name="Theme.BlueIndigoActivity" parent="Base.Theme.BlueIndigoActivity">
     </style>
 
-    <style name="Base.Theme.FriendsActivity" parent="Base.Theme.ChoresApp">
+    <style name="Base.Theme.BlueIndigoActivity" parent="Theme.ChoresApp">
         <item name="colorPrimary">@color/indigo_500</item>
         <item name="colorPrimaryDark">@color/indigo_700</item>
         <item name="colorAccent">@color/orange_A200</item>
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
+
+    <style name="Theme.OrangeActivity" parent="Base.Theme.OrangeActivity">
+    </style>
+
+    <style name="Base.Theme.OrangeActivity" parent="Theme.ChoresApp">
+        <item name="colorPrimary">@color/orange_500</item>
+        <item name="colorPrimaryDark">@color/orange_700</item>
+        <item name="colorAccent">@color/indigo_A400</item>
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 

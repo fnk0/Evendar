@@ -29,7 +29,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:theme="@style/Base.Theme.FriendsActivity"
+            android:theme="@style/Base.Theme.OrangeActivity"
             android:name=".friends_list.FriendListActivity"
             android:label="@string/app_name" />
 
@@ -38,6 +38,7 @@
             android:label="@string/app_name" />
 
         <activity
+            android:theme="@style/Base.Theme.BlueIndigoActivity"
             android:name=".user_profile.UserProfileActivity"
             android:label="@string/app_name" />
 

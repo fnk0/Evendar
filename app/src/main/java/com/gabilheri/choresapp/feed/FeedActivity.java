@@ -32,6 +32,7 @@ public class FeedActivity extends BaseDrawerActivity {
         adapter.addFragment(new FeedFragment(), "Wants to");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        navigationView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override

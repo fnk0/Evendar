@@ -54,13 +54,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
         User user = users.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(user.getUserPicture())
-                .centerCrop()
+                .fitCenter()
                 .crossFade()
                 .into(holder.userPicture);
         holder.userName.setText(user.getName());
         Glide.with(holder.itemView.getContext())
                 .load(user.getSocialMedia())
-                .centerCrop()
+                .fitCenter()
                 .crossFade()
                 .into(holder.socialMedia);
 

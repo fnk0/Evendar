@@ -54,7 +54,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.ViewHolder> {
         Feed feed = feedList.get(position);
         Glide.with(holder.itemView.getContext())
                 .load(feed.getUserPicUrl())
-                .centerCrop()
+                .fitCenter()
                 .crossFade()
                 .into(holder.userPicture);
         holder.feedTitle.setText(feed.getTitle());

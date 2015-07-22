@@ -47,18 +47,21 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
-
+                        Intent i = null;
                         switch (menuItem.getItemId()) {
                             case R.id.nav_home:
-                                startFeedActivity();
+                                i = getFeedActivity();
                                 break;
                             case R.id.nav_friends:
-                                startFriendsActivity();
+                                i = getFriendsActivity();
                                 break;
                         }
-
+                        mDrawerLayout.closeDrawers();
+                        if(i != null) {
+                            menuItem.setChecked(true);
+                            startActivity(i);
+                            finish();
+                        }
                         return true;
                     }
                 });
@@ -70,18 +73,18 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                 .into(userPicture);
     }
 
-    private void startFeedActivity() {
+    private Intent getFeedActivity() {
         if(this instanceof FeedActivity) {
-           return;
+           return null;
         }
-        startActivity(new Intent(this, FeedActivity.class));
+        return new Intent(this, FeedActivity.class);
     }
 
-    private void startFriendsActivity() {
+    private Intent getFriendsActivity() {
         if(this instanceof FriendListActivity) {
-            return;
+            return null;
         }
-        startActivity(new Intent(this, FriendListActivity.class));
+        return new Intent(this, FriendListActivity.class);
     }
 
     protected void enableHamburgerMenu() {

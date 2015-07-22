@@ -21,5 +21,6 @@ public class FriendListActivity extends BaseDrawerActivity {
         ButterKnife.bind(this);
         setTitle("Friends");
         addFragmentToContainer(new FriendListFragment(), "Friends Fragment");
+        navigationView.getMenu().getItem(2).setChecked(true);
     }
 }

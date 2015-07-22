@@ -34,7 +34,7 @@ public class FriendListFragment extends BaseListFragment {
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         List<User> userList = new ArrayList<>();
-        for(int i = 0; i < 300; i++) {
+        for(int i = 0; i < 50; i++) {
             userList.add(MockUtils.getRandomUser());
         }
 
