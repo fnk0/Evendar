@@ -12,7 +12,9 @@
         android:id="@+id/userPicture"
         android:src="@mipmap/ic_launcher"
         android:layout_width="62dp"
-        android:layout_height="62dp" />
+        android:layout_height="62dp"
+        android:transitionName="profileImage"
+    />
 
     <RelativeLayout
         android:paddingLeft="8dp"

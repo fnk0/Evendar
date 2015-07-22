@@ -57,7 +57,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .centerCrop()
                 .crossFade()
                 .into(holder.userPicture);
-
         holder.userName.setText(user.getName());
         Glide.with(holder.itemView.getContext())
                 .load(user.getSocialMedia())
@@ -65,7 +64,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
                 .crossFade()
                 .into(holder.socialMedia);
 
-        holder.itemView.setTag(user.getName());
+        holder.itemView.setTag(user.getUserPicture());
     }
 
     @Override
