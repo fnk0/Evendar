@@ -94,7 +94,6 @@ public abstract class BaseDrawerActivity extends BaseActivity {
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

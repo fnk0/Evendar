@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-
 import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
