@@ -56,7 +56,11 @@ public class MockUtils {
             " is going to Starbucks @5:00 PM",
             " is going to Austin Java @11:00 AM",
             " is going to Burger King @1:00 PM,",
-            " is going to Trader Joe's @4:30 PM"
+            " is going to Trader Joe's @4:30 PM",
+            " wants to play basketball @4:00 PM",
+            " wants to watch The Titanic @9:00 PM",
+            " wants to get groceries @11:00 AM",
+
     };
 
     public static String[] maleNames = {
