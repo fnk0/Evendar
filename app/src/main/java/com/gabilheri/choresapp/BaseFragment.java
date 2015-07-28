@@ -24,7 +24,6 @@ public abstract class BaseFragment extends Fragment {
 
     CompositeSubscription mCompositeSubscription;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

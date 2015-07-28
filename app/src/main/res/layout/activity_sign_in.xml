@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+  android:id="@+id/main_content"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:fitsSystemWindows="true"
+  xmlns:app="http://schemas.android.com/apk/res-auto">
+
+  <android.support.design.widget.AppBarLayout
+    android:id="@+id/appbar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    <include layout="@layout/toolbar" />
+
+  </android.support.design.widget.AppBarLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <Button
+      android:id="@+id/google_sign_in"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:background="@drawable/gplus_background"
+      android:text="Sign in with Google"
+      android:textColor="@color/grey_200"
+      />
+
+    <Button
+      android:id="@+id/facebook_sign_in"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:background="@drawable/facebook_background"
+      android:text="Sign in with Facebook"
+      android:textColor="@color/grey_200"
+      />
+
+    <Button
+      android:id="@+id/twitter_sign_in"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:background="@drawable/twitter_background"
+      android:text="Sign in with Twitter"
+      android:textColor="@color/grey_200"
+      />
+
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+      android:id="@+id/twitter_login_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginBottom="@dimen/activity_vertical_margin"
+      android:visibility="gone"
+      />
+
+    <com.facebook.login.widget.LoginButton
+      android:id="@+id/facebook_login_button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:padding="@dimen/activity_vertical_margin"
+      android:visibility="gone"
+      />
+
+  </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
