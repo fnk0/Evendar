@@ -14,7 +14,7 @@ import butterknife.Bind;
  * @version 1.0
  * @since 7/21/15.
  */
-public class BaseListFragment extends BaseFragment {
+public abstract class BaseListFragment extends BaseFragment {
 
     @Bind(R.id.recyclerview)
     protected RecyclerView recyclerView;

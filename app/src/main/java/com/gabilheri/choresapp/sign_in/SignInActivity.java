@@ -106,7 +106,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
                                     String email = object.getString("email");
                                     String gender = object.getString("gender");
                                     Log.d(LOG_TAG, "ID: " + id);
-                                    String profilePicture = "https://graph.facebook.com/v2.2/" + id + "/picture?height=800&type=square&width=800";
+                                    String profilePicture = "https://graph.facebook.com/v2.4/" + id + "/picture?height=800&type=square&width=800";
                                     Log.d(LOG_TAG, profilePicture);
                                     //TODO handle use signed in with facebook
                                 } catch (JSONException ex) {
