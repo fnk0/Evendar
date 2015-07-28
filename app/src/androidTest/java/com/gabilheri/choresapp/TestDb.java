@@ -6,6 +6,7 @@ import android.test.AndroidTestCase;
  * Created by kieran on 7/24/15.
  */
 public class TestDb extends AndroidTestCase {
+    //@TODO: complete the test cases to ensure DB is working
     /*
 
     public static final String LOG_TAG = testDB.class.getSimpleName();
