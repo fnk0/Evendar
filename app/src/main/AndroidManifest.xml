@@ -60,14 +60,17 @@
       android:name="com.google.android.gms.version"
       android:value="@integer/google_play_services_version"/>
 
+    <!-- Google Key -->
     <meta-data
       android:name="com.google.android.geo.API_KEY"
       android:value="AIzaSyAS9_hwY1regUzMQ7BEZMDKT94EtXCuALw"/>
 
+    <!-- Twitter Key -->
     <meta-data
       android:name="io.fabric.ApiKey"
       android:value="0f1bbd3b27cae435eff5f9d6857577615f5b0d62"/>
 
+    <!-- Facebook Key -->
     <meta-data
       android:name="com.facebook.sdk.ApplicationId"
       android:value="@string/facebook_app_id" />

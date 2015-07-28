@@ -148,7 +148,6 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
         }
     }
 
-
     @OnClick(R.id.google_sign_in)
     public void signInWithGPlus() {
         if (mGoogleApiClient == null) {
