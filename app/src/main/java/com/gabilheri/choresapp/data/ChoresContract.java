@@ -18,10 +18,11 @@ public class ChoresContract {
     }
 
     public static final class UserEntry implements BaseColumns {
-        public static final String TABLE_NAME = "user";
+        public static final String TABLE_NAME = "users";
 
-        public static final String COLUMN_FULL_NAME = "fullname";
+        public static final String COLUMN_FULL_NAME = "full_name";
 
+        public static final String COLUMN_USERNAME = "username";
         public static final String COLUMN_EMAIL = "email";
 
         public static final String COLUMN_DATE_REGISTERED = "date_registered";
@@ -29,6 +30,13 @@ public class ChoresContract {
         public static final String COLUMN_FACEBOOK_USERNAME = "facebook_username";
         public static final String COLUMN_TWITTER_USERNAME = "twitter_username";
         public static final String COLUMN_GOOGLE_USERNAME = "google_username";
+
+        public static final String COLUMN_NUM_EVENTS = "num_events";
+        public static final String COLUMN_NUM_FAVORITES = "num_favorites";
+
+        public static final String COLUMN_PIC_URL = "pic_URL";
+
+
 
 
 
@@ -42,6 +50,18 @@ public class ChoresContract {
         public static final String COLUMN_DATE = "date";
 
         public static final String COLUMN_USER_ID = "user_id";
+
+        public static final String COLUMN_TIME = "time";
+
+        public static final String COLUMN_IS_WANT = "is_want";
+
+        public static final String COLUMN_NUM_FAV = "num_fav";
+
+        public static final String COLUMN_NUM_COMMENTS = "num_comments";
+
+        public static final String COLUMN_NUM_GOING = "num_going";
+
+        public static final String COLUMN_LOC = "loc";
     }
 
     public static final class FavoriteEntry implements BaseColumns{
@@ -61,6 +81,26 @@ public class ChoresContract {
 
         public static final String COLUMN_USER_ID2 = "user_id2";
 
+    }
+
+    public static final class CommentEntry implements BaseColumns{
+        public static final String TABLE_NAME = "comments";
+
+        public static final String COLUMN_TEXT = "text";
+
+        public static final String COLUMN_USER_ID = "user_id";
+
+        public static final String COLUMN_EVENT_ID = "event_id";
+
+        public static final String COLUMN_TIME = "time";
+    }
+
+    public static final class RSVPEntry implements BaseColumns{
+        public static final String TABLE_NAME = "RSVPs";
+
+        public static final String COLUMN_EVENT_ID = "event_id";
+
+        public static final String COLUMN_USER_ID = "user_id";
     }
 
 
