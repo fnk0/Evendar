@@ -19,7 +19,6 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
     }
 
 
-    //@TODO: finish creation of the other tables
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         final String SQL_CREATE_USER_TABLE = "CREATE TABLE " + ChoresContract.UserEntry.TABLE_NAME + " (" +
                 ChoresContract.UserEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -102,24 +101,6 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion){
         onCreate(sqLiteDatabase);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
