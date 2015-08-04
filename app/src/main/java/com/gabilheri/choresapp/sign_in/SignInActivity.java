@@ -1,6 +1,7 @@
 package com.gabilheri.choresapp.sign_in;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -15,9 +16,18 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.gabilheri.choresapp.BaseActivity;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.ChoresContract;
+import com.gabilheri.choresapp.data.NetworkClient;
+import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.feed.FeedActivity;
+import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.PrefManager;
+import com.gabilheri.choresapp.utils.TimeUtils;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterException;
@@ -31,6 +41,9 @@ import java.util.ArrayList;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -43,6 +56,8 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
         GoogleApiClient.OnConnectionFailedListener {
 
     private static final String LOG_TAG = "SignInFragment";
+
+    private static final int PROFILE_PIC_SIZE = 800;
 
     /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
@@ -75,12 +90,32 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
             @Override
             public void success(Result<TwitterSession> result) {
                 // Do something with result, which provides a TwitterSession for making API calls
-                //TODO handle something with authenticated user
+                Twitter.getApiClient()
+                        .getAccountService().verifyCredentials(true, true, new Callback<com.twitter.sdk.android.core.models.User>() {
+                    @Override
+                    public void success(Result<com.twitter.sdk.android.core.models.User> result) {
+                        Log.d(LOG_TAG, result.data.profileImageUrlHttps);
+                        User user = new User();
+                        user.setUsername(result.data.screenName);
+                        user.setTwitterUsername(String.valueOf(result.data.screenName));
+                        user.setFullName(result.data.name);
+                        // If the user registers with Twitter we can't get a email unfortunately
+                        // We have to ask the people from Twitter to white-list our app...
+                        // and that takes a while!
+                        registerUser(user);
+                    }
+
+                    @Override
+                    public void failure(TwitterException e) {
+                        //TODO show error to the user
+                    }
+                });
             }
 
             @Override
             public void failure(TwitterException exception) {
                 // Do something on failure
+                //TODO show error to the user
             }
         });
 
@@ -104,13 +139,16 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
                                     String id = object.getString("id");
                                     String name = object.getString("name");
                                     String email = object.getString("email");
-                                    String gender = object.getString("gender");
-                                    Log.d(LOG_TAG, "ID: " + id);
                                     String profilePicture = "https://graph.facebook.com/v2.4/" + id + "/picture?height=800&type=square&width=800";
-                                    Log.d(LOG_TAG, profilePicture);
-                                    //TODO handle use signed in with facebook
+                                    User user = new User();
+                                    user.setEmail(email);
+                                    user.setFullName(name);
+                                    user.setFacebookUsername(id);
+                                    user.setPicUrl(profilePicture);
+                                    registerUser(user);
                                 } catch (JSONException ex) {
                                     Log.e(LOG_TAG, "Error parsing JSON result", ex);
+                                    //TODO show error to the user
                                 }
                             }
                         });
@@ -122,12 +160,12 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
             @Override
             public void onCancel() {
-
+                // Since they canceled we don't need to do anything here really
             }
 
             @Override
             public void onError(FacebookException e) {
-
+                //TODO show error to the user
             }
         });
     }
@@ -181,12 +219,86 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     public void onConnected(Bundle bundle) {
         mShouldResolve = false;
-        //TODO user signed in with Google+
+        Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+
+        if(person != null) {
+            User user = new User();
+            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+
+            if (email != null) {
+                user.setEmail(email);
+            }
+
+            user.setGoogleUsername(person.getId());
+            user.setFullName(person.getDisplayName());
+
+            int g = person.getGender();
+
+            // In case we want gender at some point
+            String gender = "Other";
+            if (g == 0) {
+                gender = "Male";
+            } else if (g == 1) {
+                gender = "Female";
+            }
+
+            String picUrl = person.getImage().getUrl();
+
+            user.setPicUrl(picUrl.substring(0, picUrl.length() - 2) + PROFILE_PIC_SIZE);
+            registerUser(user);
+        } else {
+            //TODO show error to the user
+        }
     }
 
     @Override
     public void onConnectionSuspended(int i) {
 
+    }
+
+    public void registerUser(User user) {
+        if(user.getEmail() != null) {
+            user.setUsername(user.getEmail());
+        }
+        user.setDateRegistered(TimeUtils.getToday());
+
+        NetworkClient.getApi(this).insertUser(user)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(userSubscriber);
+    }
+
+    Subscriber<User> userSubscriber = new Subscriber<User>() {
+        @Override
+        public void onCompleted() {
+            unsubscribe();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            //TODO show error tho the user
+            Log.e(LOG_TAG, "Error registering user", e);
+        }
+
+        @Override
+        public void onNext(User user) {
+            if(user != null) {
+                saveUserToDB(user);
+                PrefManager.with(getApplicationContext()).save(Const.USERNAME, user.getUsername());
+                PrefManager.with(getApplicationContext()).save(Const.SIGNED_IN, true);
+                goToFeedActivity();
+                finish();
+            }
+        }
+
+        private void saveUserToDB(User user) {
+            ContentValues userVaues = User.toContentValues(user);
+            getContentResolver().insert(ChoresContract.UserEntry.buildUserUri(), userVaues);
+        }
+    };
+
+    private void goToFeedActivity() {
+        startActivity(new Intent(this, FeedActivity.class));
     }
 
     @Override
@@ -211,8 +323,6 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
                 // error dialog.
                 // TODO show the user a error dialog
             }
-        } else {
-            // Show the signed-out UI
         }
     }
 

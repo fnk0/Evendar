@@ -1,5 +1,7 @@
 package com.gabilheri.choresapp.data;
 
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.text.format.Time;
 import android.provider.BaseColumns;
 
@@ -7,6 +9,13 @@ import android.provider.BaseColumns;
  * Created by kieran on 7/24/15.
  */
 public class ChoresContract {
+
+    // Base authority + base uri
+    public static final String CONTENT_AUTHORITY = "com.gabilheri.choresapp.app";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+
+    // Tables
+    public static final String PATH_USER = "user";
 
     // To make it easy to query for the exact date, we normalize all dates that go into
     // the database to the start of the the Julian day at UTC.
@@ -18,6 +27,12 @@ public class ChoresContract {
     }
 
     public static final class UserEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_USER).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_USER;
+
         public static final String TABLE_NAME = "users";
 
         public static final String COLUMN_FULL_NAME = "full_name";
@@ -36,10 +51,13 @@ public class ChoresContract {
 
         public static final String COLUMN_PIC_URL = "pic_URL";
 
+        public static Uri buildUserUri() {
+            return CONTENT_URI;
+        }
 
-
-
-
+        public static Uri buildUserUri(String username) {
+            return CONTENT_URI.buildUpon().appendPath(username).build();
+        }
     }
 
     public static final class EventEntry implements BaseColumns {
