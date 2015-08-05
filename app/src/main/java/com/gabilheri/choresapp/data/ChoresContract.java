@@ -56,6 +56,8 @@ public class ChoresContract {
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
         public static Uri buildUserUri() {
             return CONTENT_URI;
         }
@@ -100,6 +102,9 @@ public class ChoresContract {
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
 
 
 
@@ -142,6 +147,9 @@ public class ChoresContract {
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
 
 
     }
@@ -156,6 +164,9 @@ public class ChoresContract {
         public static final String COLUMN_LONG_ID = "long_id";
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
 
 
 
@@ -176,6 +187,9 @@ public class ChoresContract {
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
 
     }
 
@@ -189,6 +203,9 @@ public class ChoresContract {
         public static final String COLUMN_LONG_ID = "long_id";
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
 
 
     }
