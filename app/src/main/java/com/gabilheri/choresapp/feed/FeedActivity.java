@@ -12,6 +12,8 @@ import com.gabilheri.choresapp.utils.Const;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
+import org.joda.time.LocalDateTime;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
@@ -54,10 +56,13 @@ public class FeedActivity extends BaseDrawerActivity {
     }
 
     private Bundle getArgumentsBundle(boolean isWant) {
-        long start = 0, end = 0; // TODO choose the correct stuff here...
+        LocalDateTime now = LocalDateTime.now();
+        // We get a month worth of data
+        String start = String.valueOf(now.minusDays(15).toDate().getTime());
+        String end = String.valueOf(now.plusDays(15).toDate().getTime());
         Bundle args = new Bundle();
-        args.putLong(Const.DATE_START, start);
-        args.putLong(Const.DATE_END, end);
+        args.putString(Const.START_DATE, start);
+        args.putString(Const.END_DATE, end);
         args.putBoolean(Const.BOOLEAN_IS_WANT, isWant);
         return args;
     }

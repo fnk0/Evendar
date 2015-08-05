@@ -16,10 +16,11 @@ public final class Const {
     public static final String DEFAULT_USERNAME = "username@choresapp.com";
     public static final String SIGNED_IN = "signed_in";
 
-    // Feed constant stuff
     public static final String BOOLEAN_IS_WANT = "is_want";
-    public static final String DATE_START = "date_start";
-    public static final String DATE_END = "date_end";
+    public static final String START_DATE = "started_date";
+    public static final String END_DATE = "end_date";
     public static final String CREATED_AT = "created_at";
-
+    public static final String UPDATED_AT = "updated_at";
+    public static final String USER_PICTURE = "user_picture";
+    public static final String SELECTED_KEY = "selected_position";
 }

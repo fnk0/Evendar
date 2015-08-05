@@ -21,6 +21,7 @@ public class Event {
     int numFavorites;
     int numComments;
     int numGoing;
+    int numShares;
     String userId;
 
     /**
@@ -115,6 +116,15 @@ public class Event {
         return this;
     }
 
+    public int getNumShares() {
+        return numShares;
+    }
+
+    public Event setNumShares(int numShares) {
+        this.numShares = numShares;
+        return this;
+    }
+
     public static Event fromCursor(Cursor cursor, boolean closeCursor) {
         Event event = new Event();
         event.setDate(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE)))
@@ -125,6 +135,7 @@ public class Event {
                 .setNumComments(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_COMMENTS)))
                 .setNumFavorites(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_FAV)))
                 .setNumGoing(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_GOING)))
+                .setNumShares(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_SHARES)))
                 .setUserId(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID)));
 
         if(closeCursor) {
@@ -145,6 +156,7 @@ public class Event {
         values.put(EventEntry.COLUMN_NUM_FAV, event.getNumFavorites());
         values.put(EventEntry.COLUMN_NUM_GOING, event.getNumGoing());
         values.put(EventEntry.COLUMN_USER_ID, event.getUserId());
+        values.put(EventEntry.COLUMN_NUM_SHARES, event.getNumShares());
         return values;
     }
 

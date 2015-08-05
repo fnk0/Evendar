@@ -1,5 +1,6 @@
 package com.gabilheri.choresapp.adapters;
 
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.R;
-import com.gabilheri.choresapp.models.User;
-
-import java.util.List;
+import com.gabilheri.choresapp.data.models.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -24,18 +23,13 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @version 1.0
  * @since 7/20/15.
  */
-public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder> {
+public class FriendAdapter extends CursorRecyclerAdapter<FriendAdapter.ViewHolder> {
 
-    List<User> users;
 
     ItemCallback callback;
 
-    public FriendAdapter(List<User> users) {
-        this.users = users;
-    }
-
-    public FriendAdapter(List<User> users, ItemCallback callback) {
-        this.users = users;
+    public FriendAdapter(Cursor c, ItemCallback callback) {
+        super(c);
         this.callback = callback;
     }
 
@@ -50,26 +44,24 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        User user = users.get(position);
-        Glide.with(holder.itemView.getContext())
-                .load(user.getUserPicture())
-                .fitCenter()
-                .crossFade()
-                .into(holder.userPicture);
-        holder.userName.setText(user.getName());
-        Glide.with(holder.itemView.getContext())
-                .load(user.getSocialMedia())
-                .fitCenter()
-                .crossFade()
-                .into(holder.socialMedia);
+    public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
+        User user = User.fromCursor(cursor, false);
+        if(user != null) {
+            Glide.with(holder.itemView.getContext())
+                    .load(user.getPicUrl())
+                    .fitCenter()
+                    .crossFade()
+                    .into(holder.userPicture);
+            holder.userName.setText(user.getFullName());
+            Glide.with(holder.itemView.getContext())
+                    .load(user.getSocialMedia())
+                    .fitCenter()
+                    .crossFade()
+                    .into(holder.socialMedia);
 
-        holder.itemView.setTag(user.getUserPicture());
-    }
+            holder.itemView.setTag(R.id.userPicture, user.getPicUrl());
+        }
 
-    @Override
-    public int getItemCount() {
-        return users.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

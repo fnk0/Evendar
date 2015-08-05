@@ -1,12 +1,14 @@
 package com.gabilheri.choresapp.user_profile;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.BaseActivity;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.QueryUtils;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -30,8 +32,10 @@ public class UserProfileActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         enableBackNav();
+        String username = getIntent().getStringExtra(Const.USERNAME);
+        User user = QueryUtils.getUserFromDB(this, username);
+        String title = user.getFullName();
 
-        String title = getIntent().getStringExtra(Intent.EXTRA_SHORTCUT_NAME);
         if(title != null) {
             collapsingToolbar.setTitle(title);
         }
