@@ -52,6 +52,12 @@ public class ChoresContract {
 
         public static final String COLUMN_PIC_URL = "pic_URL";
 
+        public static final String COLUMN_LONG_ID = "long_id";
+
+        public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
         public static Uri buildUserUri() {
             return CONTENT_URI;
         }
@@ -76,6 +82,8 @@ public class ChoresContract {
 
         public static final String COLUMN_USER_ID = "user_id";
 
+        public static final String COLUMN_USERNAME = "username";
+
         public static final String COLUMN_TIME = "time";
 
         public static final String COLUMN_IS_WANT = "is_want";
@@ -86,7 +94,19 @@ public class ChoresContract {
 
         public static final String COLUMN_NUM_GOING = "num_going";
 
+        public static final String COLUMN_NUM_SHARES = "num_shares";
+
         public static final String COLUMN_LOC = "loc";
+
+        public static final String COLUMN_LONG_ID = "long_id";
+
+        public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
+
+
 
         public static Uri buildEventUri() {
             return CONTENT_URI;
@@ -123,6 +143,15 @@ public class ChoresContract {
 
         public static final String COLUMN_USER_ID = "user_id";
 
+        public static final String COLUMN_LONG_ID = "long_id";
+
+        public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
+
+
     }
 
     public static final class FriendshipEntry implements BaseColumns{
@@ -131,6 +160,15 @@ public class ChoresContract {
         public static final String COLUMN_USER_ID1 = "user_id1";
 
         public static final String COLUMN_USER_ID2 = "user_id2";
+
+        public static final String COLUMN_LONG_ID = "long_id";
+
+        public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
+
 
     }
 
@@ -144,6 +182,15 @@ public class ChoresContract {
         public static final String COLUMN_EVENT_ID = "event_id";
 
         public static final String COLUMN_TIME = "time";
+
+        public static final String COLUMN_LONG_ID = "long_id";
+
+        public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
+
     }
 
     public static final class RSVPEntry implements BaseColumns{
@@ -152,6 +199,15 @@ public class ChoresContract {
         public static final String COLUMN_EVENT_ID = "event_id";
 
         public static final String COLUMN_USER_ID = "user_id";
+
+        public static final String COLUMN_LONG_ID = "long_id";
+
+        public static final String COLUMN_UPDATED_AT = "updated_at";
+
+        public static final String COLUMN_DATE_CREATED = "date_created";
+
+
+
     }
 
 
