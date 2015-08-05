@@ -33,6 +33,7 @@ public class TestDb extends AndroidTestCase {
         final HashSet<String> tableNameHashSet = new HashSet<String>();
         tableNameHashSet.add(ChoresContract.UserEntry.TABLE_NAME);
         tableNameHashSet.add(ChoresContract.EventEntry.TABLE_NAME);
+        tableNameHashSet.add(ChoresContract.FavoriteEntry.TABLE_NAME);
         tableNameHashSet.add(ChoresContract.FriendshipEntry.TABLE_NAME);
         tableNameHashSet.add(ChoresContract.CommentEntry.TABLE_NAME);
         tableNameHashSet.add(ChoresContract.RSVPEntry.TABLE_NAME);
