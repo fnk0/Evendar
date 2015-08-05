@@ -15,4 +15,6 @@ public final class Const {
     public static final String USERNAME = "username";
     public static final String DEFAULT_USERNAME = "username@choresapp.com";
     public static final String SIGNED_IN = "signed_in";
+
+    public static final String BOOLEAN_IS_WANT = "is_want";
 }

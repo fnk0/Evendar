@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <integer name="event_num_cols">1</integer>
+
     <array name="colors">
         <item>@color/indigo_400</item>
         <item>@color/purple_400</item>
@@ -10,4 +13,5 @@
         <item>@color/yellow_600</item>
         <item>@color/blue_grey_600</item>
     </array>
+
 </resources>

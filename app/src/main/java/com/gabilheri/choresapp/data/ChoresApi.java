@@ -18,7 +18,7 @@ import rx.Observable;
  */
 public interface ChoresApi {
 
-    //TODO Stiil needs to put the right URL's for this API Calls...
+    //TODO Still needs to put the right URL's for this API Calls...
 
     @POST("/")
     Observable<User> insertUser(@Body User user);

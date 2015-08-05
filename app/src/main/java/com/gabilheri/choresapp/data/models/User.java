@@ -156,21 +156,24 @@ public class User {
         return userValues;
     }
 
-    public static User fromCursor(Cursor cursor) {
+    public static User fromCursor(Cursor cursor, boolean closeCursor) {
         if(cursor.moveToFirst()) {
             User user = new User();
-            user.setUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_USERNAME)));
-            user.setEmail(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_EMAIL)));
-            user.setFullName(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_FULL_NAME)));
-            user.setFacebookUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_FACEBOOK_USERNAME)));
-            user.setTwitterUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_TWITTER_USERNAME)));
-            user.setGoogleUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_GOOGLE_USERNAME)));
-            user.setPicUrl(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PIC_URL)));
-            user.setDateRegistered(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_DATE_REGISTERED)));
-            user.setNumEvents(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_EVENTS)));
-            user.setNumFavorites(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_FAVORITES)));
+            user.setUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_USERNAME)))
+                .setEmail(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_EMAIL)))
+                .setFullName(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_FULL_NAME)))
+                .setFacebookUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_FACEBOOK_USERNAME)))
+                .setTwitterUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_TWITTER_USERNAME)))
+                .setGoogleUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_GOOGLE_USERNAME)))
+                .setPicUrl(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PIC_URL)))
+                .setDateRegistered(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_DATE_REGISTERED)))
+                .setNumEvents(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_EVENTS)))
+                .setNumFavorites(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_FAVORITES)));
 
-            cursor.close();
+            if(closeCursor) {
+                cursor.close();
+            }
+
             return user;
         } else {
             return null;

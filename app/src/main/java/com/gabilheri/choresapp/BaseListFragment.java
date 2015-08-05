@@ -1,6 +1,7 @@
 package com.gabilheri.choresapp;
 
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.gabilheri.choresapp.ui.DividerItemDecorator;
@@ -25,13 +26,14 @@ public abstract class BaseListFragment extends BaseFragment {
     }
 
     protected void initBaseList(RecyclerView.Adapter adapter) {
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
+        recyclerView.setLayoutManager(new LinearLayoutManager(recyclerView.getContext()));
         recyclerView.addItemDecoration(new DividerItemDecorator(recyclerView.getContext(), null));
         recyclerView.setAdapter(adapter);
     }
 
     protected void initCardsList(RecyclerView.Adapter adapter) {
-        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), 1));
+        int numCols = getResources().getInteger(R.integer.event_num_cols);
+        recyclerView.setLayoutManager(new GridLayoutManager(recyclerView.getContext(), numCols));
         recyclerView.setAdapter(adapter);
     }
 }

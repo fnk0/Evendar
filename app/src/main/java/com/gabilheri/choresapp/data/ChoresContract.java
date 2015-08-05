@@ -15,7 +15,8 @@ public class ChoresContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
     // Tables
-    public static final String PATH_USER = "user";
+    public static final String PATH_USER = "users";
+    public static final String PATH_EVENT = "events";
 
     // To make it easy to query for the exact date, we normalize all dates that go into
     // the database to the start of the the Julian day at UTC.
@@ -61,6 +62,12 @@ public class ChoresContract {
     }
 
     public static final class EventEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_EVENT).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENT;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_EVENT;
+
         public static final String TABLE_NAME = "event";
 
         public static final String COLUMN_TITLE = "title";
@@ -80,6 +87,32 @@ public class ChoresContract {
         public static final String COLUMN_NUM_GOING = "num_going";
 
         public static final String COLUMN_LOC = "loc";
+
+        public static Uri buildEventUri() {
+            return CONTENT_URI;
+        }
+
+        /**
+         *
+         * @param startDate
+         *      The beginning of the period to get events
+         * @param endDate
+         *      The ending of the period for the events
+         * @param isWant
+         *      represents if the events should be isWant or goingTo
+         * @return
+         *      The uri representing this query
+         */
+        public static Uri buildEventUri(String startDate, String endDate, boolean isWant) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("s")
+                    .appendPath(startDate)
+                    .appendPath("e")
+                    .appendPath(endDate)
+                    .appendPath("iw")
+                    .appendPath(String.valueOf(isWant ? 1 : 0))
+                    .build();
+        }
     }
 
     public static final class FavoriteEntry implements BaseColumns{
