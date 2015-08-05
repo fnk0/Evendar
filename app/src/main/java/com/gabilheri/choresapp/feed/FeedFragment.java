@@ -1,7 +1,6 @@
 package com.gabilheri.choresapp.feed;
 
 import android.app.ActivityOptions;
-import android.app.LoaderManager;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
@@ -10,9 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ListView;
 
-import com.gabilheri.choresapp.BaseListFragment;
+import com.gabilheri.choresapp.BaseCursorListFragment;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FeedAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
@@ -30,13 +28,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @version 1.0
  * @since 7/20/15.
  */
-public class FeedFragment extends BaseListFragment
-        implements LoaderManager.LoaderCallbacks<Cursor>, ItemCallback{
+public class FeedFragment extends BaseCursorListFragment implements ItemCallback{
 
     private static final int FEED_LOADER = 0;
-
-    private int mPosition = ListView.INVALID_POSITION;
-    FeedAdapter adapter;
 
     String sortOrder = ChoresContract.EventEntry.COLUMN_DATE + " DESC";
 
@@ -61,15 +55,9 @@ public class FeedFragment extends BaseListFragment
             endDate = arguments.getString(Const.END_DATE);
             isWant = arguments.getBoolean(Const.BOOLEAN_IS_WANT);
 
-            adapter = new FeedAdapter(null, this);
-            initCardsList(adapter);
+            mAdapter = new FeedAdapter(null, this);
+            initCardsList(mAdapter);
         }
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        getLoaderManager().initLoader(FEED_LOADER, null, this);
-        super.onActivityCreated(savedInstanceState);
     }
 
     @Override
@@ -121,23 +109,7 @@ public class FeedFragment extends BaseListFragment
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-            adapter.swapCursor(data);
-            if (mPosition != ListView.INVALID_POSITION) {
-                recyclerView.smoothScrollToPosition(mPosition);
-            }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        adapter.swapCursor(null);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (mPosition != ListView.INVALID_POSITION) {
-            arguments.putInt(Const.SELECTED_KEY, mPosition);
-        }
-        super.onSaveInstanceState(arguments);
+    protected int[] getLoaders() {
+        return new int[]{FEED_LOADER};
     }
 }
