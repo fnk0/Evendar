@@ -6,7 +6,7 @@ import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
-import retrofit.http.Query;
+import retrofit.http.Path;
 import rx.Observable;
 
 /**
@@ -27,5 +27,5 @@ public interface ChoresApi {
     Observable<User> updateUser(@Body User user);
 
     @GET("/{username}")
-    Observable<User> getuser(@Query("username") String username);
+    Observable<User> getuser(@Path("username") String username);
 }

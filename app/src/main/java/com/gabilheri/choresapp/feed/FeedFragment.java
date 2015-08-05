@@ -96,6 +96,9 @@ public class FeedFragment extends BaseListFragment
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        if (mPosition != ListView.INVALID_POSITION) {
+            arguments.putInt(SELECTED_KEY, mPosition);
+        }
         super.onSaveInstanceState(arguments);
     }
 }
