@@ -47,6 +47,7 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.EventEntry.COLUMN_NUM_FAV + " INTEGER NOT NULL, " +
                 ChoresContract.EventEntry.COLUMN_NUM_COMMENTS + " INTEGER NOT NULL, " +
                 ChoresContract.EventEntry.COLUMN_NUM_GOING + " INTEGER NOT NULL, " +
+                ChoresContract.EventEntry.COLUMN_NUM_SHARES + " INTEGER NOT NULL, " +
                 ChoresContract.EventEntry.COLUMN_LOC + " TEXT NOT NULL, " +
                 ChoresContract.EventEntry.COLUMN_LONG_ID + " TEXT NOT NULL, " +
                 ChoresContract.EventEntry.COLUMN_UPDATED_AT + " TEXT NOT NULL, " +
