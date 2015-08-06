@@ -23,6 +23,7 @@ public class Event {
     String location;
     String updated_at;
     String date_created;
+    int user_id;
 
     public Event() {}
 
@@ -132,5 +133,11 @@ public class Event {
         this.date_created = date_created;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
 
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
 }
