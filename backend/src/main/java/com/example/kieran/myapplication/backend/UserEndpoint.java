@@ -12,7 +12,7 @@ import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
 
-//import static com.example.kieran.myapplication.backend.OfyService.ofy;
+import static com.example.kieran.myapplication.backend.OfyService.ofy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,7 +80,7 @@ public class UserEndpoint {
             }
         }
 
-        ofy.save().entity(user).now();
+        ofy().save().entity(user).now();
         return user;
     }
 
@@ -101,7 +101,7 @@ public class UserEndpoint {
 
     @ApiMethod(name = "removeUser")
     public void removeUser(@Named("id") Long id) throws NotFoundException {
-        User record findRecord(id);
+        User record = findRecord(id);
         if(record == null){
             throw new NotFoundException("User record does not exist!");
         }
