@@ -24,7 +24,10 @@ import javax.inject.Named;
  * Created by kieran on 8/5/15.
  */
 
-//@TODO what do i use for owner domain/name?
+/*@TODO what do i use for owner domain/name?
+fix the import for ofy
+*/
+
 
 @Api(name = "userEndpoint", version = "v1", namespace = @ApiNamespace(ownerDomain = "", ownerName = "", packagePath = ""))
 public class UserEndpoint {
@@ -66,6 +69,43 @@ public class UserEndpoint {
         }
         return CollectionResponse.<User>builder().setItems(records).setNextPageToken(cursorString).build();
 
+    }
+
+    //inserts a new user
+    @ApiMethod(name = "insertUser")
+    public User insertUser(User user) throws ConflictException{
+        if(user.getId() != null){
+            if(findRecord(user.getId()) != null){
+                throw new ConflictException("Object already exists!");
+            }
+        }
+
+        ofy.save().entity(user).now();
+        return user;
+    }
+
+    private User findRecord(Long id){
+        return ofy().load().type(User.class).id(id).now();
+    }
+
+
+    //updates a user
+    @ApiMethod(name = "updateUser")
+    public User updateUser(User user) throws NotFoundException {
+        if(findRecord(user.getId()) == null){
+            throw new NotFoundException("User Record does not exist!");
+        }
+        ofy().save().entity(user).now();
+        return user;
+    }
+
+    @ApiMethod(name = "removeUser")
+    public void removeUser(@Named("id") Long id) throws NotFoundException {
+        User record findRecord(id);
+        if(record == null){
+            throw new NotFoundException("User record does not exist!");
+        }
+        ofy().delete().entity(record).now();
     }
 
 
