@@ -47,12 +47,15 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
                 .crossFade()
                 .into(holder.userPicture);
 
+        holder.itemView.setTag(R.id.userName, username);
+        holder.itemView.setTag(R.id.userProfile, user.getPicUrl());
+
         Event event = Event.fromCursor(cursor, false);
 
         holder.feedTitle.setText(event.getTitle());
         holder.favoritesCount.setText(String.valueOf(event.getNumFavorites()));
         holder.commentsCount.setText(String.valueOf(event.getNumComments()));
-//        holder.sharesCount.setText(String.valueOf(event.getNumShares));
+        holder.sharesCount.setText(String.valueOf(event.getNumShares()));
     }
 
     @Override

@@ -25,4 +25,7 @@ public final class TimeUtils {
         return sBasicSimpleDateFormat.format(new Date());
     }
 
+    public static String formatBasicDate(long time) {
+        return sBasicSimpleDateFormat.format(time);
+    }
 }

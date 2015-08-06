@@ -1,6 +1,7 @@
 package com.gabilheri.choresapp.adapters;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,12 +11,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.R;
-import com.gabilheri.choresapp.models.Comment;
+import com.gabilheri.choresapp.data.models.Comment;
+import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.TimeUtils;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 import java.util.Random;
 
 import butterknife.Bind;
@@ -29,44 +29,28 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @version 1.0
  * @since 7/21/15.
  */
-public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHolder> {
+public class CommentsAdapter extends CursorRecyclerAdapter<CommentsAdapter.ViewHolder> {
 
-    List<Comment> commentList;
     ItemCallback callback;
-    Context context;
     int[] colorResources;
     int colorsLength;
     Random random = new Random();
 
-    private static final SimpleDateFormat simpleDateFormat;
-
-    static  {
-        simpleDateFormat = new SimpleDateFormat("MMM, dd yyyy", Locale.US);
-    }
-
-    public CommentsAdapter(List<Comment> commentList) {
-        this.commentList = commentList;
-    }
-
-    public CommentsAdapter(List<Comment> commentList, ItemCallback callback) {
-        this.commentList = commentList;
+    public CommentsAdapter(Cursor c, ItemCallback callback) {
+        super(c);
         this.callback = callback;
     }
 
-    public CommentsAdapter(List<Comment> commentList, ItemCallback callback, Context context) {
-        this.commentList = commentList;
-        this.callback = callback;
-        this.context = context;
-        initArray();
-    }
-
-    void initArray() {
+    void initArray(Context context) {
         colorResources = context.getResources().getIntArray(R.array.colors);
         colorsLength = colorResources.length;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if(colorResources == null) {
+            initArray(parent.getContext());
+        }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_comment, parent, false);
         if(callback == null) {
             return new ViewHolder(view);
@@ -76,26 +60,21 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Comment c = commentList.get(position);
+    public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
+        Comment c = Comment.fromCursor(cursor, false);
+        User user = QueryUtils.getUserFromDB(holder.itemView.getContext(), c.getUserId());
         Glide.with(holder.itemView.getContext())
-                .load(c.getUserPicture())
+                .load(user.getPicUrl())
                 .centerCrop()
                 .crossFade()
                 .into(holder.userPicture);
 
-        holder.userName.setText(c.getUserName());
-        holder.favoritesCount.setText("" + c.getFavoritesCount());
-        holder.comment.setText(c.getComment());
-        holder.date.setText(simpleDateFormat.format(new Date(c.getDate())));
-        if(context != null) {
-            holder.bottomLine.setBackgroundColor(colorResources[random.nextInt(colorsLength)]);
-        }
-    }
+        holder.userName.setText(user.getUsername());
+//        holder.favoritesCount.setText("" + c.getFavoritesCount());
+        holder.comment.setText(c.getText());
+        holder.date.setText(TimeUtils.formatBasicDate(Long.parseLong(c.getCreatedAt())));
 
-    @Override
-    public int getItemCount() {
-        return commentList.size();
+        holder.bottomLine.setBackgroundColor(colorResources[random.nextInt(colorsLength)]);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -132,6 +111,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             super(itemView);
             this.callback = callback;
             ButterKnife.bind(this, itemView);
+            userName.setOnClickListener(this);
+            userPicture.setOnClickListener(this);
             favorite.setOnClickListener(this);
         }
 

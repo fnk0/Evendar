@@ -2,6 +2,9 @@ package com.gabilheri.choresapp.data.models;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.support.annotation.DrawableRes;
+
+import com.gabilheri.choresapp.R;
 
 import static com.gabilheri.choresapp.data.ChoresContract.UserEntry;
 
@@ -177,6 +180,18 @@ public class User {
             return user;
         } else {
             return null;
+        }
+    }
+
+    public @DrawableRes int getSocialMedia() {
+        if(googleUsername != null) {
+            return R.drawable.ic_google;
+        } else if(facebookUsername == null) {
+            return R.drawable.ic_facebook;
+        } else if(twitterUsername == null) {
+            return R.drawable.ic_twitter;
+        } else {
+            return R.mipmap.ic_launcher;
         }
     }
 
