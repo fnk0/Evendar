@@ -44,8 +44,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(path: ':backend', configuration: 'android-endpoints')
-
+    
     // Play Services Libraries
     compile 'com.google.android.gms:play-services-maps:7.5.0'
     compile 'com.google.android.gms:play-services-plus:7.5.0'
