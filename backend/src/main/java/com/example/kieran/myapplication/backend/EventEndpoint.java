@@ -11,8 +11,13 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
+import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.*;
 
-import static com.example.kieran.myapplication.backend.OfyService.ofy;
+
+
+        import static com.example.kieran.myapplication.backend.OfyService.ofy;
+import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +63,32 @@ public class EventEndpoint {
         ofy().save().entity(event).now();
         return event;
     }
+
+    //removes an event
+    @ApiMethod(name = "removeEvent")
+    public void removeUser(@Named("id") Long id) throws NotFoundException {
+        deleteObject(Event.class, id);
+    }
+
+
+
+    //updates an event
+    @ApiMethod(name = "updateEvent", path = "update", httpMethod = ApiMethod.HttpMethod.PUT)
+    public Event updateEvent(Event event) throws NotFoundException {
+        if (findRecord(Event.class, event.getId()) == null) {
+            throw new NotFoundException("Event Record does not exist!");
+        }
+        ofy().save().entity(event).now();
+        return event;
+    }
+
+
+    @ApiMethod(name = "getEvent")
+    public Event getEvent(@Named("id") Long id) throws NotFoundException {
+        return getObject(Event.class, id);
+    }
+
+
 
 
 
