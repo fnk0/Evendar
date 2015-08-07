@@ -2,6 +2,7 @@ package com.example.kieran.myapplication.backend;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 /**
  * Created by kieran on 8/5/15.
@@ -9,124 +10,153 @@ import com.googlecode.objectify.annotation.Id;
 
 @Entity
 public class User {
+
     @Id
     Long id;
-    String full_name;
+
+    @Index
     String username;
+
+    @Index
+    String fullName;
+
+    @Index
     String email;
-    String date_registered;
-    String facebook_username;
-    String twitter_username;
-    String google_username;
-    int num_events;
-    int num_favorites;
-    String updated_at;
-    String date_created;
-    String pic_URL;
 
-    public User(){}
+    @Index
+    String dateRegistered;
 
-    public Long getId(){
+    @Index
+    String facebookUsername;
+
+    @Index
+    String twitterUsername;
+
+    @Index
+    String googleUsername;
+
+    String picUrl;
+
+    int numEvents;
+
+    int numFavorites;
+
+    public User() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id){
+    public User setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public String getFull_name(){
-        return full_name;
-    }
-
-    public void setFull_name(String full_name){
-        this.full_name = full_name;
-    }
-
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username){
+    public User setUsername(String username) {
         this.username = username;
+        return this;
     }
 
-    public String getEmail(){
+    public String getFullName() {
+        return fullName;
+    }
+
+    public User setFullName(String fullName) {
+        this.fullName = fullName;
+        return this;
+    }
+
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email){
+    public User setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public String getDate_registered(){
-        return date_registered;
+    public String getDateRegistered() {
+        return dateRegistered;
     }
 
-    public void setDate_registered(String date_registered) {
-        this.date_registered = date_registered;
+    public User setDateRegistered(String dateRegistered) {
+        this.dateRegistered = dateRegistered;
+        return this;
     }
 
-    public String getFacebook_username(){
-        return facebook_username;
+    public String getFacebookUsername() {
+        return facebookUsername;
     }
 
-    public void setFacebook_username(String facebook_username) {
-        this.facebook_username = facebook_username;
+    public User setFacebookUsername(String facebookUsername) {
+        this.facebookUsername = facebookUsername;
+        return this;
     }
 
-    public String getTwitter_username() {
-        return twitter_username;
+    public String getTwitterUsername() {
+        return twitterUsername;
     }
 
-    public void setTwitter_username(String twitter_username) {
-        this.twitter_username = twitter_username;
+    public User setTwitterUsername(String twitterUsername) {
+        this.twitterUsername = twitterUsername;
+        return this;
     }
 
-    public String getGoogle_username() {
-        return google_username;
+    public String getGoogleUsername() {
+        return googleUsername;
     }
 
-    public void setGoogle_username(String google_username) {
-        this.google_username = google_username;
+    public User setGoogleUsername(String googleUsername) {
+        this.googleUsername = googleUsername;
+        return this;
     }
 
-    public int getNum_events() {
-        return num_events;
+    public String getPicUrl() {
+        return picUrl;
     }
 
-    public void setNum_events(int num_events) {
-        this.num_events = num_events;
+    public User setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+        return this;
     }
 
-    public int getNum_favorites() {
-        return num_favorites;
+    public int getNumEvents() {
+        return numEvents;
     }
 
-    public void setNum_favorites(int num_favorites) {
-        this.num_favorites = num_favorites;
+    public User setNumEvents(int numEvents) {
+        this.numEvents = numEvents;
+        return this;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public int getNumFavorites() {
+        return numFavorites;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public User setNumFavorites(int numFavorites) {
+        this.numFavorites = numFavorites;
+        return this;
     }
 
-    public String getDate_created() {
-        return date_created;
-    }
-
-    public void setDate_created(String date_created) {
-        this.date_created = date_created;
-    }
-
-    public String getPic_URL() {
-        return pic_URL;
-    }
-
-    public void setPic_URL(String pic_URL) {
-        this.pic_URL = pic_URL;
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", dateRegistered='" + dateRegistered + '\'' +
+                ", facebookUsername='" + facebookUsername + '\'' +
+                ", twitterUsername='" + twitterUsername + '\'' +
+                ", googleUsername='" + googleUsername + '\'' +
+                ", picUrl='" + picUrl + '\'' +
+                ", numEvents=" + numEvents +
+                ", numFavorites=" + numFavorites +
+                '}';
     }
 }

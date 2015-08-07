@@ -3,27 +3,44 @@ package com.example.kieran.myapplication.backend;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 /**
  * Created by kieran on 8/5/15.
  */
 @Entity
 public class Event {
+
     @Id
     Long id;
+
+    @Index
     String username;
+
+    @Index
     String title;
+
+    @Index
     String date;
+
+    @Index
     String time;
+
+    @Index
     boolean isWant;
-    int num_fav;
-    int num_comments;
-    int num_going;
-    int num_shares;
+
+    int numFavorites;
+    int numComments;
+    int numGoing;
+    int numShares;
+
     String location;
-    String updated_at;
-    String date_created;
-    int user_id;
+
+    @Index
+    String updatedAt;
+
+    @Index
+    String createdAt;
 
     public Event() {}
 
@@ -77,38 +94,6 @@ public class Event {
         this.isWant = isWant;
     }
 
-    public int getNum_fav() {
-        return num_fav;
-    }
-
-    public void setNum_fav(int num_fav) {
-        this.num_fav = num_fav;
-    }
-
-    public int getNum_comments() {
-        return num_comments;
-    }
-
-    public void setNum_comments(int num_comments) {
-        this.num_comments = num_comments;
-    }
-
-    public int getNum_going() {
-        return num_going;
-    }
-
-    public void setNum_going(int num_going) {
-        this.num_going = num_going;
-    }
-
-    public int getNum_shares() {
-        return num_shares;
-    }
-
-    public void setNum_shares(int num_shares) {
-        this.num_shares = num_shares;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -117,27 +102,76 @@ public class Event {
         this.location = location;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public int getNumFavorites() {
+        return numFavorites;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public Event setNumFavorites(int numFavorites) {
+        this.numFavorites = numFavorites;
+        return this;
     }
 
-    public String getDate_created() {
-        return date_created;
+    public int getNumComments() {
+        return numComments;
     }
 
-    public void setDate_created(String date_created) {
-        this.date_created = date_created;
+    public Event setNumComments(int numComments) {
+        this.numComments = numComments;
+        return this;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public int getNumGoing() {
+        return numGoing;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public Event setNumGoing(int numGoing) {
+        this.numGoing = numGoing;
+        return this;
+    }
+
+    public int getNumShares() {
+        return numShares;
+    }
+
+    public Event setNumShares(int numShares) {
+        this.numShares = numShares;
+        return this;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Event setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public Event setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", title='" + title + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", isWant=" + isWant +
+                ", numFavorites=" + numFavorites +
+                ", numComments=" + numComments +
+                ", numGoing=" + numGoing +
+                ", numShares=" + numShares +
+                ", location='" + location + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                '}';
     }
 }

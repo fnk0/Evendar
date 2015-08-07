@@ -14,15 +14,16 @@ import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
  */
 public class Event {
 
+    Long id;
     String title;
-    String date;
+    String createdAt;
     String time;
     boolean isWant;
     int numFavorites;
     int numComments;
     int numGoing;
     int numShares;
-    String userId;
+    String username;
 
     /**
      * Location can be of the following types
@@ -32,7 +33,27 @@ public class Event {
      */
     String location;
 
+    String updatedAt;
+
     public Event() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Event setId(Long id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public Event setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
     }
 
     public String getTitle() {
@@ -44,12 +65,12 @@ public class Event {
         return this;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public Event setDate(String date) {
-        this.date = date;
+    public Event setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
         return this;
     }
 
@@ -107,12 +128,12 @@ public class Event {
         return this;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUsername() {
+        return username;
     }
 
-    public Event setUserId(String userId) {
-        this.userId = userId;
+    public Event setUsername(String username) {
+        this.username = username;
         return this;
     }
 
@@ -127,7 +148,7 @@ public class Event {
 
     public static Event fromCursor(Cursor cursor, boolean closeCursor) {
         Event event = new Event();
-        event.setDate(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE)))
+        event.setCreatedAt(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE)))
                 .setTime(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_TIME)))
                 .setTitle(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_TITLE)))
                 .setIsWant(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_IS_WANT)) == 1)
@@ -136,7 +157,7 @@ public class Event {
                 .setNumFavorites(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_FAV)))
                 .setNumGoing(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_GOING)))
                 .setNumShares(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_SHARES)))
-                .setUserId(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID)));
+                .setUsername(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID)));
 
         if(closeCursor) {
             cursor.close();
@@ -147,7 +168,7 @@ public class Event {
 
     public static ContentValues toContentValues(Event event) {
         ContentValues values = new ContentValues();
-        values.put(EventEntry.COLUMN_DATE, event.getDate());
+        values.put(EventEntry.COLUMN_DATE, event.getCreatedAt());
         values.put(EventEntry.COLUMN_TIME, event.getTime());
         values.put(EventEntry.COLUMN_TITLE, event.getTitle());
         values.put(EventEntry.COLUMN_IS_WANT, event.isWant());
@@ -155,7 +176,7 @@ public class Event {
         values.put(EventEntry.COLUMN_NUM_COMMENTS, event.getNumComments());
         values.put(EventEntry.COLUMN_NUM_FAV, event.getNumFavorites());
         values.put(EventEntry.COLUMN_NUM_GOING, event.getNumGoing());
-        values.put(EventEntry.COLUMN_USER_ID, event.getUserId());
+        values.put(EventEntry.COLUMN_USER_ID, event.getUsername());
         values.put(EventEntry.COLUMN_NUM_SHARES, event.getNumShares());
         return values;
     }
@@ -164,7 +185,7 @@ public class Event {
     public String toString() {
         return "Event{" +
                 "title='" + title + '\'' +
-                ", date='" + date + '\'' +
+                ", createdAt='" + createdAt + '\'' +
                 ", time='" + time + '\'' +
                 ", isWant=" + isWant +
                 ", numFavorites=" + numFavorites +

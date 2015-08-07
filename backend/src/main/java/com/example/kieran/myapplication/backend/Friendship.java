@@ -3,6 +3,7 @@ package com.example.kieran.myapplication.backend;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 
 /**
@@ -13,10 +14,18 @@ import com.googlecode.objectify.annotation.Id;
 public class Friendship {
     @Id
     Long id;
-    String updated_at;
-    String date_created;
-    Long user_id1;
-    Long user_id2;
+
+    @Index
+    String updatedAt;
+
+    @Index
+    String createdAt;
+
+    @Index
+    Long userId1;
+
+    @Index
+    Long userId2;
 
     public Friendship(){}
 
@@ -28,35 +37,46 @@ public class Friendship {
         this.id = id;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
-    public String getDate_created() {
-        return date_created;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate_created(String date_created) {
-        this.date_created = date_created;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public Long getUser_id1() {
-        return user_id1;
+    public Long getUserId1() {
+        return userId1;
     }
 
-    public void setUser_id1(Long user_id1) {
-        this.user_id1 = user_id1;
+    public void setUserId1(Long userId1) {
+        this.userId1 = userId1;
     }
 
-    public Long getUser_id2() {
-        return user_id2;
+    public Long getUserId2() {
+        return userId2;
     }
 
-    public void setUser_id2(Long user_id2) {
-        this.user_id2 = user_id2;
+    public void setUserId2(Long userId2) {
+        this.userId2 = userId2;
+    }
+
+    @Override
+    public String toString() {
+        return "Friendship{" +
+                "id=" + id +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", userId1=" + userId1 +
+                ", userId2=" + userId2 +
+                '}';
     }
 }

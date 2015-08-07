@@ -3,6 +3,7 @@ package com.example.kieran.myapplication.backend;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 
 /**
@@ -13,11 +14,18 @@ import com.googlecode.objectify.annotation.Id;
 public class Favorite {
     @Id
     Long id;
-    String updated_at;
-    String date_created;
-    int event_id;
-    int user_id;
 
+    @Index
+    String updatedAt;
+
+    @Index
+    String createdAt;
+
+    @Index
+    Long eventId;
+
+    @Index
+    Long userId;
 
     public Favorite(){}
 
@@ -29,35 +37,50 @@ public class Favorite {
         this.id = id;
     }
 
-    public String getUpdated_at() {
-        return updated_at;
+    public String getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdated_at(String updated_at) {
-        this.updated_at = updated_at;
+    public Favorite setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+        return this;
     }
 
-    public String getDate_created() {
-        return date_created;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate_created(String date_created) {
-        this.date_created = date_created;
+    public Favorite setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+        return this;
     }
 
-    public int getEvent_id() {
-        return event_id;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setEvent_id(int event_id) {
-        this.event_id = event_id;
+    public Favorite setEventId(Long eventId) {
+        this.eventId = eventId;
+        return this;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public Favorite setUserId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "Favorite{" +
+                "id=" + id +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", eventId=" + eventId +
+                ", userId=" + userId +
+                '}';
     }
 }
