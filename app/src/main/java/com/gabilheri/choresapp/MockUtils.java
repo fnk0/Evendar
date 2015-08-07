@@ -1,9 +1,4 @@
 package com.gabilheri.choresapp;
-
-import com.gabilheri.choresapp.models.Comment;
-import com.gabilheri.choresapp.models.Feed;
-import com.gabilheri.choresapp.models.User;
-
 import java.util.Random;
 
 /**
@@ -125,38 +120,6 @@ public class MockUtils {
             "In dolor libero, rutrum quis ligula a, malesuada fringilla ligula. Donec commodo massa nisi. Nunc accumsan dictum libero, at tristique mauris tincidunt nec. Nunc quis nibh a erat pharetra porta. Cras non egestas urna, ac fermentum ex. Quisque eleifend, nisi sit amet hendrerit pulvinar, libero erat finibus nisi, et finibus est nulla eu sapien. Sed viverra sed ligula nec lobortis.",
             "Suspendisse erat leo, luctus et vestibulum viverra, congue eget quam. Nullam facilisis erat nibh, a rutrum nunc sollicitudin id. Nulla eu erat diam. Fusce et nunc neque. Nam ac molestie est. Morbi condimentum interdum augue. Nunc ac viverra orci. Sed dolor erat, semper nec eros vitae, varius scelerisque ligula. Sed porttitor blandit purus. Fusce hendrerit id turpis in dignissim. Quisque eu blandit neque."
     };
-
-
-    public static Comment getRandomComment() {
-        Comment c = new Comment();
-        int r = random.nextInt();
-        c.setUserPicture(getUserPicture(r));
-        c.setUserName(getUserName(r));
-        c.setFavoritesCount(random.nextInt(40));
-        c.setComment(smallIpsumStrings[random.nextInt(smallIpsumStrings.length)]);
-
-        return c;
-    }
-
-    public static Feed getRandomFeed() {
-        Feed f = new Feed();
-        int r = random.nextInt();
-        f.setTitle(getUserName(r) + phrases[random.nextInt(phrases.length)]);
-        f.setUserPicUrl(getUserPicture(r));
-        f.setCommentsCount(random.nextInt(30));
-        f.setFavoritesCount(random.nextInt(40));
-        f.setSharesCount(random.nextInt(15));
-        return f;
-    }
-
-    public static User getRandomUser() {
-        User user = new User();
-        int r = random.nextInt();
-        user.setName(getUserName(r));
-        user.setUserPicture(getUserPicture(r));
-        user.setSocialMedia(getRandomSocialResource());
-        return user;
-    }
 
     public static String getUserPicture(int r) {
         if(r % 2 == 0) {

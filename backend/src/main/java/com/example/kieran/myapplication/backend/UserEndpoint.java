@@ -27,7 +27,7 @@ fix the import for ofy
 */
 
 @Api(
-        name = "userEndpoint",
+        name = "userApi",
         version = "v1",
         resource = "user",
         namespace = @ApiNamespace(

@@ -27,7 +27,9 @@ public class NetworkClient {
     private final static RestAdapter.LogLevel LOG_LEVEL = RestAdapter.LogLevel.FULL;
 
     // This is the base URL that our API client will use
-    private static final String API_ENDPOINT = "http://URL goes here";
+    public static final String API_VERSION = "v1";
+    public static final String USER_API = "/userApi/" + NetworkClient.API_VERSION;
+    private static final String API_ENDPOINT = "https://choresapp-1013.appspot.com/_ah/api";
 
     // Our api methods will go in this interface
     private static ChoresApi api;
