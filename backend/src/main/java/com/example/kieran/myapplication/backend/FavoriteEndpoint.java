@@ -32,9 +32,9 @@ import javax.inject.Named;
 
 
 @Api(
-        name = "commentApi",
+        name = "favoriteApi",
         version = "v1",
-        resource = "comment",
+        resource = "favorite",
         namespace = @ApiNamespace(
                 ownerDomain = "backend.myapplication.kieran.example.com",
                 ownerName = "backend.myapplication.kieran.example.com",
