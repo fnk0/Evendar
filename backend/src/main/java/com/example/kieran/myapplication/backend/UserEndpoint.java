@@ -14,6 +14,7 @@ import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findByUsername;
 import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
+import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
 /**
@@ -21,15 +22,17 @@ import static com.example.kieran.myapplication.backend.QueryUtils.list;
  */
 
 /*@TODO what do i use for owner domain/name?
+Response: Package name
 fix the import for ofy
 */
 
 @Api(
         name = "userEndpoint",
         version = "v1",
+        resource = "user",
         namespace = @ApiNamespace(
-                ownerDomain = "",
-                ownerName = "",
+                ownerDomain = "backend.myapplication.kieran.example.com",
+                ownerName = "backend.myapplication.kieran.example.com",
                 packagePath = "")
 )
 public class UserEndpoint {
@@ -60,7 +63,7 @@ public class UserEndpoint {
 
     @ApiMethod(name = "getUser")
     public User getUser(@Named("id") Long id) throws NotFoundException {
-        return findRecord(User.class, id);
+        return getObject(User.class, id);
     }
 
     @ApiMethod(name = "getUserByUsername", path = "user")
