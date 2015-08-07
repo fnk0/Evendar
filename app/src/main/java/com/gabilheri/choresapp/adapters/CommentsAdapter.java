@@ -91,7 +91,7 @@ public class CommentsAdapter extends CursorRecyclerAdapter<CommentsAdapter.ViewH
         @Bind(R.id.comment)
         public TextView comment;
 
-        @Bind(R.id.date)
+        @Bind(R.id.createdAt)
         public TextView date;
 
         @Bind(R.id.bottomLine)

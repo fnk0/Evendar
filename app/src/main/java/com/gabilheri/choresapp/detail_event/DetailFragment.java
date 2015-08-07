@@ -8,13 +8,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.BaseFragment;
-import com.gabilheri.choresapp.MockUtils;
 import com.gabilheri.choresapp.R;
-import com.gabilheri.choresapp.models.User;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -47,28 +41,28 @@ public class DetailFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<User> users = new ArrayList<>();
-        int numUsers = new Random().nextInt(12) + 4;
-
-        for(int i = 0; i < numUsers; i++) {
-            users.add(MockUtils.getRandomUser());
-        }
-
-        if(numUsers > 0) {
-            loadWithGlide(friend1, users.get(0).getUserPicture());
-        }
-
-        if(numUsers > 1) {
-            loadWithGlide(friend2, users.get(1).getUserPicture());
-        }
-
-        if(numUsers > 2) {
-            loadWithGlide(friend3, users.get(2).getUserPicture());
-        }
-
-        if(numUsers > 3) {
-            overflowFriends.setText(String.format("%d more...", numUsers - 3));
-        }
+////        List<User> users = new ArrayList<>();
+////        int numUsers = new Random().nextInt(12) + 4;
+////
+////        for(int i = 0; i < numUsers; i++) {
+////            users.add(MockUtils.getRandomUser());
+////        }
+////
+////        if(numUsers > 0) {
+////            loadWithGlide(friend1, users.get(0).getUserPicture());
+////        }
+////
+////        if(numUsers > 1) {
+////            loadWithGlide(friend2, users.get(1).getUserPicture());
+////        }
+////
+////        if(numUsers > 2) {
+////            loadWithGlide(friend3, users.get(2).getUserPicture());
+////        }
+//
+//        if(numUsers > 3) {
+//            overflowFriends.setText(String.format("%d more...", numUsers - 3));
+//        }
     }
 
     private void loadWithGlide(ImageView view, String url) {

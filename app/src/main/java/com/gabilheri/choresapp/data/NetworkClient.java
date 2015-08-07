@@ -31,12 +31,6 @@ public class NetworkClient {
     public static final String USER_API = "/userApi/" + NetworkClient.API_VERSION;
     private static final String API_ENDPOINT = "https://choresapp-1013.appspot.com/_ah/api";
 
-    // Our api methods will go in this interface
-    private static ChoresApi api;
-
-    // The rest adapter that our api uses
-    private static RestAdapter restAdapter;
-
     /**
      * The OkhttpClient is a fairly expensive object so we don't want to create instances
      * of this object all the time. That's why we keep this object as a Singleton keeping a reference
@@ -62,24 +56,6 @@ public class NetworkClient {
     }
 
     /**
-     *
-     * @param context
-     *      The necessary context to instantiate this adapter
-     * @return
-     *      The rest adapter instance
-     */
-    public static RestAdapter getRestAdapter(Context context) {
-        if(restAdapter == null) {
-            restAdapter = new RestAdapter.Builder()
-                    .setEndpoint(API_ENDPOINT)
-                    .setLogLevel(LOG_LEVEL)
-                    .setClient(getClient(getOkHttpClient(context)))
-                    .build();
-        }
-        return restAdapter;
-    }
-
-    /**
      * Our main interface to interact with our web server
      *
      * @param context
@@ -88,9 +64,10 @@ public class NetworkClient {
      *      The ChoresApi instance
      */
     public static ChoresApi getApi(Context context) {
-        if(api == null) {
-            api = restAdapter.create(ChoresApi.class);
-        }
-        return api;
+        return new RestAdapter.Builder()
+                .setEndpoint(API_ENDPOINT)
+                .setLogLevel(LOG_LEVEL)
+                .setClient(getClient(getOkHttpClient(context)))
+                .build().create(ChoresApi.class);
     }
 }

@@ -72,7 +72,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
 
         ItemCallback callback;
 
-        @Bind(R.id.date)
+        @Bind(R.id.createdAt)
         public TextView date;
 
         @Bind(R.id.feedTitle)

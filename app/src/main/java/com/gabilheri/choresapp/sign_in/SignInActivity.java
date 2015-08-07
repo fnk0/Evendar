@@ -15,9 +15,9 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.gabilheri.choresapp.BaseActivity;
+import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.ChoresContract;
-import com.gabilheri.choresapp.data.NetworkClient;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.utils.Const;
@@ -262,7 +262,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
         }
         user.setDateRegistered(TimeUtils.getToday());
 
-        NetworkClient.getApi(this).insertUser(user)
+        ChoresApp.instance().getApi().insertUser(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(userSubscriber);
@@ -283,7 +283,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
         @Override
         public void onNext(User user) {
             if(user != null) {
-                saveUserToDB(user);
+//                saveUserToDB(user);
                 PrefManager.with(getApplicationContext()).save(Const.USERNAME, user.getUsername());
                 PrefManager.with(getApplicationContext()).save(Const.SIGNED_IN, true);
                 goToFeedActivity();
