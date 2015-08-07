@@ -29,103 +29,35 @@ fix the import for ofy
 */
 
 
-@Api(name = "eventEndpoint", version = "v1", namespace = @ApiNamespace(ownerDomain = "", ownerName = "", packagePath = ""))
+@Api(
+        name = "eventApi",
+        version = "v1",
+        resource = "event",
+        namespace = @ApiNamespace(
+                ownerDomain = "backend.myapplication.kieran.example.com",
+                ownerName = "backend.myapplication.kieran.example.com",
+                packagePath = "")
+)
 public class EventEndpoint {
     public EventEndpoint(){}
 
 
-    //returns a collection of events
-    @ApiMethod(name = "listEvent")
-    public CollectionResponse<Event> listEvent(@Nullable @Named("cursor") String cursorString,
-                                             @Nullable @Named("count") Integer count) {
-
-        Query<Event> query = ofy().load().type(Event.class);
-        if(count != null){
-            query.limit(count);
-        }
-
-        if(cursorString != null && cursorString != ""){
-            query = query.startAt(Cursor.fromWebSafeString(cursorString));
-        }
-
-        List<Event> records = new ArrayList<Event>();
-        QueryResultIterator<Event> iterator = query.iterator();
-        int num = 0;
-        while(iterator.hasNext()){
-            records.add(iterator.next());
-            if(count != null){
-                num++;
-            }
-            if(num == count){
-                break;
-            }
-        }
-
-        if(cursorString != null && cursorString != ""){
-            Cursor cursor = iterator.getCursor();
-            if(cursor != null){
-                cursorString = cursor.toWebSafeString();
-            }
-        }
-        return CollectionResponse.<Event>builder().setItems(records).setNextPageToken(cursorString).build();
-
-    }
-
     //inserts a new event
     @ApiMethod(name = "insertEvent")
-    public Event insertEvent(Event event) throws ConflictException{
-        if(event.getId() != null){
-            if(findRecord(event.getId()) != null){
-                throw new ConflictException("Object already exists!");
+    public Event insertEvent(Event event) throws ConflictException {
+        if (event.getId() != null) {
+            if (QueryUtils.findRecord(Event.class, event.getId()) != null) {
+                // We don't want a exception here
+                // Instead we return null and in the client side
+                // If the return of registering a user is null what we do
+                // is fire the updateUser to keep our user updated in the server
+                return null;
             }
         }
 
         ofy().save().entity(event).now();
         return event;
     }
-
-    private Event findRecord(Long id){
-        return ofy().load().type(Event.class).id(id).now();
-    }
-
-
-    //updates a event
-    @ApiMethod(name = "updateEvent")
-    public Event updateEvent(Event event) throws NotFoundException {
-        if(findRecord(event.getId()) == null){
-            throw new NotFoundException("Event Record does not exist!");
-        }
-        ofy().save().entity(event).now();
-        return event;
-    }
-
-    @ApiMethod(name = "removeEvent")
-    public void removeEvent(@Named("id") Long id) throws NotFoundException {
-        Event record = findRecord(id);
-        if(record == null){
-            throw new NotFoundException("Event record does not exist!");
-        }
-        ofy().delete().entity(record).now();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
