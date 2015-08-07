@@ -12,6 +12,16 @@ public class OfyService {
 
     static {
         ObjectifyService.register(User.class);
+        ObjectifyService.register(Event.class);
+        ObjectifyService.register(Comment.class);
+        ObjectifyService.register(Favorite.class);
+        ObjectifyService.register(Friendship.class);
+        ObjectifyService.register(RSVP.class);
+
+
+
+
+
     }
 
     public static Objectify ofy() {
