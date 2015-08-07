@@ -1,7 +1,6 @@
 package com.gabilheri.choresapp.sign_in;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -17,7 +16,6 @@ import com.facebook.login.widget.LoginButton;
 import com.gabilheri.choresapp.BaseActivity;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
-import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.utils.Const;
@@ -78,6 +76,8 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
     GoogleApiClient mGoogleApiClient;
 
+    private User mUser;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,15 +94,15 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
                         .getAccountService().verifyCredentials(true, true, new Callback<com.twitter.sdk.android.core.models.User>() {
                     @Override
                     public void success(Result<com.twitter.sdk.android.core.models.User> result) {
-                        Log.d(LOG_TAG, result.data.profileImageUrlHttps);
-                        User user = new User();
-                        user.setUsername(result.data.screenName);
-                        user.setTwitterUsername(String.valueOf(result.data.screenName));
-                        user.setFullName(result.data.name);
+                        mUser = new User();
+                        mUser.setUsername(result.data.screenName);
+                        mUser.setTwitterUsername(String.valueOf(result.data.screenName));
+                        mUser.setFullName(result.data.name);
+                        mUser.setPicUrl(result.data.profileImageUrlHttps);
                         // If the user registers with Twitter we can't get a email unfortunately
                         // We have to ask the people from Twitter to white-list our app...
                         // and that takes a while!
-                        registerUser(user);
+                        registerUser();
                     }
 
                     @Override
@@ -140,12 +140,12 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
                                     String name = object.getString("name");
                                     String email = object.getString("email");
                                     String profilePicture = "https://graph.facebook.com/v2.4/" + id + "/picture?height=800&type=square&width=800";
-                                    User user = new User();
-                                    user.setEmail(email);
-                                    user.setFullName(name);
-                                    user.setFacebookUsername(id);
-                                    user.setPicUrl(profilePicture);
-                                    registerUser(user);
+                                    mUser = new User();
+                                    mUser.setEmail(email);
+                                    mUser.setFullName(name);
+                                    mUser.setFacebookUsername(id);
+                                    mUser.setPicUrl(profilePicture);
+                                    registerUser();
                                 } catch (JSONException ex) {
                                     Log.e(LOG_TAG, "Error parsing JSON result", ex);
                                     //TODO show error to the user
@@ -219,18 +219,18 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     public void onConnected(Bundle bundle) {
         mShouldResolve = false;
-        Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
         if(person != null) {
-            User user = new User();
+            mUser = new User();
             String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
 
             if (email != null) {
-                user.setEmail(email);
+                mUser.setEmail(email);
             }
 
-            user.setGoogleUsername(person.getId());
-            user.setFullName(person.getDisplayName());
+            mUser.setGoogleUsername(person.getId());
+            mUser.setFullName(person.getDisplayName());
 
             int g = person.getGender();
 
@@ -244,8 +244,8 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
             String picUrl = person.getImage().getUrl();
 
-            user.setPicUrl(picUrl.substring(0, picUrl.length() - 2) + PROFILE_PIC_SIZE);
-            registerUser(user);
+            mUser.setPicUrl(picUrl.substring(0, picUrl.length() - 2) + PROFILE_PIC_SIZE);
+            registerUser();
         } else {
             //TODO show error to the user
         }
@@ -256,46 +256,32 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
     }
 
-    public void registerUser(User user) {
-        if(user.getEmail() != null) {
-            user.setUsername(user.getEmail());
+    public void registerUser() {
+        if(mUser.getEmail() != null) {
+            mUser.setUsername(mUser.getEmail());
         }
-        user.setDateRegistered(TimeUtils.getToday());
+        mUser.setDateRegistered(TimeUtils.getToday());
 
-        ChoresApp.instance().getApi().insertUser(user)
+        ChoresApp.instance().getApi().insertUser(mUser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(userSubscriber);
+                .subscribe(new UserSubscriber());
     }
 
-    Subscriber<User> userSubscriber = new Subscriber<User>() {
-        @Override
-        public void onCompleted() {
-            unsubscribe();
-        }
+    public void updateUser() {
+        ChoresApp.instance().getApi().updateUser(mUser)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new UserSubscriber());
+    }
 
-        @Override
-        public void onError(Throwable e) {
-            //TODO show error tho the user
-            Log.e(LOG_TAG, "Error registering user", e);
-        }
-
-        @Override
-        public void onNext(User user) {
-            if(user != null) {
-//                saveUserToDB(user);
-                PrefManager.with(getApplicationContext()).save(Const.USERNAME, user.getUsername());
-                PrefManager.with(getApplicationContext()).save(Const.SIGNED_IN, true);
-                goToFeedActivity();
-                finish();
-            }
-        }
-
-        private void saveUserToDB(User user) {
-            ContentValues userVaues = User.toContentValues(user);
-            getContentResolver().insert(ChoresContract.UserEntry.buildUserUri(), userVaues);
-        }
-    };
+    void finishActivity(User user) {
+        // saveUserToDB(user);
+        PrefManager.with(getApplicationContext()).save(Const.USERNAME, user.getUsername());
+        PrefManager.with(getApplicationContext()).save(Const.SIGNED_IN, true);
+        goToFeedActivity();
+        finish();
+    }
 
     private void goToFeedActivity() {
         startActivity(new Intent(this, FeedActivity.class));
@@ -345,5 +331,29 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     public int getLayoutResource() {
         return R.layout.activity_sign_in;
+    }
+
+    private class UserSubscriber extends Subscriber<User>  {
+
+        @Override
+        public void onCompleted() {
+            unsubscribe();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            //TODO show error tho the user
+            Log.e(LOG_TAG, "Error registering user", e);
+        }
+
+        @Override
+        public void onNext(User user) {
+            // The servers returns null if the user already exists
+            if(user != null) {
+                finishActivity(user);
+            } else {
+                updateUser();
+            }
+        }
     }
 }

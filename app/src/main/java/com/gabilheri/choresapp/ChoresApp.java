@@ -8,6 +8,8 @@ import com.gabilheri.choresapp.data.NetworkClient;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 import io.fabric.sdk.android.Fabric;
 
 /**
@@ -33,6 +35,7 @@ public class ChoresApp extends Application {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         FacebookSdk.sdkInitialize(this);
+        JodaTimeAndroid.init(this);
         sInstance = this;
     }
 

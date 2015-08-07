@@ -6,6 +6,7 @@ import retrofit.http.Body;
 import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 import retrofit.http.Path;
 import rx.Observable;
 
@@ -23,7 +24,7 @@ public interface ChoresApi {
     @POST(NetworkClient.USER_API + "/user")
     Observable<User> insertUser(@Body User user);
 
-    @POST(NetworkClient.USER_API + "/update")
+    @PUT(NetworkClient.USER_API + "/update")
     Observable<User> updateUser(@Body User user);
 
     @DELETE(NetworkClient.USER_API + "/user/{username}")

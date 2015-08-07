@@ -13,7 +13,6 @@ import javax.inject.Named;
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findByUsername;
-import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
@@ -74,7 +73,7 @@ public class UserEndpoint {
     //updates a user
     @ApiMethod(name = "updateUser", path = "update", httpMethod = ApiMethod.HttpMethod.PUT)
     public User updateUser(User user) throws NotFoundException {
-        if (findRecord(User.class, user.getId()) == null) {
+        if (findByUsername(User.class, user.getUsername()) == null) {
             throw new NotFoundException("User Record does not exist!");
         }
         ofy().save().entity(user).now();
