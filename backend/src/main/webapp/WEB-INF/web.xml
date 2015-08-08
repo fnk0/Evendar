@@ -6,8 +6,12 @@
     <init-param>
       <param-name>services</param-name>
       <param-value>
-        com.example.kieran.myapplication.backend.MyEndpoint,
-        com.example.kieran.myapplication.backend.UserEndpoint
+        com.example.kieran.myapplication.backend.UserEndpoint,
+        com.example.kieran.myapplication.backend.EventEndpoint,
+        com.example.kieran.myapplication.backend.RSVPEndpoint,
+        com.example.kieran.myapplication.backend.FavoriteEndpoint,
+        com.example.kieran.myapplication.backend.CommentEndpoint,
+        com.example.kieran.myapplication.backend.FriendshipEndpoint
       </param-value>
     </init-param>
   </servlet>

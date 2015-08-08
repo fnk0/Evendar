@@ -29,6 +29,7 @@ public class NetworkClient {
     // This is the base URL that our API client will use
     public static final String API_VERSION = "v1";
     public static final String USER_API = "/userApi/" + NetworkClient.API_VERSION;
+    public static final String EVENT_API = "/eventApi/" + NetworkClient.API_VERSION;
     private static final String API_ENDPOINT = "https://choresapp-1013.appspot.com/_ah/api";
 
     /**

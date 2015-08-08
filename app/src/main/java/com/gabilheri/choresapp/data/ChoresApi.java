@@ -1,5 +1,6 @@
 package com.gabilheri.choresapp.data;
 
+import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.data.models.User;
 
 import retrofit.http.Body;
@@ -19,8 +20,7 @@ import rx.Observable;
  */
 public interface ChoresApi {
 
-    //TODO Still needs to put the right URL's for this API Calls...
-
+    // User section
     @POST(NetworkClient.USER_API + "/user")
     Observable<User> insertUser(@Body User user);
 
@@ -35,4 +35,12 @@ public interface ChoresApi {
 
     @GET("/{username}")
     Observable<User> getuser(@Path("username") String username);
+
+    // Event section
+
+    @POST(NetworkClient.EVENT_API + "/event")
+    Observable<Event> insertEvent(@Body Event event);
+
+    @PUT(NetworkClient.EVENT_API + "/event")
+    Observable<Event> updateEvent(@Body Event event);
 }

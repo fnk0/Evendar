@@ -8,22 +8,14 @@ import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
-import com.googlecode.objectify.cmd.Query;
-import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
-import static com.example.kieran.myapplication.backend.QueryUtils.*;
-
-
-
-        import static com.example.kieran.myapplication.backend.OfyService.ofy;
-import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 import javax.inject.Named;
+
+import static com.example.kieran.myapplication.backend.OfyService.ofy;
+import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
+import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
 /**
  * Created by kieran on 8/5/15.
@@ -44,8 +36,21 @@ fix the import for ofy
                 packagePath = "")
 )
 public class EventEndpoint {
-    public EventEndpoint(){}
 
+    @ApiMethod(name = "listEvents", path = "allEvents")
+    public CollectionResponse<Event> listEvents(@Nullable @Named("cursor") String cursorString,
+                                              @Nullable @Named("count") Integer count) {
+        return list(Event.class, cursorString, count);
+    }
+
+    //TODO write code to return only events for a associated user.
+    //Ex: events from his friends
+    @ApiMethod(name = "listEventsForUsers", path = "allUserEvents")
+    public CollectionResponse<Event> listAllEventsForUser(@Named("id") Long userId, @Named("date") String updatedAt,
+                                    @Nullable @Named("cursor") String cursorString,
+                                    @Nullable @Named("limit") Integer limit) {
+        return list(Event.class, cursorString, limit);
+    }
 
     //inserts a new event
     @ApiMethod(name = "insertEvent")
@@ -66,7 +71,7 @@ public class EventEndpoint {
 
     //removes an event
     @ApiMethod(name = "removeEvent")
-    public void removeUser(@Named("id") Long id) throws NotFoundException {
+    public void removeEvent(@Named("id") Long id) throws NotFoundException {
         deleteObject(Event.class, id);
     }
 
