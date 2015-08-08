@@ -73,9 +73,11 @@ public class UserEndpoint {
     //updates a user
     @ApiMethod(name = "updateUser", path = "update", httpMethod = ApiMethod.HttpMethod.PUT)
     public User updateUser(User user) throws NotFoundException {
-        if (findByUsername(User.class, user.getUsername()) == null) {
+        User oldUser = findByUsername(User.class, user.getUsername());
+        if (oldUser == null) {
             throw new NotFoundException("User Record does not exist!");
         }
+        user.setId(oldUser.getId());
         ofy().save().entity(user).now();
         return user;
     }
