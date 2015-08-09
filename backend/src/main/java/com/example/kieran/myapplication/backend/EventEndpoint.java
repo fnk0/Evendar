@@ -38,18 +38,20 @@ fix the import for ofy
 public class EventEndpoint {
 
     @ApiMethod(name = "listEvents", path = "allEvents")
-    public CollectionResponse<Event> listEvents(@Nullable @Named("cursor") String cursorString,
-                                              @Nullable @Named("count") Integer count) {
+    public CollectionResponse<Event> listEvents(@Named("updatedAt") String updatedAt,
+                                                @Nullable @Named("cursor") String cursorString,
+                                                @Nullable @Named("count") Integer count) {
         return list(Event.class, cursorString, count);
     }
 
     //TODO write code to return only events for a associated user.
     //Ex: events from his friends
     @ApiMethod(name = "listEventsForUsers", path = "allUserEvents")
-    public CollectionResponse<Event> listAllEventsForUser(@Named("id") Long userId, @Named("date") String updatedAt,
-                                    @Nullable @Named("cursor") String cursorString,
-                                    @Nullable @Named("limit") Integer limit) {
-        return list(Event.class, cursorString, limit);
+    public CollectionResponse<Event> listAllEventsForUser(@Named("id") Long userId,
+                                                          @Named("date") String updatedAt,
+                                                          @Nullable @Named("cursor") String cursorString,
+                                                          @Nullable @Named("count") Integer count) {
+        return list(Event.class, cursorString, count);
     }
 
     //inserts a new event
@@ -57,10 +59,6 @@ public class EventEndpoint {
     public Event insertEvent(Event event) throws ConflictException {
         if (event.getId() != null) {
             if (QueryUtils.findRecord(Event.class, event.getId()) != null) {
-                // We don't want a exception here
-                // Instead we return null and in the client side
-                // If the return of registering a user is null what we do
-                // is fire the updateUser to keep our user updated in the server
                 return null;
             }
         }
@@ -92,10 +90,4 @@ public class EventEndpoint {
     public Event getEvent(@Named("id") Long id) throws NotFoundException {
         return getObject(Event.class, id);
     }
-
-
-
-
-
-
 }
