@@ -1,10 +1,13 @@
 package com.example.kieran.myapplication.backend;
+import com.gabilheri.choresapp.data.ChoresContract;
+import com.gabilheri.choresapp.data.ChoresDbHelper;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
+import static com.gabilheri.choresapp.data.ChoresContract.FriendshipEntry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +90,44 @@ public final class QueryUtils {
                                                  @Nullable @Named("cursor") String cursorString, @Nullable @Named("count") Integer count) {
         Query<T> query = ofy().load().type(type);
         return listByQuery(query, cursorString, count);
+    }
+
+
+    //given a user id, returns a list of their friends
+    public static CollectionResponse<User> getFriends( @Named("id") Long id){
+        //String str = "SELECT " + FriendshipEntry.COLUMN_USER_ID2 + " FROM " + ChoresContract.FriendshipEntry.TABLE_NAME + " WHERE " + ChoresContract.FriendshipEntry.COLUMN_USER_ID1 + " = " + id;
+        Query<User> query = ofy().load().type(User.class).filter(FriendshipEntry.COLUMN_USER_ID1, id).filter(" OR " + FriendshipEntry.COLUMN_USER_ID2, id);
+        return listByQuery(query, null, null);
+
+    }
+
+
+    //given a user id, returns the list of evens that the user has created
+    public static CollectionResponse<Event> getEventsFromUser(@Named("id") Long id){
+       // String query = "SELECT * FROM " + ChoresContract.EventEntry.TABLE_NAME + " WHERE " + ChoresContract.EventEntry.COLUMN_USER_ID + " = " + id;
+
+        Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID, id);
+        return listByQuery(query, null, null);
+    }
+
+
+    //given a user id, returns the list of events that represents their home feed
+
+    public static List<Event> getEventFeed(@Named("id") Long id){
+
+        List<Event> feed = new ArrayList<Event>();
+        List<User> friends = ofy().load().type(User.class).filter(FriendshipEntry.COLUMN_USER_ID1 + " = ", id).filter(FriendshipEntry.COLUMN_USER_ID2 + " = ", id).list();
+
+        for(User u : friends){
+            List<Event> friendsEvents = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID + " = ", u.getId()).list();
+            for (Event e : friendsEvents){
+                feed.add(e);
+            }
+        }
+
+
+        return feed;
+
     }
 
     public static <T> CollectionResponse<T> listByQuery(Query<T> query, @Nullable @Named("cursor") String cursorString, @Nullable @Named("count") Integer count) {

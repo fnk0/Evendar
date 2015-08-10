@@ -86,4 +86,6 @@ public class UserEndpoint {
     public void removeUser(@Named("id") Long id) throws NotFoundException {
        deleteObject(User.class, id);
     }
+
+
 }
