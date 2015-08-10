@@ -53,9 +53,9 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
         Uri queryUri;
 
         if(eventId == -1L) {
-            queryUri = ChoresContract.UserEntry.buildUserUri(user.getUsername());
+            queryUri = ChoresContract.FriendshipEntry.buildFriendsForUser(user.getId());
         } else {
-            queryUri = ChoresContract.UserEntry.buildUsersForEvent(eventId);
+            queryUri = ChoresContract.RSVPEntry.buildUsersForEvent(eventId);
         }
 
         return new CursorLoader(getActivity(), queryUri, null, null, null, sortOrder);

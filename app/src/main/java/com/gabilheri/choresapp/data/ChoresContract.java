@@ -16,6 +16,10 @@ public class ChoresContract {
     // Tables
     public static final String PATH_USER = "users";
     public static final String PATH_EVENT = "events";
+    public static final String PATH_RSVP = "rsvp";
+    public static final String PATH_COMMENTS = "comments";
+    public static final String PATH_FRIENDSHIP = "friendships";
+    public static final String PATH_FAVORITES = "favorites";
 
     public static final class UserEntry implements BaseColumns {
 
@@ -52,14 +56,18 @@ public class ChoresContract {
             return CONTENT_URI;
         }
 
-        public static Uri buildUserUri(String username) {
-            return CONTENT_URI.buildUpon().appendPath(username).build();
+        public static Uri buildUserUri(Long id) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("id")
+                    .appendPath(String.valueOf(id))
+                    .build();
         }
 
-        public static Uri buildUsersForEvent(Long eventId) {
-            return CONTENT_URI.buildUpon()
-                    .appendPath("eId")
-                    .appendPath(String.valueOf(eventId))
+        public static Uri buildUserUri(String username) {
+            return CONTENT_URI
+                    .buildUpon()
+                    .appendPath("us")
+                    .appendPath(username)
                     .build();
         }
     }
@@ -135,7 +143,12 @@ public class ChoresContract {
         }
     }
 
-    public static final class FavoriteEntry implements BaseColumns{
+    public static final class FavoriteEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FAVORITES).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVORITES;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FAVORITES;
 
         public static final String TABLE_NAME = "favorites";
 
@@ -151,7 +164,13 @@ public class ChoresContract {
 
     }
 
-    public static final class FriendshipEntry implements BaseColumns{
+    public static final class FriendshipEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_FRIENDSHIP).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FRIENDSHIP;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_FRIENDSHIP;
+
         public static final String TABLE_NAME = "friendships";
 
         public static final String COLUMN_USER_ID1 = "user_id1";
@@ -164,9 +183,22 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static Uri buildFriendsForUser(Long userId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("userId")
+                    .appendPath(String.valueOf(userId))
+                    .build();
+        }
+
     }
 
-    public static final class CommentEntry implements BaseColumns{
+    public static final class CommentEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_COMMENTS).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_COMMENTS;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_COMMENTS;
+
         public static final String TABLE_NAME = "comments";
 
         public static final String COLUMN_TEXT = "text";
@@ -185,7 +217,13 @@ public class ChoresContract {
 
     }
 
-    public static final class RSVPEntry implements BaseColumns{
+    public static final class RSVPEntry implements BaseColumns {
+
+        public static final Uri CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_RSVP).build();
+
+        public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_RSVP;
+        public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_RSVP;
+
         public static final String TABLE_NAME = "RSVPs";
 
         public static final String COLUMN_EVENT_ID = "event_id";
@@ -198,9 +236,11 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static Uri buildUsersForEvent(Long eventId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("eId")
+                    .appendPath(String.valueOf(eventId))
+                    .build();
+        }
     }
-
-
-
-
 }

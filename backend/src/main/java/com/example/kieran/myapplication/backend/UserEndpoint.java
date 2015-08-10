@@ -8,13 +8,13 @@ import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 
+import java.util.List;
+
 import javax.inject.Named;
-import java.util.*;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findByUsername;
-import static com.example.kieran.myapplication.backend.QueryUtils.getEventFeed;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
@@ -22,7 +22,8 @@ import static com.example.kieran.myapplication.backend.QueryUtils.list;
  * Created by kieran on 8/5/15.
  */
 
-/*@TODO what do i use for owner domain/name?
+/*
+TODO what do i use for owner domain/name?
 Response: Package name
 fix the import for ofy
 */
