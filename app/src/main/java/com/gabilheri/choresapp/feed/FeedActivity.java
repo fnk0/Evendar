@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
+import com.gabilheri.choresapp.sync.ChoresSyncAdapter;
 import com.gabilheri.choresapp.utils.Const;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -40,6 +41,9 @@ public class FeedActivity extends BaseDrawerActivity {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         ButterKnife.bind(this);
+
+        ChoresSyncAdapter.initializeSyncAdapter(this);
+
         MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());
 
         FeedFragment goingTo = new FeedFragment();

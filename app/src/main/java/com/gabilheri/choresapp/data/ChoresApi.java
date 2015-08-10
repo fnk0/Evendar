@@ -98,5 +98,4 @@ public interface ChoresApi {
     Observable<Response> deleteComment(
             @Path("id") Long commentId
     );
-
 }

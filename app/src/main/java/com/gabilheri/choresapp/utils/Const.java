@@ -23,4 +23,9 @@ public final class Const {
     public static final String UPDATED_AT = "updated_at";
     public static final String USER_PICTURE = "user_picture";
     public static final String SELECTED_KEY = "selected_position";
+    public static final String IS_COMMENT = "is_comment";
+    public static final String EVENT_ID = "event_id";
+
+    // Event related Prefs
+    public static final String EVENT_UPDATED_AT = "event_updated_at";
 }

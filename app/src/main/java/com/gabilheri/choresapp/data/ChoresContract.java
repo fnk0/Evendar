@@ -2,7 +2,6 @@ package com.gabilheri.choresapp.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;
-import android.text.format.Time;
 import android.provider.BaseColumns;
 
 /**
@@ -17,15 +16,6 @@ public class ChoresContract {
     // Tables
     public static final String PATH_USER = "users";
     public static final String PATH_EVENT = "events";
-
-    // To make it easy to query for the exact date, we normalize all dates that go into
-    // the database to the start of the the Julian day at UTC.
-    public static long normalizeDate(long startDate){
-        Time time = new Time();
-        time.set(startDate);
-        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
-        return time.setJulianDay(julianDay);
-    }
 
     public static final class UserEntry implements BaseColumns {
 
@@ -64,6 +54,13 @@ public class ChoresContract {
 
         public static Uri buildUserUri(String username) {
             return CONTENT_URI.buildUpon().appendPath(username).build();
+        }
+
+        public static Uri buildUsersForEvent(Long eventId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("eId")
+                    .appendPath(String.valueOf(eventId))
+                    .build();
         }
     }
 
@@ -104,12 +101,15 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
-
-
-
-
         public static Uri buildEventUri() {
             return CONTENT_URI;
+        }
+
+        public static Uri buildEventUri(Long id) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("id")
+                    .appendPath(String.valueOf(id))
+                    .build();
         }
 
         /**
@@ -149,9 +149,6 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
-
-
-
     }
 
     public static final class FriendshipEntry implements BaseColumns{
@@ -166,9 +163,6 @@ public class ChoresContract {
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
-
-
-
 
     }
 
@@ -189,8 +183,6 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
-
-
     }
 
     public static final class RSVPEntry implements BaseColumns{
@@ -205,8 +197,6 @@ public class ChoresContract {
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
-
-
 
     }
 

@@ -1,5 +1,7 @@
 package com.gabilheri.choresapp.utils;
 
+import android.text.format.Time;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -28,4 +30,14 @@ public final class TimeUtils {
     public static String formatBasicDate(long time) {
         return sBasicSimpleDateFormat.format(time);
     }
+
+    // To make it easy to query for the exact date, we normalize all dates that go into
+    // the database to the start of the the Julian day at UTC.
+    public static long normalizeDate(long startDate){
+        Time time = new Time();
+        time.set(startDate);
+        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
+        return time.setJulianDay(julianDay);
+    }
+
 }

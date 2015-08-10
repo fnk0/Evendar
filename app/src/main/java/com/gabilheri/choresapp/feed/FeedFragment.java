@@ -6,20 +6,25 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import com.gabilheri.choresapp.BaseCursorListFragment;
+import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FeedAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.data.ChoresContract;
+import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.detail_event.DetailActivity;
-import com.gabilheri.choresapp.user_profile.UserProfileActivity;
 import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.IntentUtils;
+import com.gabilheri.choresapp.utils.QueryUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -64,26 +69,25 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     public void onItemClick(View view) {
         Intent intent = null;
         ActivityOptions options = null;
+        Event event = (Event) view.getTag(R.id.eventId);
         switch (view.getId()) {
             case R.id.favorites:
+                event.setNumFavorites(event.getNumFavorites() + 1);
                 break;
 
             case R.id.userPicture:
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    CircleImageView imgView = (CircleImageView) view.findViewById(R.id.userPicture);
-                    options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), imgView, "profileImage");
-                }
-
-                intent = new Intent(getActivity(), UserProfileActivity.class);
-                // Username should be enough to query for the right user on our content provider
-                intent.putExtra(Const.USERNAME, view.getTag(R.id.userName).toString());
-                intent.putExtra(Const.USER_PICTURE, view.getTag(R.id.userProfile).toString());
-                break;
+                CircleImageView imgView = (CircleImageView) view.findViewById(R.id.userPicture);
+                String username = view.getTag(R.id.userName).toString();
+                IntentUtils.openUserProfile(getActivity(), username, imgView);
+                return; // We return because the openUserProfile already starts the intent
 
             case R.id.shares:
+                event.setNumShares(event.getNumShares() + 1);
                 break;
 
-            case R.id.favorite:
+            case R.id.comments:
+                intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(Const.IS_COMMENT, true);
                 break;
 
             case R.id.details:
@@ -92,11 +96,10 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
         }
 
         if(intent != null) {
-            if(options != null ) {
-                startActivity(intent, options.toBundle());
-            } else {
-                startActivity(intent);
-            }
+            intent.putExtra(Const.EVENT_ID, event.getId());
+            startActivity(intent);
+        } else {
+            updateEvent(event);
         }
     }
 
@@ -111,5 +114,31 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     @Override
     protected int[] getLoaders() {
         return new int[]{FEED_LOADER};
+    }
+
+    private void updateEvent(Event event) {
+        ChoresApp.instance().getApi().updateEvent(event)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new EventSubscriber());
+    }
+
+    private static class EventSubscriber extends Subscriber<Event> {
+
+        @Override
+        public void onCompleted() {
+            unsubscribe();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(Event event) {
+            // When we save the event the cursor loader automatically updates the UI
+            QueryUtils.saveEventToDB(event);
+        }
     }
 }

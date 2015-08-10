@@ -5,8 +5,11 @@ package com.example.kieran.myapplication.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.config.Nullable;
+import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
+import com.googlecode.objectify.cmd.Query;
 
 import javax.inject.Named;
 
@@ -14,6 +17,7 @@ import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.listByQuery;
 
 /**
  * Created by kieran on 8/7/15.
@@ -30,8 +34,20 @@ import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
                 packagePath = "")
 )
 public class CommentEndpoint {
-    public CommentEndpoint(){}
 
+    @ApiMethod(name = "listComments", path = "allComments")
+    public CollectionResponse<Comment> listComments(@Named("eventId") Long eventId,
+                                                    @Named("updatedAt") String updatedAt,
+                                                    @Nullable @Named("cursor") String cursorString,
+                                                    @Nullable @Named("count") Integer count) {
+        Query<Comment> query = ofy().load().type(Comment.class).filter("eventId", eventId);
+
+        if(updatedAt != null) {
+            query.filter("updatedAt > ", Long.parseLong(updatedAt));
+        }
+
+        return listByQuery(query, cursorString, count);
+    }
 
     //inserts a new comment
     @ApiMethod(name = "insertComment")
@@ -40,6 +56,10 @@ public class CommentEndpoint {
             if (QueryUtils.findRecord(Comment.class, comment.getId()) != null) {
                 return null;
             }
+        }
+
+        if(comment.getUpdatedAt() == null) {
+            comment.setUpdatedAt(comment.getCreatedAt());
         }
 
         ofy().save().entity(comment).now();

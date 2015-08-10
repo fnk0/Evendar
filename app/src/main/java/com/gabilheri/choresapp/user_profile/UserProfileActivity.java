@@ -33,7 +33,7 @@ public class UserProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         enableBackNav();
         String username = getIntent().getStringExtra(Const.USERNAME);
-        User user = QueryUtils.getUserFromDB(this, username);
+        User user = QueryUtils.getUserFromDB(username);
         String title = user.getFullName();
 
         if(title != null) {

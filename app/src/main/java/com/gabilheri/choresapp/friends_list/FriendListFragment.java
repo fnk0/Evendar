@@ -1,10 +1,9 @@
 package com.gabilheri.choresapp.friends_list;
 
-import android.app.ActivityOptions;
-import android.content.Intent;
+import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.Build;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -13,8 +12,10 @@ import com.gabilheri.choresapp.BaseCursorListFragment;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FriendAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
-import com.gabilheri.choresapp.user_profile.UserProfileActivity;
-import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.data.ChoresContract;
+import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.utils.IntentUtils;
+import com.gabilheri.choresapp.utils.QueryUtils;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -29,6 +30,8 @@ public class FriendListFragment extends BaseCursorListFragment implements ItemCa
 
     private static final int FRIENDS_LOADER = 0;
 
+    String sortOrder = ChoresContract.UserEntry.COLUMN_FULL_NAME + " ASC";
+
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -38,24 +41,16 @@ public class FriendListFragment extends BaseCursorListFragment implements ItemCa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // TODO implement query
-        return null;
+        User user = QueryUtils.getAuthenticatedUserFromDB();
+        Uri queryUri = ChoresContract.UserEntry.buildUserUri(user.getUsername());
+        return new CursorLoader(getActivity(), queryUri, null, null, null, sortOrder);
     }
 
     @Override
     public void onItemClick(View v) {
         CircleImageView imgView = (CircleImageView) v.findViewById(R.id.userPicture);
-        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
         TextView userName = (TextView) v.findViewById(R.id.userName);
-        intent.putExtra(Const.USERNAME, userName.getText().toString());
-        intent.putExtra(Const.USER_PICTURE, v.getTag(R.id.userProfile).toString());
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(getActivity(), imgView, "profileImage");
-            startActivity(intent, options.toBundle());
-        } else {
-            startActivity(intent);
-        }
+        IntentUtils.openUserProfile(getActivity(), userName.getText().toString(), imgView);
     }
 
     @Override

@@ -40,7 +40,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
 
         String username = cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID));
-        User user = QueryUtils.getUserFromDB(holder.itemView.getContext(), username);
+        User user = QueryUtils.getUserFromDB(username);
         Glide.with(holder.itemView.getContext())
                 .load(user.getPicUrl())
                 .fitCenter()
@@ -48,7 +48,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
                 .into(holder.userPicture);
 
         holder.itemView.setTag(R.id.userName, username);
-        holder.itemView.setTag(R.id.userProfile, user.getPicUrl());
+        holder.userPicture.setTag(R.id.userProfile, user.getPicUrl());
 
         Event event = Event.fromCursor(cursor, false);
 
@@ -56,6 +56,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
         holder.favoritesCount.setText(String.valueOf(event.getNumFavorites()));
         holder.commentsCount.setText(String.valueOf(event.getNumComments()));
         holder.sharesCount.setText(String.valueOf(event.getNumShares()));
+        holder.itemView.setTag(R.id.eventId, event);
     }
 
     @Override

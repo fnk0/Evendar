@@ -1,6 +1,7 @@
 package com.gabilheri.choresapp.detail_event;
 
 import android.os.Bundle;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.BaseFragment;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.QueryUtils;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -41,9 +44,16 @@ public class DetailFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-////        List<User> users = new ArrayList<>();
-////        int numUsers = new Random().nextInt(12) + 4;
-////
+        Long eventId;
+
+        if(getArguments() != null) {
+            eventId = getArguments().getLong(Const.EVENT_ID);
+            SparseArrayCompat users = QueryUtils.getUsersForEvent(eventId);
+
+
+
+        }
+
 ////        for(int i = 0; i < numUsers; i++) {
 ////            users.add(MockUtils.getRandomUser());
 ////        }

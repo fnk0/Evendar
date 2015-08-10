@@ -59,6 +59,7 @@ public class FriendAdapter extends CursorRecyclerAdapter<FriendAdapter.ViewHolde
                     .crossFade()
                     .into(holder.socialMedia);
 
+            holder.itemView.setTag(R.id.userName, user.getUsername());
             holder.itemView.setTag(R.id.userPicture, user.getPicUrl());
         }
 

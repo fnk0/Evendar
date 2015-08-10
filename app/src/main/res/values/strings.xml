@@ -4,8 +4,20 @@
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
   <string name="details">Details</string>
+  <string name="comments">Comments</string>
 
-  <string name="facebook_app_id">855330497892855</string>
   <string name="going_to">Going to</string>
   <string name="wants_to">Wants to</string>
+
+
+  <!-- Id's & auth -->
+  <string name="facebook_app_id">855330497892855</string>
+
+  <!-- Content Provider / SyncAdapter -->
+  <string name="sync_account_type">choresapp.gabilheri.com</string>
+  <string name="content_authority">com.gabilheri.choresapp.app</string>
+  <string name="whos_going">Who\'s Going?</string>
+
+  <!-- Generated from code section -->
+
 </resources>

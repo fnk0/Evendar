@@ -62,7 +62,7 @@ public class CommentsAdapter extends CursorRecyclerAdapter<CommentsAdapter.ViewH
     @Override
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
         Comment c = Comment.fromCursor(cursor, false);
-        User user = QueryUtils.getUserFromDB(holder.itemView.getContext(), c.getUserId());
+        User user = QueryUtils.getUserFromDB(c.getUserId());
         Glide.with(holder.itemView.getContext())
                 .load(user.getPicUrl())
                 .centerCrop()
@@ -73,8 +73,10 @@ public class CommentsAdapter extends CursorRecyclerAdapter<CommentsAdapter.ViewH
 //        holder.favoritesCount.setText("" + c.getFavoritesCount());
         holder.comment.setText(c.getText());
         holder.date.setText(TimeUtils.formatBasicDate(Long.parseLong(c.getCreatedAt())));
-
         holder.bottomLine.setBackgroundColor(colorResources[random.nextInt(colorsLength)]);
+        holder.userPicture.setTag(R.id.userPicture, user.getPicUrl());
+        holder.itemView.setTag(R.id.commentId, c);
+        holder.itemView.setTag(R.id.userName, user.getUsername());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
