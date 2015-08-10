@@ -9,7 +9,7 @@ import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.feed.FeedActivity;
-import com.gabilheri.choresapp.friends_list.FriendListActivity;
+import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -81,10 +81,10 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private Intent getFriendsActivity() {
-        if(this instanceof FriendListActivity) {
+        if(this instanceof PeopleListActivity) {
             return null;
         }
-        return new Intent(this, FriendListActivity.class);
+        return new Intent(this, PeopleListActivity.class);
     }
 
     protected void enableHamburgerMenu() {

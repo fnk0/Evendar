@@ -1,19 +1,26 @@
 package com.gabilheri.choresapp.detail_event;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.BaseFragment;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
+import java.util.List;
+
 import butterknife.Bind;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -28,51 +35,47 @@ public class DetailFragment extends BaseFragment {
     @Bind(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
 
-    @Bind(R.id.friend1)
-    CircleImageView friend1;
+    @Bind({R.id.friend1, R.id.friend2, R.id.friend3})
+    List<CircleImageView> friends;
 
-    @Bind(R.id.friend2)
-    CircleImageView friend2;
-
-    @Bind(R.id.friend3)
-    CircleImageView friend3;
+    @Bind(R.id.overFlowLayout)
+    LinearLayout overflowLayout;
 
     @Bind(R.id.overflowFriends)
     TextView overflowFriends;
+
+    Long eventId;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Long eventId;
+
 
         if(getArguments() != null) {
             eventId = getArguments().getLong(Const.EVENT_ID);
-            SparseArrayCompat users = QueryUtils.getUsersForEvent(eventId);
+            SparseArrayCompat<User> users = QueryUtils.getUsersForEvent(eventId);
+            int numUsers = users.size();
+            int counter = 0;
+            while(counter < numUsers && counter < 3) {
+                CircleImageView imageView = friends.get(counter);
+                imageView.setVisibility(View.VISIBLE);
+                loadWithGlide(imageView, users.get(counter).getPicUrl());
+                counter++;
+            }
 
-
-
+            if(numUsers > 3) {
+                overflowLayout.setVisibility(View.VISIBLE);
+                overflowFriends.setText(String.format("%d more", (numUsers - 3)));
+            }
         }
+    }
 
-////        for(int i = 0; i < numUsers; i++) {
-////            users.add(MockUtils.getRandomUser());
-////        }
-////
-////        if(numUsers > 0) {
-////            loadWithGlide(friend1, users.get(0).getUserPicture());
-////        }
-////
-////        if(numUsers > 1) {
-////            loadWithGlide(friend2, users.get(1).getUserPicture());
-////        }
-////
-////        if(numUsers > 2) {
-////            loadWithGlide(friend3, users.get(2).getUserPicture());
-////        }
-//
-//        if(numUsers > 3) {
-//            overflowFriends.setText(String.format("%d more...", numUsers - 3));
-//        }
+    @OnClick(R.id.overflowFriends)
+    public void navitateToWhosGoing() {
+        Intent i = new Intent(getActivity(), PeopleListActivity.class);
+        i.putExtra(Const.EVENT_ID, eventId);
+        startActivity(i);
     }
 
     private void loadWithGlide(ImageView view, String url) {
