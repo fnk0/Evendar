@@ -8,13 +8,13 @@ import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 
-import java.util.List;
-
 import javax.inject.Named;
+import java.util.*;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findByUsername;
+import static com.example.kieran.myapplication.backend.QueryUtils.getEventFeed;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
@@ -98,4 +98,6 @@ public class UserEndpoint {
 
         return QueryUtils.getEventFeed(u.getId());
     }
+
+
 }
