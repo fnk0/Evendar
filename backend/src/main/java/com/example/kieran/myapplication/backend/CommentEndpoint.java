@@ -37,7 +37,7 @@ public class CommentEndpoint {
 
     @ApiMethod(name = "listComments", path = "allComments")
     public CollectionResponse<Comment> listComments(@Named("eventId") Long eventId,
-                                                    @Named("updatedAt") String updatedAt,
+                                                    @Nullable @Named("updatedAt") String updatedAt,
                                                     @Nullable @Named("cursor") String cursorString,
                                                     @Nullable @Named("count") Integer count) {
         Query<Comment> query = ofy().load().type(Comment.class).filter("eventId", eventId);
