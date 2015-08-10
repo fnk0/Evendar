@@ -50,8 +50,6 @@ public class DetailFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
         if(getArguments() != null) {
             eventId = getArguments().getLong(Const.EVENT_ID);
             SparseArrayCompat<User> users = QueryUtils.getUsersForEvent(eventId);

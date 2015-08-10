@@ -139,10 +139,8 @@ public final class QueryUtils {
                 if (num == count) break;
             }
         }
-
-
         Cursor cursor = iterator.getCursor();
-        if (cursorString != null && !cursorString.isEmpty()) {
+        if (cursorString != null) {
             cursorString = cursor.toWebSafeString();
         }
         return CollectionResponse.<T>builder().setItems(records).setNextPageToken(cursorString).build();

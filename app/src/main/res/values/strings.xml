@@ -18,6 +18,12 @@
   <string name="content_authority">com.gabilheri.choresapp.app</string>
   <string name="whos_going">Who\'s Going?</string>
   <string name="friends">Friends</string>
+  <string name="about">About</string>
+  <string name="search">Search</string>
+  <string name="favorites">Favorites</string>
+  <string name="feed">Feed</string>
+  <string name="settings">Settings</string>
+  <string name="sign_out">Sign Out</string>
 
   <!-- Generated from code section -->
 

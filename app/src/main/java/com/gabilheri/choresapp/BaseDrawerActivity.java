@@ -10,6 +10,9 @@ import android.view.MenuItem;
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
+import com.gabilheri.choresapp.sign_in.SignInActivity;
+import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.PrefManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -55,9 +58,12 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                             case R.id.nav_friends:
                                 i = getFriendsActivity();
                                 break;
+                            case R.id.sign_out:
+                                i = signOut();
+                                break;
                         }
                         mDrawerLayout.closeDrawers();
-                        if(i != null) {
+                        if (i != null) {
                             menuItem.setChecked(true);
                             startActivity(i);
                             finish();
@@ -85,6 +91,12 @@ public abstract class BaseDrawerActivity extends BaseActivity {
             return null;
         }
         return new Intent(this, PeopleListActivity.class);
+    }
+
+    private Intent signOut() {
+        PrefManager.with(this).remove(Const.USERNAME);
+        PrefManager.with(this).save(Const.SIGNED_IN, false);
+        return new Intent(this, SignInActivity.class);
     }
 
     protected void enableHamburgerMenu() {
