@@ -1,6 +1,4 @@
 package com.example.kieran.myapplication.backend;
-import com.gabilheri.choresapp.data.ChoresContract;
-import com.gabilheri.choresapp.data.ChoresDbHelper;
 import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.NotFoundException;
@@ -101,7 +99,6 @@ public final class QueryUtils {
 
     }
 
-
     //given a user id, returns the list of evens that the user has created
     public static CollectionResponse<Event> getEventsFromUser(@Named("id") Long id){
        // String query = "SELECT * FROM " + ChoresContract.EventEntry.TABLE_NAME + " WHERE " + ChoresContract.EventEntry.COLUMN_USER_ID + " = " + id;
@@ -109,7 +106,6 @@ public final class QueryUtils {
         Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID, id);
         return listByQuery(query, null, null);
     }
-
 
     //given a user id, returns the list of events that represents their home feed
 
