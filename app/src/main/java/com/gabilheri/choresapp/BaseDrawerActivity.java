@@ -94,6 +94,9 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private Intent signOut() {
+
+
+
         PrefManager.with(this).remove(Const.USERNAME);
         PrefManager.with(this).save(Const.SIGNED_IN, false);
         return new Intent(this, SignInActivity.class);
