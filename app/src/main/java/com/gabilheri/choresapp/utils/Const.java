@@ -26,6 +26,10 @@ public final class Const {
     public static final String IS_COMMENT = "is_comment";
     public static final String EVENT_ID = "event_id";
 
+    public static final String FACEBOOK_SIGN_IN = "fb_signed_in";
+    public static final String GOOGLE_SIGN_IN = "google_signed_in";
+    public static final String TWITTER_SIGN_IN = "twitter_signed_in";
+
     // Event related Prefs
     public static final String EVENT_UPDATED_AT = "event_updated_at";
 }
