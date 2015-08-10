@@ -89,7 +89,7 @@ public class UserEndpoint {
        deleteObject(User.class, id);
     }
 
-    @ApiMethod(name = "getEventFeed", path = "getEventsForUser")
+    @ApiMethod(name = "getEventFeed", path = "getEventFeedForUser")
     public List<Event> getEventFeed(User u) throws NotFoundException{
         User user = findByUsername(User.class, u.getUsername());
         if (user == null){
@@ -97,6 +97,24 @@ public class UserEndpoint {
         }
 
         return QueryUtils.getEventFeed(u.getId());
+    }
+
+    @ApiMethod(name = "getFriends", path = "getFriendsForUser")
+    public CollectionResponse<User> getFriends(User u ) throws NotFoundException{
+        User user = findByUsername(User.class, u.getUsername());
+        if (user == null){
+            throw new NotFoundException("User Record does not exist!");
+        }
+        return QueryUtils.getFriends(u.getId());
+    }
+
+    @ApiMethod(name = "getEventsForUser", path = "getEventsForUser")
+    public CollectionResponse<Event> getEventsForUser(User u) throws NotFoundException{
+        User user = findByUsername(User.class, u.getUsername());
+        if (user == null){
+            throw new NotFoundException("User Record does not exist!");
+        }
+        return QueryUtils.getEventsFromUser(u.getId());
     }
 
 
