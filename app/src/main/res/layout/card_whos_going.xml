@@ -76,6 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
+                    android:background="?attr/selectableItemBackground"
                     tools:text="5 more"
                     android:textColor="@color/grey_800"
                     android:textSize="16sp"/>

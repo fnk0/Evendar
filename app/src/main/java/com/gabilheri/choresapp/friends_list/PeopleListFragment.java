@@ -14,6 +14,7 @@ import com.gabilheri.choresapp.adapters.FriendAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.IntentUtils;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
@@ -26,15 +27,22 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * @version 1.0
  * @since 7/20/15.
  */
-public class FriendListFragment extends BaseCursorListFragment implements ItemCallback {
+public class PeopleListFragment extends BaseCursorListFragment implements ItemCallback {
 
     private static final int FRIENDS_LOADER = 0;
 
     String sortOrder = ChoresContract.UserEntry.COLUMN_FULL_NAME + " ASC";
 
+    Long eventId = -1L;
+
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(getArguments() != null) {
+            eventId = getArguments().getLong(Const.EVENT_ID);
+        }
+
         mAdapter = new FriendAdapter(null, this);
         initBaseList(mAdapter);
     }
@@ -42,7 +50,14 @@ public class FriendListFragment extends BaseCursorListFragment implements ItemCa
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         User user = QueryUtils.getAuthenticatedUserFromDB();
-        Uri queryUri = ChoresContract.UserEntry.buildUserUri(user.getUsername());
+        Uri queryUri;
+
+        if(eventId == -1L) {
+            queryUri = ChoresContract.UserEntry.buildUserUri(user.getUsername());
+        } else {
+            queryUri = ChoresContract.UserEntry.buildUsersForEvent(eventId);
+        }
+
         return new CursorLoader(getActivity(), queryUri, null, null, null, sortOrder);
     }
 
