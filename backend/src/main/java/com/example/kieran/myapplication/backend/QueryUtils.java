@@ -145,12 +145,11 @@ public final class QueryUtils {
                 if (num == count) break;
             }
         }
-        //Find the next cursor
+
+
+        Cursor cursor = iterator.getCursor();
         if (cursorString != null && !cursorString.isEmpty()) {
-            Cursor cursor = iterator.getCursor();
-            if (cursor != null) {
-                cursorString = cursor.toWebSafeString();
-            }
+            cursorString = cursor.toWebSafeString();
         }
         return CollectionResponse.<T>builder().setItems(records).setNextPageToken(cursorString).build();
     }
