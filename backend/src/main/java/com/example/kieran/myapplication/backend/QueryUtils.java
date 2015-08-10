@@ -5,13 +5,11 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
-import static com.gabilheri.choresapp.data.ChoresContract.FriendshipEntry;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Named;
-
+import static com.example.kieran.myapplication.backend.ChoresContract.FriendshipEntry;
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 
 /**
