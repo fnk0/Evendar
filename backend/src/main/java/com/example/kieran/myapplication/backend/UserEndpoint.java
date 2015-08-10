@@ -9,10 +9,12 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 
 import javax.inject.Named;
+import java.util.*;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findByUsername;
+import static com.example.kieran.myapplication.backend.QueryUtils.getEventFeed;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
@@ -85,6 +87,16 @@ public class UserEndpoint {
     @ApiMethod(name = "removeUser")
     public void removeUser(@Named("id") Long id) throws NotFoundException {
        deleteObject(User.class, id);
+    }
+
+    @ApiMethod(name = "getEventFeed", path = "getEventsForUser")
+    public List<Event> getEventFeed(User u) throws NotFoundException{
+        User user = findByUsername(User.class, u.getUsername());
+        if (user == null){
+            throw new NotFoundException("User Record does not exist!");
+        }
+
+        return QueryUtils.getEventFeed(u.getId());
     }
 
 
