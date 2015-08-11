@@ -111,6 +111,8 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.RSVPEntry.COLUMN_DATE_CREATED + " TEXT, " +
                 ChoresContract.RSVPEntry.COLUMN_EVENT_ID + " TEXT, " +
                 ChoresContract.RSVPEntry.COLUMN_USER_ID + " TEXT, " +
+                ChoresContract.RSVPEntry.COLUMN_FULL_NAME + " TEXT, " +
+
 
                 " FOREIGN KEY (" + ChoresContract.RSVPEntry.COLUMN_EVENT_ID + ") REFERENCES " +
                 ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +

@@ -243,7 +243,7 @@ public class ChoresProvider extends ContentProvider {
                         new String[]{RSVPEntry.getEventIdFromUri(uri)},
                         null,
                         null,
-                        sortOrder
+                        null
                 );
                 break;
 
@@ -527,7 +527,7 @@ public class ChoresProvider extends ContentProvider {
 
         // Events URI's
         matcher.addURI(authority, ChoresContract.PATH_EVENT, EVENTS);
-        matcher.addURI(authority, ChoresContract.PATH_EVENT + "/s/#/e/#/iw/#", EVENT_WITH_STARTDATE);
+        matcher.addURI(authority, ChoresContract.PATH_EVENT + "/s/*/e/#/iw/#", EVENT_WITH_STARTDATE);
         matcher.addURI(authority, ChoresContract.PATH_EVENT + "/e/*", EVENT_WITH_ENDDATE);
         matcher.addURI(authority, ChoresContract.PATH_EVENT + "/iw/#", EVENT_WITH_IS_WANT);
 
@@ -550,7 +550,7 @@ public class ChoresProvider extends ContentProvider {
         // RSVP Uri's
         matcher.addURI(authority, ChoresContract.PATH_RSVP, RSVP);
         matcher.addURI(authority, ChoresContract.PATH_RSVP + "/rsvpId/#", RSVP_WITH_ID);
-        matcher.addURI(authority, ChoresContract.PATH_RSVP + "/rsvpId/#/eId/#", RSVP_WITH_EVENT_ID);
+        matcher.addURI(authority, ChoresContract.PATH_RSVP + "/eId/#", RSVP_WITH_EVENT_ID);
 
         return matcher;
     }
