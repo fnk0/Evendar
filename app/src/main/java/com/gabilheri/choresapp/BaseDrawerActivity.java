@@ -91,15 +91,17 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                     }
                 });
 
-        String[] fNameArr = mActiveUser.getFullName().split(" ");
-        userName.setText(fNameArr[0] + " " + fNameArr[fNameArr.length - 1]);
-        userLocation.setVisibility(View.GONE);
+        if(mActiveUser != null) {
+            String[] fNameArr = mActiveUser.getFullName().split(" ");
+            userName.setText(fNameArr[0] + " " + fNameArr[fNameArr.length - 1]);
+            userLocation.setVisibility(View.GONE);
 
-        Glide.with(this)
-                .load(mActiveUser.getPicUrl())
-                .centerCrop()
-                .crossFade()
-                .into(mUserPicture);
+            Glide.with(this)
+                    .load(mActiveUser.getPicUrl())
+                    .centerCrop()
+                    .crossFade()
+                    .into(mUserPicture);
+        }
     }
 
     @OnClick(R.id.userPicture)
