@@ -113,6 +113,13 @@ public class ChoresContract {
             return CONTENT_URI;
         }
 
+        public static Uri buildLocalEventUri(long id) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("localId")
+                    .appendPath(String.valueOf(id))
+                    .build();
+        }
+
         public static Uri buildEventUri(Long id) {
             return CONTENT_URI.buildUpon()
                     .appendPath("id")
