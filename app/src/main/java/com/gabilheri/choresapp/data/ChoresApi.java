@@ -13,6 +13,7 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -54,10 +55,10 @@ public interface ChoresApi {
             @Path("updatedAt") String updatedAt
     );
 
-    @POST(NetworkClient.EVENT_API + "/allEvents/{userId}/{updatedAt")
+    @POST(NetworkClient.EVENT_API + "/allUserEvents")
     Observable<List<Event>> getAllUserEvents(
-            @Path("userId") Long userId,
-            @Path("updatedAt") String updatedAt
+            @Query("date") Long userId,
+            @Query("id") String updatedAt
     );
 
     @POST(NetworkClient.EVENT_API + "/event")
