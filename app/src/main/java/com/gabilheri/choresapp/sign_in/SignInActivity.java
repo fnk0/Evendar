@@ -18,10 +18,12 @@ import com.gabilheri.choresapp.BaseActivity;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.favorite_events.FavoritesActivity;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.PrefManager;
 import com.gabilheri.choresapp.utils.TimeUtils;
+import com.gabilheri.choresapp.BuildConfig;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
@@ -33,6 +35,7 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -43,6 +46,8 @@ import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -203,7 +208,12 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
     @OnClick(R.id.facebook_sign_in)
     public void signInWithFacebook() {
-        facebookLoginButton.performClick();
+        if (BuildConfig.DEBUG) {
+            // do something for a debug build
+            goToFeedActivity();
+        } else {
+            facebookLoginButton.performClick();
+        }
     }
 
     @OnClick(R.id.twitter_sign_in)

@@ -8,6 +8,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
+import com.gabilheri.choresapp.favorite_events.FavoritesActivity;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.sign_in.SignInActivity;
@@ -55,6 +56,9 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                             case R.id.nav_home:
                                 i = getFeedActivity();
                                 break;
+                            case R.id.nav_favorites:
+                                i = getFavoritesActivity();
+                                break;
                             case R.id.nav_friends:
                                 i = getFriendsActivity();
                                 break;
@@ -84,6 +88,13 @@ public abstract class BaseDrawerActivity extends BaseActivity {
            return null;
         }
         return new Intent(this, FeedActivity.class);
+    }
+
+    private Intent getFavoritesActivity() {
+        if(this instanceof FavoritesActivity) {
+            return null;
+        }
+        return new Intent(this, FavoritesActivity.class);
     }
 
     private Intent getFriendsActivity() {

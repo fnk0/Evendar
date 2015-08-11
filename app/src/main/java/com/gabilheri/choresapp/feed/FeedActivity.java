@@ -1,13 +1,17 @@
 package com.gabilheri.choresapp.feed;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
+import com.gabilheri.choresapp.new_event.NewEventActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
@@ -16,6 +20,7 @@ import org.joda.time.LocalDateTime;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.fabric.sdk.android.Fabric;
 
 public class FeedActivity extends BaseDrawerActivity {
@@ -33,6 +38,9 @@ public class FeedActivity extends BaseDrawerActivity {
 
     @Bind(R.id.viewpager)
     ViewPager viewPager;
+
+    @Bind(R.id.fab)
+    FloatingActionButton fab;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -73,5 +81,10 @@ public class FeedActivity extends BaseDrawerActivity {
     @Override
     public int getLayoutResource() {
         return R.layout.activity_main;
+    }
+
+    @OnClick(R.id.fab)
+    public void goToNewEventActivity( View view ) {
+        startActivity( new Intent(FeedActivity.this, NewEventActivity.class));
     }
 }
