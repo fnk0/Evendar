@@ -40,6 +40,7 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.EventEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ChoresContract.EventEntry.COLUMN_USERNAME + " TEXT, " +
                 ChoresContract.EventEntry.COLUMN_TITLE + " TEXT, " +
+                ChoresContract.EventEntry.COLUMN_DESCRIPTION + " TEXT, " +
                 ChoresContract.EventEntry.COLUMN_DATE + " TEXT, " +
                 ChoresContract.EventEntry.COLUMN_TIME + " TEXT, " +
                 ChoresContract.EventEntry.COLUMN_IS_WANT + " INTEGER, " +

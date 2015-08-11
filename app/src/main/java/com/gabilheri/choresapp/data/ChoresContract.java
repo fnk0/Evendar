@@ -129,6 +129,8 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static final String COLUMN_DESCRIPTION = "description";
+
         public static Uri buildEventUri() {
             return CONTENT_URI;
         }
