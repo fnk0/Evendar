@@ -176,6 +176,13 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static Uri buildFavorite(Long favId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("favId")
+                    .appendPath(String.valueOf(favId))
+                    .build();
+        }
+
     }
 
     public static final class FriendshipEntry implements BaseColumns {
@@ -196,6 +203,13 @@ public class ChoresContract {
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
+
+        public static Uri buildFriendship(Long friendshipID) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("fId")
+                    .appendPath(String.valueOf(friendshipID))
+                    .build();
+        }
 
         public static Uri buildFriendsForUser(Long userId) {
             return CONTENT_URI.buildUpon()
@@ -229,6 +243,12 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static Uri buildCommentsUri(Long commentId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("commentId")
+                    .appendPath(String.valueOf(commentId))
+                    .build();
+        }
     }
 
     public static final class RSVPEntry implements BaseColumns {
@@ -249,6 +269,14 @@ public class ChoresContract {
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
+
+
+        public static Uri buildRSVP(Long rsvpID) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("rsvpId")
+                    .appendPath(String.valueOf(rsvpID))
+                    .build();
+        }
 
         public static Uri buildUsersForEvent(Long eventId) {
             return CONTENT_URI.buildUpon()
