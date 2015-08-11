@@ -54,7 +54,7 @@ public interface ChoresApi {
             @Path("updatedAt") String updatedAt
     );
 
-    @POST(NetworkClient.EVENT_API + "/allEvents/{userId}/{updatedAt")
+    @POST(NetworkClient.EVENT_API + "/allEvents/{userId}/{updatedAt}")
     Observable<List<Event>> getAllUserEvents(
             @Path("userId") Long userId,
             @Path("updatedAt") String updatedAt
@@ -82,7 +82,7 @@ public interface ChoresApi {
      * @return
      *          List with all the comments for the specific event
      */
-    @POST(NetworkClient.COMMENT_API + "/allComments/{id}/{updatedAt")
+    @POST(NetworkClient.COMMENT_API + "/allComments/{id}/{updatedAt}")
     Observable<List<Comment>> getAllCommentsForEvent(
             @Path("id") Long eventId,
             @Path("updatedAt") String updatedAt
