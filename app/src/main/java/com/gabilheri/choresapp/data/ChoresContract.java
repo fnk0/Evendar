@@ -70,6 +70,13 @@ public class ChoresContract {
                     .appendPath(username)
                     .build();
         }
+
+        public static Uri buildUsersForEvent(Long eventId){
+            return CONTENT_URI.buildUpon()
+                    .appendPath("ei")
+                    .appendPath(String.valueOf(eventId))
+                    .build();
+        }
     }
 
     public static final class EventEntry implements BaseColumns {
