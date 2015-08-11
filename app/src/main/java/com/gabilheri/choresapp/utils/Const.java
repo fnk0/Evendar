@@ -12,6 +12,8 @@ public final class Const {
     private Const() {
     }
 
+    public static final String INTENT_ID_EXTRA = "intentIdExtra";
+
     public static final String USERNAME = "username";
     public static final String DEFAULT_USERNAME = "username@choresapp.com";
     public static final String SIGNED_IN = "signed_in";

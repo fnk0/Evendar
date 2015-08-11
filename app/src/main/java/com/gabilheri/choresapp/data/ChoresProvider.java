@@ -29,24 +29,24 @@ public class ChoresProvider extends ContentProvider {
     private ChoresDbHelper mChoresDbHelper;
 
     // User matcher ID's
-    private static final int USER = 100;
+    public static final int USER = 100;
     private static final int USER_WITH_ID = 101;
     private static final int USER_WITH_USERNAME = 102;
 
     // Event Mather ID's
-    private static final int EVENTS = 200;
+    public static final int EVENTS = 200;
 
     // Comments Matcher ID's
-    private static final int COMMENTS = 300;
+    public static final int COMMENTS = 300;
 
     // Friendship matcher ID's
-    private static final int FRIENDS = 400;
+    public static final int FRIENDS = 400;
 
     // RSVP Matcher ID's
-    private static final int RSVP = 500;
+    public static final int RSVP = 500;
 
     // Favorites Matcher ID's
-    private static final int FAVORITES = 600;
+    public static final int FAVORITES = 600;
 
     @Override
     public boolean onCreate() {
