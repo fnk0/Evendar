@@ -10,10 +10,14 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 
 import javax.inject.Named;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
+import static com.example.kieran.myapplication.backend.QueryUtils.getEventsFromUser;
+import static com.example.kieran.myapplication.backend.QueryUtils.getFriends;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
 
@@ -51,7 +55,18 @@ public class EventEndpoint {
                                                           @Named("date") String updatedAt,
                                                           @Nullable @Named("cursor") String cursorString,
                                                           @Nullable @Named("count") Integer count) {
-        return list(Event.class, cursorString, count);
+
+
+        ArrayList<Event> feedForUser = new ArrayList<Event>();
+        Collection<User> friends = getFriends(userId).getItems();
+        for (User u : friends){
+            Collection<Event> friendsEvents = getEventsFromUser(u.getId()).getItems();
+            for (Event e : friendsEvents){
+                feedForUser.add(e);
+            }
+        }
+
+        return CollectionResponse.<Event> builder().setItems(feedForUser).build();
     }
 
     //inserts a new event
