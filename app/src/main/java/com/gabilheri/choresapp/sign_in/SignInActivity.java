@@ -96,6 +96,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
             @Override
             public void success(Result<TwitterSession> result) {
                 // Do something with result, which provides a TwitterSession for making API calls
+
                 Twitter.getApiClient()
                         .getAccountService().verifyCredentials(true, true, new Callback<com.twitter.sdk.android.core.models.User>() {
                     @Override
@@ -134,6 +135,8 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
         facebookLoginButton.registerCallback(mCallbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+
+
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {

@@ -16,11 +16,13 @@ import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.sign_in.SignInActivity;
 import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.IntentUtils;
 import com.gabilheri.choresapp.utils.PrefManager;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -47,6 +49,8 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     @Bind(R.id.userLocation)
     TextView userLocation;
 
+    protected User mActiveUser;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +60,7 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private void setupDrawerContent() {
-        User activeUser = QueryUtils.getAuthenticatedUserFromDB();
+        mActiveUser = QueryUtils.getAuthenticatedUserFromDB();
         ButterKnife.bind(mNavigationView);
         mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -87,15 +91,20 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                     }
                 });
 
-        String[] fNameArr = activeUser.getFullName().split(" ");
+        String[] fNameArr = mActiveUser.getFullName().split(" ");
         userName.setText(fNameArr[0] + " " + fNameArr[fNameArr.length - 1]);
         userLocation.setVisibility(View.GONE);
 
         Glide.with(this)
-                .load(activeUser.getPicUrl())
+                .load(mActiveUser.getPicUrl())
                 .centerCrop()
                 .crossFade()
                 .into(mUserPicture);
+    }
+
+    @OnClick(R.id.userPicture)
+    public void onUserPictureClick(View v) {
+        IntentUtils.openUserProfile(this, mActiveUser.getUsername(), mUserPicture);
     }
 
     private Intent getFeedActivity() {
