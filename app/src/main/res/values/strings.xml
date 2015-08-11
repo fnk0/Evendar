@@ -8,6 +8,9 @@
 
   <string name="going_to">Going to</string>
   <string name="wants_to">Wants to</string>
+    <string name="title_activity_favorites">Favorites</string>
+    <string name="create_event">New Event</string>
+
 
 
   <!-- Id's & auth -->
