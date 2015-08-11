@@ -41,6 +41,6 @@ public class PeopleListActivity extends BaseDrawerActivity {
         frag.setArguments(bundle);
 
         addFragmentToContainer(frag, "Friends Fragment");
-        navigationView.getMenu().getItem(2).setChecked(true);
+        mNavigationView.getMenu().getItem(2).setChecked(true);
     }
 }

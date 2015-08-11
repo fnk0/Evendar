@@ -87,7 +87,7 @@ public class FeedActivity extends BaseDrawerActivity {
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-        navigationView.getMenu().getItem(0).setChecked(true);
+        mNavigationView.getMenu().getItem(0).setChecked(true);
     }
 
     private Bundle getArgumentsBundle(boolean isWant) {
