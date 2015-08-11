@@ -9,6 +9,7 @@ import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.SocialUtils;
 
 import butterknife.Bind;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -34,13 +35,13 @@ public class UserProfileActivity extends BaseActivity {
         enableBackNav();
         String username = getIntent().getStringExtra(Const.USERNAME);
         User user = QueryUtils.getUserFromDB(username);
-        String title = user.getFullName();
+        String title = SocialUtils.getFirstLastName(user.getFullName());
 
         if(title != null) {
             collapsingToolbar.setTitle(title);
         }
 
-        String url = getIntent().getStringExtra("userPicture");
+        String url = getIntent().getStringExtra(Const.USER_PICTURE);
         if(url != null) {
             Glide.with(this)
                     .load(url)

@@ -122,7 +122,6 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
                 break;
         }
 
-
         return new CursorLoader(getActivity(), queryUri, null, null, null, sortOrder);
     }
 

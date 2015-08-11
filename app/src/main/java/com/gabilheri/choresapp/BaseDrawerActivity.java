@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.data.models.User;
-import com.gabilheri.choresapp.favorite_events.FavoritesActivity;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.sign_in.SignInActivity;
@@ -19,6 +18,7 @@ import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.IntentUtils;
 import com.gabilheri.choresapp.utils.PrefManager;
 import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.SocialUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -54,6 +54,12 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!PrefManager.with(this).getBoolean(Const.SIGNED_IN, false)) {
+            startActivity(new Intent(this, SignInActivity.class));
+            finish();
+        }
+
         ButterKnife.bind(this);
         enableHamburgerMenu();
         setupDrawerContent();
@@ -92,10 +98,9 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                 });
 
         if(mActiveUser != null) {
-            String[] fNameArr = mActiveUser.getFullName().split(" ");
-            userName.setText(fNameArr[0] + " " + fNameArr[fNameArr.length - 1]);
+            userName.setText(SocialUtils.getFirstLastName(mActiveUser.getFullName()));
             userLocation.setVisibility(View.GONE);
-
+            mUserPicture.setTag(R.id.userPicture, mActiveUser.getPicUrl());
             Glide.with(this)
                     .load(mActiveUser.getPicUrl())
                     .centerCrop()
@@ -117,10 +122,9 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private Intent getFavoritesActivity() {
-        if (this instanceof FavoritesActivity) {
-            return null;
-        }
-        return new Intent(this, FavoritesActivity.class);
+        Intent i = new Intent(this, FeedActivity.class);
+        i.putExtra(Const.IS_FAVORITES, true);
+        return i;
     }
 
     private Intent getFriendsActivity() {

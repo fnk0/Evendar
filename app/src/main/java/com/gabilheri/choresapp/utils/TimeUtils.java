@@ -20,7 +20,7 @@ public final class TimeUtils {
     public static final SimpleDateFormat sBasicSimpleDateFormat;
 
     static  {
-        sBasicSimpleDateFormat = new SimpleDateFormat("EEE, MM dd yyyy", Locale.US);
+        sBasicSimpleDateFormat = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.US);
     }
 
     public static String getToday() {
