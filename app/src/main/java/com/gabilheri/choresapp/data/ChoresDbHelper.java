@@ -67,9 +67,9 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.FavoriteEntry.COLUMN_USER_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.FavoriteEntry.COLUMN_EVENT_ID + ") REFERENCES " +
-                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.EventEntry._ID + "), " +
+                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.FavoriteEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
         final String SQL_CREATE_FRIENDSHIPS_TABLE = "CREATE TABLE " + ChoresContract.FriendshipEntry.TABLE_NAME + " (" +
@@ -81,9 +81,9 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.FriendshipEntry.COLUMN_USER_ID2 + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.FriendshipEntry.COLUMN_USER_ID1 + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.FriendshipEntry.COLUMN_USER_ID2 + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
 
@@ -98,9 +98,9 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.CommentEntry.COLUMN_EVENT_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.CommentEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.CommentEntry.COLUMN_EVENT_ID + ") REFERENCES " +
-                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.EventEntry._ID + "), " +
+                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
         final String SQL_CREATE_RSVP_TABLE = "CREATE TABLE " + ChoresContract.RSVPEntry.TABLE_NAME + " (" +
@@ -112,9 +112,9 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.RSVPEntry.COLUMN_USER_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.RSVPEntry.COLUMN_EVENT_ID + ") REFERENCES " +
-                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.EventEntry._ID + "), " +
+                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.RSVPEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
 
