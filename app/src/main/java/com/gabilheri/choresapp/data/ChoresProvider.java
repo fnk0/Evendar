@@ -539,12 +539,12 @@ public class ChoresProvider extends ContentProvider {
         // Favorites URI's
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES, FAVORITES);
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/favId/#", FAVORITE_WITH_ID);
-        matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/uId/#", FAVORITE_WITH_USER_ID);
+        matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/favId/uId/#", FAVORITE_WITH_USER_ID);
 
         // Friends URI's
         matcher.addURI(authority, ChoresContract.PATH_FRIENDSHIP, FRIENDS);
         matcher.addURI(authority, ChoresContract.PATH_FRIENDSHIP + "/fId/#", FRIEND_WITH_ID);
-        matcher.addURI(authority, ChoresContract.PATH_FRIENDSHIP + "/userId/#", FRIEND_WITH_USER_ID);
+        matcher.addURI(authority, ChoresContract.PATH_FRIENDSHIP + "/fId/userId1/#/userId2/#", FRIEND_WITH_USER_ID);
 
 
         // RSVP Uri's

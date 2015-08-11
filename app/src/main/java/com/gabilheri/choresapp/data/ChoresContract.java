@@ -211,7 +211,7 @@ public class ChoresContract {
         }
 
         public static String getUserIdFromUri(Uri uri) {
-            return uri.getPathSegments().get(2);
+            return uri.getPathSegments().get(4);
         }
 
         public static String getIdFromUri(Uri uri) {
