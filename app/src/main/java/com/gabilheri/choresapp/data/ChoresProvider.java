@@ -58,6 +58,7 @@ public class ChoresProvider extends ContentProvider {
     // Favorites Matcher ID's
     private static final int FAVORITES = 600;
     private static final int FAVORITE_WITH_ID = 601;
+    private static final int FAVORITE_WITH_USER_ID = 602;
 
     @Override
     public boolean onCreate() {
@@ -138,8 +139,8 @@ public class ChoresProvider extends ContentProvider {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
-                        ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE_CREATED + " = ?"),
-                        new String[]{EventEntry.getStartDateFromUri(uri)},
+                        ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE_CREATED + " = ? AND " + EventEntry.COLUMN_IS_WANT + " = ?"),
+                        new String[]{EventEntry.getStartDateFromUri(uri), EventEntry.getIsWantFromUri(uri)},
                         null,
                         null,
                         sortOrder
@@ -151,7 +152,7 @@ public class ChoresProvider extends ContentProvider {
                         EventEntry.TABLE_NAME,
                         projection,
                         ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_IS_WANT + " = ?"),
-                        new String[]{Integer.parseInt(uri.getPathSegments().get(6)) + ""},
+                        new String[]{EventEntry.getIsWantFromUri(uri) + ""},
                         null,
                         null,
                         sortOrder
@@ -164,7 +165,7 @@ public class ChoresProvider extends ContentProvider {
                         CommentEntry.TABLE_NAME,
                         projection,
                         ("" + CommentEntry.TABLE_NAME + "." + CommentEntry._ID + " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(2)) + ""},
+                        new String[]{CommentEntry.getIdFromUri(uri) + ""},
                         null,
                         null,
                         sortOrder
@@ -190,7 +191,7 @@ public class ChoresProvider extends ContentProvider {
                         FriendshipEntry.TABLE_NAME,
                         projection,
                         ("" + FriendshipEntry.TABLE_NAME + "." + FriendshipEntry._ID + " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(2)) + ""},
+                        new String[]{FriendshipEntry.getIdFromUri(uri) + ""},
                         null,
                         null,
                         sortOrder
@@ -203,7 +204,7 @@ public class ChoresProvider extends ContentProvider {
                         FriendshipEntry.TABLE_NAME,
                         projection,
                         ("" + FriendshipEntry.TABLE_NAME + "." + FriendshipEntry.COLUMN_USER_ID1 + " = ? OR " + FriendshipEntry.COLUMN_USER_ID2 + " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(4)) + "", Long.parseLong(uri.getPathSegments().get(4)) + ""},
+                        new String[]{FriendshipEntry.getId1FromUri(uri) + "" , FriendshipEntry.getId2FromUri(uri) + ""},
                         null,
                         null,
                         sortOrder
@@ -228,7 +229,7 @@ public class ChoresProvider extends ContentProvider {
                         RSVPEntry.TABLE_NAME,
                         projection,
                         ("" + RSVPEntry.TABLE_NAME + "." + RSVPEntry.COLUMN_EVENT_ID + " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(4)) + ""},
+                        new String[]{RSVPEntry.getEventIdFromUri(uri)},
                         null,
                         null,
                         sortOrder
@@ -243,7 +244,7 @@ public class ChoresProvider extends ContentProvider {
                         RSVPEntry.TABLE_NAME,
                         projection,
                         ("" + RSVPEntry.TABLE_NAME + "." + RSVPEntry._ID + " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(2)) + ""},
+                        new String[]{RSVPEntry.getIdFromUri(uri)},
                         null,
                         null,
                         sortOrder
@@ -266,12 +267,24 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
+            case FAVORITE_WITH_USER_ID:{
+                retCursor = mChoresDbHelper.getReadableDatabase().query(
+                        FavoriteEntry.TABLE_NAME,
+                        projection,
+                        ("" + FavoriteEntry.TABLE_NAME + "." + FavoriteEntry.COLUMN_USER_ID + " = ?"),
+                        new String[]{FavoriteEntry.getUserIdFromUri(uri) + ""},
+                        null,
+                        null,
+                        sortOrder
+                );
+            }
+
             case FAVORITE_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FavoriteEntry.TABLE_NAME,
                         projection,
                         ("" + FavoriteEntry.TABLE_NAME + "." + FavoriteEntry._ID + " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(2)) + ""},
+                        new String[]{FavoriteEntry.getIdFromUri(uri)},
                         null,
                         null,
                         sortOrder
@@ -515,6 +528,7 @@ public class ChoresProvider extends ContentProvider {
         // Favorites URI's
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES, FAVORITES);
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/favId/#", FAVORITE_WITH_ID);
+        matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/uId/#", FAVORITE_WITH_USER_ID);
 
         // Friends URI's
         matcher.addURI(authority, ChoresContract.PATH_FRIENDSHIP, FRIENDS);
@@ -525,7 +539,7 @@ public class ChoresProvider extends ContentProvider {
         // RSVP Uri's
         matcher.addURI(authority, ChoresContract.PATH_RSVP, RSVP);
         matcher.addURI(authority, ChoresContract.PATH_RSVP + "/rsvpId/#", RSVP_WITH_ID);
-        matcher.addURI(authority, ChoresContract.PATH_RSVP + "/eId/#", RSVP_WITH_EVENT_ID);
+        matcher.addURI(authority, ChoresContract.PATH_RSVP + "/rsvpId/#/eId/#", RSVP_WITH_EVENT_ID);
 
         return matcher;
     }

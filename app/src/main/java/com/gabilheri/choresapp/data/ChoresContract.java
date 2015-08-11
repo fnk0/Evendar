@@ -88,6 +88,8 @@ public class ChoresContract {
         public static Long getIdFromUri(Uri uri){
             return Long.parseLong(uri.getPathSegments().get(2));
         }
+
+
     }
 
     public static final class EventEntry implements BaseColumns {
@@ -143,6 +145,10 @@ public class ChoresContract {
                     .appendPath("id")
                     .appendPath(String.valueOf(id))
                     .build();
+        }
+
+        public static String getIsWantFromUri(Uri uri){
+            return uri.getPathSegments().get(6);
         }
 
         /**
@@ -205,6 +211,14 @@ public class ChoresContract {
                     .build();
         }
 
+        public static String getUserIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+
+        public static String getIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+
     }
 
     public static final class FriendshipEntry implements BaseColumns {
@@ -238,6 +252,18 @@ public class ChoresContract {
                     .build();
         }
 
+        public static String getIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
+        }
+
+        public static String getId1FromUri(Uri uri){
+            return uri.getPathSegments().get(4);
+        }
+
+        public static String getId2FromUri(Uri uri){
+            return uri.getPathSegments().get(6);
+        }
+
     }
 
     public static final class CommentEntry implements BaseColumns {
@@ -266,6 +292,10 @@ public class ChoresContract {
                     .appendPath("commentId")
                     .appendPath(String.valueOf(commentId))
                     .build();
+        }
+
+        public static String getIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
         }
     }
 
@@ -299,6 +329,14 @@ public class ChoresContract {
                     .appendPath("eId")
                     .appendPath(String.valueOf(eventId))
                     .build();
+        }
+
+        public static String getEventIdFromUri(Uri uri){
+            return uri.getPathSegments().get(4);
+        }
+
+        public static String getIdFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
         }
     }
 }
