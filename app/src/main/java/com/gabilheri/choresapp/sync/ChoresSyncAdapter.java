@@ -17,6 +17,7 @@ import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.FeedResponse;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.PrefManager;
@@ -55,15 +56,16 @@ public class ChoresSyncAdapter extends AbstractThreadedSyncAdapter{
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         User authenticatedUser = QueryUtils.getAuthenticatedUserFromDB();
-        String eventUpdatedAt = PrefManager.with(getContext()).getString(Const.EVENT_UPDATED_AT, null);
-        ChoresApp.instance().getApi().getAllUserEvents(authenticatedUser.getId(), eventUpdatedAt)
+        String eventUpdatedAt = PrefManager.with(getContext())
+                .getString(Const.EVENT_UPDATED_AT, String.valueOf(LocalDateTime.now().minusDays(100).toDate().getTime()));
+        ChoresApp.instance().getApi().getAllUserEvents(eventUpdatedAt, (authenticatedUser.getId()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(eventsSubscriber);
 
     }
 
-    Subscriber<List<Event>> eventsSubscriber = new Subscriber<List<Event>>() {
+    Subscriber<FeedResponse> eventsSubscriber = new Subscriber<FeedResponse>() {
         @Override
         public void onCompleted() {
             unsubscribe();
@@ -71,11 +73,12 @@ public class ChoresSyncAdapter extends AbstractThreadedSyncAdapter{
 
         @Override
         public void onError(Throwable e) {
-            Log.e(LOG_TAG, "Error syncing events, e");
+            Log.e(LOG_TAG, "Error syncing events", e);
         }
 
         @Override
-        public void onNext(List<Event> events) {
+        public void onNext(FeedResponse response) {
+            List<Event> events = response.getItems();
             LocalDateTime now = LocalDateTime.now();
             PrefManager.with(getContext()).save(Const.UPDATED_AT, String.valueOf(now.toDate().getTime()));
             int size = events.size();

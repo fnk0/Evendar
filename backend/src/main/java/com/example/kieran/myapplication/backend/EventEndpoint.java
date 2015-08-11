@@ -10,10 +10,10 @@ import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 import com.googlecode.objectify.cmd.Query;
 
-
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
+
+import javax.inject.Named;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
@@ -28,8 +28,6 @@ import static com.example.kieran.myapplication.backend.QueryUtils.listByQuery;
 /**
  * Created by kieran on 8/5/15.
  */
-
-
 
 @Api(
         name = "eventApi",
@@ -57,16 +55,17 @@ public class EventEndpoint {
                                                           @Nullable @Named("count") Integer count) {
 
 
-        ArrayList<Event> feedForUser = new ArrayList<Event>();
-        Collection<User> friends = getFriends(userId).getItems();
-        for (User u : friends){
-            Collection<Event> friendsEvents = getEventsFromUser(u.getId()).getItems();
-            for (Event e : friendsEvents){
-                feedForUser.add(e);
+        ArrayList<Event> feedForUser = new ArrayList<>();
+        feedForUser.addAll(getEventsFromUser(userId).getItems());
+
+        Collection<Friendship> friends = getFriends(userId).getItems();
+        for (Friendship u : friends) {
+            if (!userId.equals(u.getId())) {
+                feedForUser.addAll(getEventsFromUser(u.getId()).getItems());
             }
         }
 
-        return CollectionResponse.<Event> builder().setItems(feedForUser).build();
+        return CollectionResponse.<Event>builder().setItems(feedForUser).build();
     }
 
     //inserts a new event
@@ -89,7 +88,6 @@ public class EventEndpoint {
     }
 
 
-
     //updates an event
     @ApiMethod(name = "updateEvent", path = "update", httpMethod = ApiMethod.HttpMethod.PUT)
     public Event updateEvent(Event event) throws NotFoundException {
@@ -108,7 +106,7 @@ public class EventEndpoint {
 
     @ApiMethod(name = "getEventsCreatedBy", path = "getEventsCreatedBy")
     public CollectionResponse<Event> getEventsCreatedBy(@Named("id") Long id) throws NotFoundException {
-        if (findByUserId(User.class, id) == null){
+        if (findByUserId(User.class, id) == null) {
             throw new NotFoundException("User record not found!");
         }
 

@@ -71,7 +71,6 @@ public class ChoresProvider extends ContentProvider {
         Cursor retCursor;
         switch (sUriMatcher.match(uri)) {
 
-
             case USER_WITH_EVENT_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
@@ -82,6 +81,7 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
             }
             case USER_WITH_USERNAME: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
@@ -150,8 +150,10 @@ public class ChoresProvider extends ContentProvider {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
-                        ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE_CREATED + " = ? AND " + EventEntry.COLUMN_IS_WANT + " = ?"),
-                        new String[]{EventEntry.getStartDateFromUri(uri), EventEntry.getIsWantFromUri(uri)},
+//                        (EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE_CREATED + " >= ? AND " + EventEntry.COLUMN_IS_WANT + " = ?"),
+//                        new String[]{EventEntry.getStartDateFromUri(uri), EventEntry.getIsWantFromUri(uri)},
+                        null,
+                        null,
                         null,
                         null,
                         sortOrder
@@ -207,7 +209,7 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
-
+                break;
             }
 
             case FRIEND_WITH_USER_ID: {
@@ -220,6 +222,7 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
             }
 
             case FRIENDS: {
@@ -246,8 +249,6 @@ public class ChoresProvider extends ContentProvider {
                         sortOrder
                 );
                 break;
-
-
             }
 
             case RSVP_WITH_ID: {
@@ -288,6 +289,7 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
             }
 
             case FAVORITE_WITH_ID: {
@@ -326,7 +328,15 @@ public class ChoresProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) {
-        return null;
+
+        switch (sUriMatcher.match(uri)) {
+            case EVENTS:
+            case EVENT_WITH_STARTDATE:
+                return EventEntry.CONTENT_TYPE;
+
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
     }
 
     @Override

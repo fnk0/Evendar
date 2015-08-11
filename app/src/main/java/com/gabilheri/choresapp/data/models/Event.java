@@ -3,6 +3,8 @@ package com.gabilheri.choresapp.data.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.gabilheri.choresapp.data.ChoresContract;
+
 import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
 
 /**
@@ -154,6 +156,7 @@ public class Event {
     public static Event fromCursor(Cursor cursor, boolean closeCursor) {
         Event event = new Event();
         event.setCreatedAt(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE)))
+                .setId(cursor.getLong(cursor.getColumnIndex(ChoresContract.LONG_ID)))
                 .setTime(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_TIME)))
                 .setTitle(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_TITLE)))
                 .setIsWant(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_IS_WANT)) == 1)

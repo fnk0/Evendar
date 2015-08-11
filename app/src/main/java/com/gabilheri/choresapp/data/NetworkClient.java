@@ -6,6 +6,7 @@ import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 import retrofit.RestAdapter;
 import retrofit.client.Client;
@@ -45,6 +46,9 @@ public class NetworkClient {
      */
     static OkHttpClient getOkHttpClient(Context context) {
         OkHttpClient client = new OkHttpClient();
+        client.setWriteTimeout(120, TimeUnit.SECONDS);
+        client.setConnectTimeout(120, TimeUnit.SECONDS);
+        client.setReadTimeout(120, TimeUnit.SECONDS);
         // Install an HTTP cache in the application cache directory.
         File cacheDir = new File(context.getApplicationContext().getCacheDir(), "http");
         Cache cache = new Cache(cacheDir, DISK_CACHE_SIZE);

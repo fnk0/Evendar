@@ -24,11 +24,11 @@ public final class QueryUtils {
     private QueryUtils() { }
 
     public static <T> T findByUsername(Class<T> type, String username) {
-        return ofy().load().type(type).filter("username", username).first().now();
+        return ofy().load().type(type).filter(ChoresContract.UserEntry.COLUMN_USERNAME, username).first().now();
     }
 
     public static <T> T findByUserId(Class<T> type, Long userId) {
-        return ofy().load().type(type).filter("userId", userId).first().now();
+        return ofy().load().type(type).id(userId).now();
     }
 
     public static <T> T findRecordByDate(Class<T> type, String date) {
@@ -90,30 +90,31 @@ public final class QueryUtils {
 
 
     //given a user id, returns a list of their friends
-    public static CollectionResponse<User> getFriends( @Named("id") Long id){
-        //String str = "SELECT " + FriendshipEntry.COLUMN_USER_ID2 + " FROM " + ChoresContract.FriendshipEntry.TABLE_NAME + " WHERE " + ChoresContract.FriendshipEntry.COLUMN_USER_ID1 + " = " + id;
-        Query<User> query = ofy().load().type(User.class).filter(FriendshipEntry.COLUMN_USER_ID1, id).filter(" OR " + FriendshipEntry.COLUMN_USER_ID2, id);
+    public static CollectionResponse<Friendship> getFriends( @Named("id") Long id){
+        Query<Friendship> query = ofy().load().type(Friendship.class)
+                .filter(FriendshipEntry.COLUMN_USER_ID1, id)
+                .filter(FriendshipEntry.COLUMN_USER_ID2, id);
         return listByQuery(query, null, null);
 
     }
 
     //given a user id, returns the list of evens that the user has created
-    public static CollectionResponse<Event> getEventsFromUser(@Named("id") Long id){
-       // String query = "SELECT * FROM " + ChoresContract.EventEntry.TABLE_NAME + " WHERE " + ChoresContract.EventEntry.COLUMN_USER_ID + " = " + id;
-
-        Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID, id);
+    public static CollectionResponse<Event> getEventsFromUser(@Named("id") Long id) {
+        User user = findByUserId(User.class, id);
+        Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USERNAME, user.getUsername());
         return listByQuery(query, null, null);
     }
 
     //given a user id, returns the list of events that represents their home feed
-
     public static List<Event> getEventFeed(@Named("id") Long id){
 
         List<Event> feed = new ArrayList<Event>();
-        List<User> friends = ofy().load().type(User.class).filter(FriendshipEntry.COLUMN_USER_ID1 + " = ", id).filter(FriendshipEntry.COLUMN_USER_ID2 + " = ", id).list();
+        List<Friendship> friends = ofy().load().type(Friendship.class)
+                .filter(FriendshipEntry.COLUMN_USER_ID1, id)
+                .filter(FriendshipEntry.COLUMN_USER_ID2, id).list();
 
-        for(User u : friends){
-            List<Event> friendsEvents = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID + " = ", u.getId()).list();
+        for(Friendship u : friends){
+            List<Event> friendsEvents = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID, u.getId()).list();
             for (Event e : friendsEvents){
                 feed.add(e);
             }

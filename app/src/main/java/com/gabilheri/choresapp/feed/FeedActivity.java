@@ -13,6 +13,7 @@ import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
 import com.gabilheri.choresapp.new_event.NewEventActivity;
+import com.gabilheri.choresapp.sync.ChoresSyncAdapter;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.TimeUtils;
 
@@ -61,7 +62,8 @@ public class FeedActivity extends BaseDrawerActivity {
         String today = TimeUtils.formatShortDate(LocalDateTime.now().toDate().getTime());
         setTitle(today);
 
-//        ChoresSyncAdapter.initializeSyncAdapter(this);
+        ChoresSyncAdapter.initializeSyncAdapter(this);
+        ChoresSyncAdapter.syncImmediately(this);
 
         MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());
 

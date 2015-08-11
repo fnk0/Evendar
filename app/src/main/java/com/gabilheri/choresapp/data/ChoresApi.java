@@ -2,6 +2,7 @@ package com.gabilheri.choresapp.data;
 
 import com.gabilheri.choresapp.data.models.Comment;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.FeedResponse;
 import com.gabilheri.choresapp.data.models.User;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 import rx.Observable;
 
 /**
@@ -49,15 +51,16 @@ public interface ChoresApi {
     // Events section
 
     // Returns all public events
-    @POST(NetworkClient.EVENT_API + "/allEvents/{updatedAt}")
+    @GET(NetworkClient.EVENT_API + "/allEvents/{updatedAt}")
     Observable<List<Event>> getAllEvents(
             @Path("updatedAt") String updatedAt
     );
 
-    @POST(NetworkClient.EVENT_API + "/allEvents/{userId}/{updatedAt")
-    Observable<List<Event>> getAllUserEvents(
-            @Path("userId") Long userId,
-            @Path("updatedAt") String updatedAt
+    @GET(NetworkClient.EVENT_API + "/allUserEvents")
+    Observable<FeedResponse> getAllUserEvents(
+            @Query("date") String updatedAt,
+            @Query("id") Long userId
+
     );
 
     @POST(NetworkClient.EVENT_API + "/event")

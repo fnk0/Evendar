@@ -145,7 +145,7 @@ public class User {
 
     public static ContentValues toContentValues(User user) {
         ContentValues userValues = new ContentValues();
-
+        userValues.put(ChoresContract.LONG_ID, user.getId());
         userValues.put(UserEntry.COLUMN_EMAIL, user.getEmail());
         userValues.put(UserEntry.COLUMN_USERNAME, user.getUsername());
         userValues.put(UserEntry.COLUMN_FULL_NAME, user.getFullName());
