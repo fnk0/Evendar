@@ -503,7 +503,7 @@ public class ChoresProvider extends ContentProvider {
 
         // Events URI's
         matcher.addURI(authority, ChoresContract.PATH_EVENT, EVENTS);
-        matcher.addURI(authority, ChoresContract.PATH_EVENT + "/s/*", EVENT_WITH_STARTDATE);
+        matcher.addURI(authority, ChoresContract.PATH_EVENT + "/s/#/e/#/iw/#", EVENT_WITH_STARTDATE);
         matcher.addURI(authority, ChoresContract.PATH_EVENT + "/e/*", EVENT_WITH_ENDDATE);
         matcher.addURI(authority, ChoresContract.PATH_EVENT + "/iw/#", EVENT_WITH_IS_WANT);
 

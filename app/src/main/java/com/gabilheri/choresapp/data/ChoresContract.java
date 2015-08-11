@@ -3,6 +3,9 @@ package com.gabilheri.choresapp.data;
 import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.support.annotation.Nullable;
+
+import org.joda.time.LocalDateTime;
 
 /**
  * Created by kieran on 7/24/15.
@@ -79,7 +82,7 @@ public class ChoresContract {
         }
 
         public static String getUsernameFromUri(Uri uri){
-            return uri.getPathSegments().get(4);
+            return uri.getPathSegments().get(2);
         }
 
         public static Long getIdFromUri(Uri uri){
@@ -153,7 +156,12 @@ public class ChoresContract {
          * @return
          *      The uri representing this query
          */
-        public static Uri buildEventUri(String startDate, String endDate, boolean isWant) {
+        public static Uri buildEventUri(String startDate, @Nullable String endDate, boolean isWant) {
+
+            if(endDate == null) {
+                endDate = String.valueOf(LocalDateTime.now().plusDays(365).toDate().getTime());
+            }
+
             return CONTENT_URI.buildUpon()
                     .appendPath("s")
                     .appendPath(startDate)

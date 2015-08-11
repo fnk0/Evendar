@@ -6,14 +6,18 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.favorite_events.FavoritesActivity;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.sign_in.SignInActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.PrefManager;
+import com.gabilheri.choresapp.utils.QueryUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -32,10 +36,16 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     protected DrawerLayout mDrawerLayout;
 
     @Bind(R.id.nav_view)
-    protected NavigationView navigationView;
+    protected NavigationView mNavigationView;
 
     @Bind(R.id.userPicture)
-    CircleImageView userPicture;
+    CircleImageView mUserPicture;
+
+    @Bind(R.id.userName)
+    TextView userName;
+
+    @Bind(R.id.userLocation)
+    TextView userLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,8 +56,9 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private void setupDrawerContent() {
-        ButterKnife.bind(navigationView);
-        navigationView.setNavigationItemSelectedListener(
+        User activeUser = QueryUtils.getAuthenticatedUserFromDB();
+        ButterKnife.bind(mNavigationView);
+        mNavigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
@@ -76,29 +87,33 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                     }
                 });
 
+        String[] fNameArr = activeUser.getFullName().split(" ");
+        userName.setText(fNameArr[0] + " " + fNameArr[fNameArr.length - 1]);
+        userLocation.setVisibility(View.GONE);
+
         Glide.with(this)
-                .load("https://lh6.googleusercontent.com/-PLz-1wFMskM/U1VdxVwcXgI/AAAAAAAAMvw/JUU7tw4CWms/w1674-h1676-no/1397661337286.jpg")
+                .load(activeUser.getPicUrl())
                 .centerCrop()
                 .crossFade()
-                .into(userPicture);
+                .into(mUserPicture);
     }
 
     private Intent getFeedActivity() {
-        if(this instanceof FeedActivity) {
-           return null;
+        if (this instanceof FeedActivity) {
+            return null;
         }
         return new Intent(this, FeedActivity.class);
     }
 
     private Intent getFavoritesActivity() {
-        if(this instanceof FavoritesActivity) {
+        if (this instanceof FavoritesActivity) {
             return null;
         }
         return new Intent(this, FavoritesActivity.class);
     }
 
     private Intent getFriendsActivity() {
-        if(this instanceof PeopleListActivity) {
+        if (this instanceof PeopleListActivity) {
             return null;
         }
         return new Intent(this, PeopleListActivity.class);
@@ -107,14 +122,13 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     private Intent signOut() {
 
 
-
         PrefManager.with(this).remove(Const.USERNAME);
         PrefManager.with(this).save(Const.SIGNED_IN, false);
         return new Intent(this, SignInActivity.class);
     }
 
     protected void enableHamburgerMenu() {
-        if(getSupportActionBar() != null) {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_menu);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }

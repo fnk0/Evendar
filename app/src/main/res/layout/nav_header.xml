@@ -1,48 +1,50 @@
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="192dp"
+  android:background="@drawable/drawer_bg"
+  android:gravity="bottom"
+  android:orientation="vertical"
+  android:padding="16dp"
+  android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+  <de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/userPicture"
+    android:layout_width="82dp"
+    android:layout_height="82dp"
+    android:src="@mipmap/ic_launcher"
+    />
+
+  <TextView
+    android:id="@+id/userName"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
-    android:background="@drawable/drawer_bg"
-    android:gravity="bottom"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_vertical_margin"
+    android:layout_toRightOf="@+id/userPicture"
+    android:ellipsize="end"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:singleLine="true"
+    android:textColor="@color/grey_200"
+    android:textSize="22sp"
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/userPicture"
-        android:src="@mipmap/ic_launcher"
-        android:layout_width="82dp"
-        android:layout_height="82dp"
+    tools:text="Marcus Gabilheri"
     />
 
-    <TextView
-        android:id="@+id/userName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Marcus Gabilheri"
-        android:layout_toRightOf="@+id/userPicture"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
-        android:textSize="22sp"
-        android:singleLine="true"
-        android:ellipsize="end"
-        android:textColor="@color/grey_200"
+  <TextView
+    android:id="@+id/userLocation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/userName"
+    android:layout_marginLeft="@dimen/activity_vertical_margin"
+    android:layout_toRightOf="@+id/userPicture"
+    android:drawableLeft="@drawable/ic_location"
+    android:drawablePadding="8dp"
+    android:gravity="center_vertical"
+    android:paddingBottom="4dp"
+    android:paddingTop="8dp"
+    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+    tools:text="Austin, TX"
     />
-
-    <TextView
-        android:id="@+id/userLocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Austin, TX"
-        android:layout_toRightOf="@+id/userPicture"
-        android:layout_below="@id/userName"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:paddingTop="8dp"
-        android:drawableLeft="@drawable/ic_location"
-        android:drawablePadding="8dp"
-        android:paddingBottom="4dp"
-        android:gravity="center_vertical"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        />
 
 </RelativeLayout>
