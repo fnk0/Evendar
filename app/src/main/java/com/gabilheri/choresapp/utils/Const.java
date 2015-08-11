@@ -27,6 +27,7 @@ public final class Const {
     public static final String SELECTED_KEY = "selected_position";
     public static final String IS_COMMENT = "is_comment";
     public static final String EVENT_ID = "event_id";
+    public static final String IS_FAVORITES = "is_favorites";
 
     public static final String FACEBOOK_SIGN_IN = "fb_signed_in";
     public static final String GOOGLE_SIGN_IN = "google_signed_in";
