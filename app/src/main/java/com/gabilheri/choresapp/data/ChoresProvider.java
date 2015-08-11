@@ -143,6 +143,8 @@ public class ChoresProvider extends ContentProvider {
                 return insertValuesIntoTable(RSVPEntry.TABLE_NAME, uri, values);
             case FAVORITES:
                 return insertValuesIntoTable(FavoriteEntry.TABLE_NAME, uri, values);
+            case FRIENDS:
+                return insertValuesIntoTable(FriendshipEntry.TABLE_NAME, uri, values);
             default:
                 return super.bulkInsert(uri, values);
         }
@@ -169,12 +171,74 @@ public class ChoresProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mChoresDbHelper.getWritableDatabase();
+        int rowsDeleted;
+
+        if (selection == null) {
+            selection = "1";
+        }
+
+        switch (sUriMatcher.match(uri)) {
+            case EVENTS:
+                rowsDeleted = db.delete(EventEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case USER:
+                rowsDeleted = db.delete(UserEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case COMMENTS:
+                rowsDeleted = db.delete(CommentEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case RSVP:
+                rowsDeleted = db.delete(RSVPEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case FRIENDS:
+                rowsDeleted = db.delete(FriendshipEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            case FAVORITES:
+                rowsDeleted = db.delete(FavoriteEntry.TABLE_NAME, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+        // Because a null deletes all rows
+        if (rowsDeleted != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsDeleted;
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = mChoresDbHelper.getWritableDatabase();
+        int rowsUpdated;
+
+        switch (sUriMatcher.match(uri)) {
+            case EVENTS:
+                rowsUpdated = db.update(EventEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case USER:
+                rowsUpdated = db.update(UserEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case COMMENTS:
+                rowsUpdated = db.update(CommentEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case RSVP:
+                rowsUpdated = db.update(RSVPEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case FRIENDS:
+                rowsUpdated = db.update(FriendshipEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case FAVORITES:
+                rowsUpdated = db.update(FriendshipEntry.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return rowsUpdated;
     }
 
     /**
