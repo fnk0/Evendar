@@ -79,6 +79,17 @@ public class RSVPEndpoint {
         return rsvp;
     }
 
+    //gets all the RSVPs of a user
+    @ApiMethod(name = "getRSVPsFor", path = "getRSVPsFor")
+    public CollectionResponse<RSVP> getRSVPsFor(@Named("id") Long userId) throws NotFoundException{
+        if(findByUserId(User.class, userId) == null){
+            throw new NotFoundException("User record not found!");
+        }
+
+        Query<RSVP> query = ofy().load().type(RSVP.class).filter(ChoresContract.RSVPEntry.COLUMN_USER_ID, userId);
+        return listByQuery(query, null, null);
+    }
+
 
 
 }
