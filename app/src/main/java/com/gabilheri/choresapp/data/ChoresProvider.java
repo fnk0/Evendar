@@ -67,12 +67,11 @@ public class ChoresProvider extends ContentProvider {
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-       Cursor retCursor;
-        switch(sUriMatcher.match(uri)){
+        Cursor retCursor;
+        switch (sUriMatcher.match(uri)) {
 
 
-            case USER_WITH_USERNAME:
-            {
+            case USER_WITH_USERNAME: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         UserEntry.TABLE_NAME,
                         projection,
@@ -81,25 +80,23 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
             }
-            case USER_WITH_ID:
-            {
+            case USER_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         UserEntry.TABLE_NAME,
                         projection,
                         ("" + UserEntry.TABLE_NAME + "." + UserEntry._ID + " = ?"),
-                        new String[]{UserEntry.getIdFromUri(uri ) + ""},
+                        new String[]{UserEntry.getIdFromUri(uri) + ""},
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
 
             }
-            case USER:
-            {
+            case USER: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         UserEntry.TABLE_NAME,
                         projection,
@@ -112,8 +109,7 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
-            case EVENTS:
-            {
+            case EVENTS: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
@@ -125,8 +121,7 @@ public class ChoresProvider extends ContentProvider {
                 );
                 break;
             }
-            case EVENT_WITH_ENDDATE:
-            {
+            case EVENT_WITH_ENDDATE: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
@@ -135,12 +130,11 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
 
             }
-            case EVENT_WITH_STARTDATE:
-            {
+            case EVENT_WITH_STARTDATE: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
@@ -149,11 +143,10 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
             }
-            case EVENT_WITH_IS_WANT:
-            {
+            case EVENT_WITH_IS_WANT: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
@@ -162,12 +155,11 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
             }
 
-            case COMMENT_WITH_ID:
-            {
+            case COMMENT_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         CommentEntry.TABLE_NAME,
                         projection,
@@ -176,12 +168,11 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
             }
 
-            case COMMENTS:
-            {
+            case COMMENTS: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         CommentEntry.TABLE_NAME,
                         projection,
@@ -194,8 +185,7 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
-            case FRIEND_WITH_ID:
-            {
+            case FRIEND_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FriendshipEntry.TABLE_NAME,
                         projection,
@@ -204,25 +194,23 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
 
             }
 
-            case FRIEND_WITH_USER_ID:
-            {
+            case FRIEND_WITH_USER_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FriendshipEntry.TABLE_NAME,
                         projection,
-                        ("" + FriendshipEntry.TABLE_NAME + "." + FriendshipEntry.COLUMN_USER_ID1 + " = ? OR " + FriendshipEntry.COLUMN_USER_ID2 +  " = ?"),
-                        new String[]{Long.parseLong(uri.getPathSegments().get(4)) + "", Long.parseLong(uri.getPathSegments().get(4)) +""},
+                        ("" + FriendshipEntry.TABLE_NAME + "." + FriendshipEntry.COLUMN_USER_ID1 + " = ? OR " + FriendshipEntry.COLUMN_USER_ID2 + " = ?"),
+                        new String[]{Long.parseLong(uri.getPathSegments().get(4)) + "", Long.parseLong(uri.getPathSegments().get(4)) + ""},
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
             }
 
-            case FRIENDS:
-            {
+            case FRIENDS: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FriendshipEntry.TABLE_NAME,
                         projection,
@@ -235,8 +223,7 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
-            case RSVP_WITH_EVENT_ID:
-            {
+            case RSVP_WITH_EVENT_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         RSVPEntry.TABLE_NAME,
                         projection,
@@ -245,14 +232,13 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
 
 
             }
 
-            case RSVP_WITH_ID:
-            {
+            case RSVP_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         RSVPEntry.TABLE_NAME,
                         projection,
@@ -261,14 +247,13 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
 
 
             }
 
-            case RSVP:
-            {
+            case RSVP: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         RSVPEntry.TABLE_NAME,
                         projection,
@@ -281,8 +266,7 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
-            case FAVORITE_WITH_ID:
-            {
+            case FAVORITE_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FavoriteEntry.TABLE_NAME,
                         projection,
@@ -291,12 +275,11 @@ public class ChoresProvider extends ContentProvider {
                         null,
                         null,
                         sortOrder
-                ) ;
+                );
                 break;
             }
 
-            case FAVORITES:
-            {
+            case FAVORITES: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FavoriteEntry.TABLE_NAME,
                         projection,
@@ -309,9 +292,12 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
 
-        return null;
+        retCursor.setNotificationUri(getContext().getContentResolver(), uri);
+        return retCursor;
     }
 
     @Override
@@ -500,6 +486,7 @@ public class ChoresProvider extends ContentProvider {
     /**
      * This URI matcher will match each table of the Database and return the right one
      * based on the query
+     *
      * @return The UriMatcher object containing the desired query table
      */
     public static UriMatcher buildUriMatcher() {
