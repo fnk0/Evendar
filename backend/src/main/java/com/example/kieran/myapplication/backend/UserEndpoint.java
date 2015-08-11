@@ -7,6 +7,9 @@ import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
+import com.sun.tools.corba.se.idl.constExpr.Not;
+import com.googlecode.objectify.cmd.Query;
+
 
 import java.util.List;
 
@@ -14,9 +17,11 @@ import javax.inject.Named;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.findByUserId;
 import static com.example.kieran.myapplication.backend.QueryUtils.findByUsername;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
+import static com.example.kieran.myapplication.backend.QueryUtils.listByQuery;
 
 /**
  * Created by kieran on 8/5/15.
@@ -93,6 +98,21 @@ public class UserEndpoint {
         }
 
         return QueryUtils.getEventFeed(u.getId());
+    }
+
+    @ApiMethod(name = "getEventsAttending", path = "getEventsAttending")
+    public CollectionResponse<Event> getEventsAttending(User u) throws NotFoundException{
+        if(findByUserId(User.class, u.getId()) == null){
+            throw new NotFoundException("User record does not exist");
+        }
+
+        //call on RSVP api and then get the events from that
+
+        Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.RSVPEntry.COLUMN_USER_ID, u.getId());
+
+
+        return listByQuery(query, null, null);
+
     }
 
 
