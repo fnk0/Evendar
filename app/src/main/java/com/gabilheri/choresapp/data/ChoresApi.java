@@ -2,6 +2,7 @@ package com.gabilheri.choresapp.data;
 
 import com.gabilheri.choresapp.data.models.Comment;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.FeedResponse;
 import com.gabilheri.choresapp.data.models.User;
 
 import java.util.List;
@@ -56,7 +57,7 @@ public interface ChoresApi {
     );
 
     @POST(NetworkClient.EVENT_API + "/allUserEvents")
-    Observable<List<Event>> getAllUserEvents(
+    Observable<FeedResponse> getAllUserEvents(
             @Query("date") Long userId,
             @Query("id") String updatedAt
     );
