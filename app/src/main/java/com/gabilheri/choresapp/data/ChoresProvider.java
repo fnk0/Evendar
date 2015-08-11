@@ -72,6 +72,17 @@ public class ChoresProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
 
 
+            case USER_WITH_EVENT_ID: {
+                retCursor = mChoresDbHelper.getReadableDatabase().query(
+                        EventEntry.TABLE_NAME,
+                        projection,
+                        ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_USER_ID + " = ?"),
+                        new String[]{EventEntry.getUserIdFromUri(uri)},
+                        null,
+                        null,
+                        sortOrder
+                );
+            }
             case USER_WITH_USERNAME: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         UserEntry.TABLE_NAME,
@@ -204,7 +215,7 @@ public class ChoresProvider extends ContentProvider {
                         FriendshipEntry.TABLE_NAME,
                         projection,
                         ("" + FriendshipEntry.TABLE_NAME + "." + FriendshipEntry.COLUMN_USER_ID1 + " = ? OR " + FriendshipEntry.COLUMN_USER_ID2 + " = ?"),
-                        new String[]{FriendshipEntry.getId1FromUri(uri) + "" , FriendshipEntry.getId2FromUri(uri) + ""},
+                        new String[]{FriendshipEntry.getId1FromUri(uri) + "", FriendshipEntry.getId2FromUri(uri) + ""},
                         null,
                         null,
                         sortOrder
@@ -267,7 +278,7 @@ public class ChoresProvider extends ContentProvider {
                 break;
             }
 
-            case FAVORITE_WITH_USER_ID:{
+            case FAVORITE_WITH_USER_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FavoriteEntry.TABLE_NAME,
                         projection,

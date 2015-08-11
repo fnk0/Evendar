@@ -74,18 +74,18 @@ public class ChoresContract {
                     .build();
         }
 
-        public static Uri buildUsersForEvent(Long eventId){
+        public static Uri buildUsersForEvent(Long eventId) {
             return CONTENT_URI.buildUpon()
                     .appendPath("ei")
                     .appendPath(String.valueOf(eventId))
                     .build();
         }
 
-        public static String getUsernameFromUri(Uri uri){
+        public static String getUsernameFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
 
-        public static Long getIdFromUri(Uri uri){
+        public static Long getIdFromUri(Uri uri) {
             return Long.parseLong(uri.getPathSegments().get(2));
         }
 
@@ -147,24 +147,19 @@ public class ChoresContract {
                     .build();
         }
 
-        public static String getIsWantFromUri(Uri uri){
+        public static String getIsWantFromUri(Uri uri) {
             return uri.getPathSegments().get(6);
         }
 
         /**
-         *
-         * @param startDate
-         *      The beginning of the period to get events
-         * @param endDate
-         *      The ending of the period for the events
-         * @param isWant
-         *      represents if the events should be isWant or goingTo
-         * @return
-         *      The uri representing this query
+         * @param startDate The beginning of the period to get events
+         * @param endDate   The ending of the period for the events
+         * @param isWant    represents if the events should be isWant or goingTo
+         * @return The uri representing this query
          */
         public static Uri buildEventUri(String startDate, @Nullable String endDate, boolean isWant) {
 
-            if(endDate == null) {
+            if (endDate == null) {
                 endDate = String.valueOf(LocalDateTime.now().plusDays(365).toDate().getTime());
             }
 
@@ -178,11 +173,15 @@ public class ChoresContract {
                     .build();
         }
 
-        public static String getDateFromUri(Uri uri){
+        public static String getDateFromUri(Uri uri) {
             return uri.getPathSegments().get(4);
         }
 
-        public static String getStartDateFromUri(Uri uri){
+        public static String getStartDateFromUri(Uri uri) {
+            return uri.getPathSegments().get(2);
+        }
+
+        public static String getUserIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
     }
@@ -211,11 +210,11 @@ public class ChoresContract {
                     .build();
         }
 
-        public static String getUserIdFromUri(Uri uri){
+        public static String getUserIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
 
-        public static String getIdFromUri(Uri uri){
+        public static String getIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
 
@@ -252,15 +251,15 @@ public class ChoresContract {
                     .build();
         }
 
-        public static String getIdFromUri(Uri uri){
+        public static String getIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
 
-        public static String getId1FromUri(Uri uri){
+        public static String getId1FromUri(Uri uri) {
             return uri.getPathSegments().get(4);
         }
 
-        public static String getId2FromUri(Uri uri){
+        public static String getId2FromUri(Uri uri) {
             return uri.getPathSegments().get(6);
         }
 
@@ -294,7 +293,7 @@ public class ChoresContract {
                     .build();
         }
 
-        public static String getIdFromUri(Uri uri){
+        public static String getIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
     }
@@ -331,11 +330,11 @@ public class ChoresContract {
                     .build();
         }
 
-        public static String getEventIdFromUri(Uri uri){
+        public static String getEventIdFromUri(Uri uri) {
             return uri.getPathSegments().get(4);
         }
 
-        public static String getIdFromUri(Uri uri){
+        public static String getIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }
     }
