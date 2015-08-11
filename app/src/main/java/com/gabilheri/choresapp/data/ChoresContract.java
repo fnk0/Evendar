@@ -317,6 +317,8 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static final String COLUMN_FULL_NAME = "full_name";
+
 
         public static Uri buildRSVP(Long rsvpID) {
             return CONTENT_URI.buildUpon()
@@ -333,7 +335,7 @@ public class ChoresContract {
         }
 
         public static String getEventIdFromUri(Uri uri) {
-            return uri.getPathSegments().get(4);
+            return uri.getPathSegments().get(2);
         }
 
         public static String getIdFromUri(Uri uri) {
