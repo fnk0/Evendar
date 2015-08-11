@@ -22,11 +22,6 @@ import static com.example.kieran.myapplication.backend.QueryUtils.list;
  * Created by kieran on 8/5/15.
  */
 
-/*
-TODO what do i use for owner domain/name?
-Response: Package name
-fix the import for ofy
-*/
 
 @Api(
         name = "userApi",

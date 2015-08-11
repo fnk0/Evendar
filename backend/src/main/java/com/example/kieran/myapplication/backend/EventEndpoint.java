@@ -29,9 +29,6 @@ import static com.example.kieran.myapplication.backend.QueryUtils.listByQuery;
  * Created by kieran on 8/5/15.
  */
 
-/*@TODO what do i use for owner domain/name?
-fix the import for ofy
-*/
 
 
 @Api(
