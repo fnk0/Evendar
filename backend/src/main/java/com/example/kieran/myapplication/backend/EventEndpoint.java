@@ -8,6 +8,8 @@ import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
+import com.googlecode.objectify.cmd.Query;
+
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -15,11 +17,13 @@ import java.util.Collection;
 
 import static com.example.kieran.myapplication.backend.OfyService.ofy;
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.findByUserId;
 import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
 import static com.example.kieran.myapplication.backend.QueryUtils.getEventsFromUser;
 import static com.example.kieran.myapplication.backend.QueryUtils.getFriends;
 import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.list;
+import static com.example.kieran.myapplication.backend.QueryUtils.listByQuery;
 
 /**
  * Created by kieran on 8/5/15.
@@ -103,5 +107,16 @@ public class EventEndpoint {
     @ApiMethod(name = "getEvent")
     public Event getEvent(@Named("id") Long id) throws NotFoundException {
         return getObject(Event.class, id);
+    }
+
+    @ApiMethod(name = "getEventsCreatedBy", path = "getEventsCreatedBy")
+    public CollectionResponse<Event> getEventsCreatedBy(@Named("id") Long id) throws NotFoundException {
+        if (findByUserId(User.class, id) == null){
+            throw new NotFoundException("User record not found!");
+        }
+
+        Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID, id);
+
+        return listByQuery(query, null, null);
     }
 }
