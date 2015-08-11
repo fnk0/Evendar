@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.BaseFragment;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.utils.Const;
@@ -46,6 +47,8 @@ public class DetailFragment extends BaseFragment {
 
     Long eventId;
 
+    Event event;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,6 +69,11 @@ public class DetailFragment extends BaseFragment {
                 overflowLayout.setVisibility(View.VISIBLE);
                 overflowFriends.setText(String.format("%d more", (numUsers - 3)));
             }
+
+            event = QueryUtils.getEventFromDB(eventId);
+
+
+
         }
     }
 

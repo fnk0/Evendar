@@ -1,8 +1,9 @@
 package com.gabilheri.choresapp.new_event;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -13,9 +14,11 @@ import android.widget.TimePicker;
 import com.gabilheri.choresapp.BaseFragment;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.feed.FeedActivity;
+import com.gabilheri.choresapp.sync.ChoresSyncAdapter;
 import com.gabilheri.choresapp.utils.DialogUtils;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
@@ -64,42 +67,53 @@ public class NewEventFragment extends BaseFragment {
     }
 
     @OnClick(R.id.createEvent)
-    public void goToNewEventActivity( View view ) {
+    public void goToNewEventActivity(View view ) {
         // save details
-        Event newEvent = new Event();
-        newEvent.setTitle(enterEventName.getText().toString());
-        newEvent.setLocation(newEventLocation.getText().toString());
-        newEvent.setIsWant(radioButtonWants.isChecked());
-        newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
-        newEvent.setTime(newEventDate.getMonth() + ":" + newEventDate.getDayOfMonth() + ":" + newEventDate.getYear());
-        User user = QueryUtils.getAuthenticatedUserFromDB();
-        newEvent.setUsername(user.getUsername());
 
-        ChoresApp.instance().getApi().insertEvent(newEvent)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<Event>() {
-                    @Override
-                    public void onCompleted() {
-                        unsubscribe();
-                    }
+        String eventTitle = enterEventName.getText().toString();
 
-                    @Override
-                    public void onError(Throwable e) {
-                        // TODO show error to user
-                    }
+        if(!eventTitle.isEmpty()) {
 
-                    @Override
-                    public void onNext(Event event) {
-                        if(event.getTitle() != null) {
-                            startActivity(new Intent(getActivity(), FeedActivity.class));
-                        } else {
-                            //TODO show error to user
-                            DialogUtils.showErrorDialog(getActivity(), "No Event Title", "Please enter an event title when creating a new event");
+            Event newEvent = new Event();
+            newEvent.setTitle(eventTitle);
+            newEvent.setLocation(newEventLocation.getText().toString());
+            newEvent.setIsWant(radioButtonWants.isChecked());
+            newEvent.setDescription(newEventDetails.getText().toString());
+            newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
+            newEvent.setTime(newEventDate.getMonth() + ":" + newEventDate.getDayOfMonth() + ":" + newEventDate.getYear());
+            User user = QueryUtils.getAuthenticatedUserFromDB();
+            newEvent.setUsername(user.getUsername());
+
+            ChoresApp.instance().getApi().insertEvent(newEvent)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Subscriber<Event>() {
+                        @Override
+                        public void onCompleted() {
+                            unsubscribe();
                         }
-                    }
-                });
 
+                        @Override
+                        public void onError(Throwable e) {
+                            DialogUtils.showErrorDialog(getActivity(), null, null);
+                            Log.e("NewEventFragment", "onError", e);
+                        }
+
+                        @Override
+                        public void onNext(Event event) {
+                            ContentValues values = Event.toContentValues(event);
+                            getActivity().getContentResolver().insert(ChoresContract.EventEntry.buildEventUri(), values);
+                            ChoresSyncAdapter.syncImmediately(getActivity());
+                            if(event.getTitle() != null) {
+                                startActivity(new Intent(getActivity(), FeedActivity.class));
+                            } else {
+                                DialogUtils.showErrorDialog(getActivity(), null, null);
+                            }
+                        }
+                    });
+        } else {
+            DialogUtils.showErrorDialog(getActivity(), "No Event Title", "Please enter an event title when creating a new event");
+        }
     }
 
     @Override

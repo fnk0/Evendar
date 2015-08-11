@@ -173,6 +173,7 @@ public class Event {
 
     public static ContentValues toContentValues(Event event) {
         ContentValues values = new ContentValues();
+        values.put(EventEntry.COLUMN_LONG_ID, event.getId());
         values.put(EventEntry.COLUMN_DATE, event.getCreatedAt());
         values.put(EventEntry.COLUMN_TIME, event.getTime());
         values.put(EventEntry.COLUMN_TITLE, event.getTitle());

@@ -13,9 +13,7 @@ import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
 import com.gabilheri.choresapp.new_event.NewEventActivity;
-import com.gabilheri.choresapp.sign_in.SignInActivity;
 import com.gabilheri.choresapp.utils.Const;
-import com.gabilheri.choresapp.utils.PrefManager;
 import com.gabilheri.choresapp.utils.TimeUtils;
 
 import org.joda.time.LocalDateTime;
@@ -25,11 +23,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FeedActivity extends BaseDrawerActivity {
-
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
-    private static final String TWITTER_KEY = "JjDmkcjAqgjba10SvKRLFhEQB";
-    private static final String TWITTER_SECRET = "HLgGNfZv2Z9YSMfceDpNFcbUAKjMSBTe7Oyg5aIbzGf251Tgnp";
-
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
