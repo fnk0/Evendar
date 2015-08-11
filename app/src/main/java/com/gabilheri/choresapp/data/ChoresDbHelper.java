@@ -33,8 +33,7 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.UserEntry.COLUMN_UPDATED_AT + " TEXT, " +
                 ChoresContract.LONG_ID + " TEXT, " +
                 ChoresContract.UserEntry.COLUMN_PIC_URL + " TEXT, " +
-                "UNIQUE (" + ChoresContract.UserEntry.COLUMN_USERNAME +
-                ", " + ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
+                "UNIQUE (" + ChoresContract.UserEntry.COLUMN_USERNAME + ", " + ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
 
         final String SQL_CREATE_EVENT_TABLE = "CREATE TABLE " + ChoresContract.EventEntry.TABLE_NAME + " (" +
@@ -55,7 +54,8 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.EventEntry.COLUMN_USER_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.EventEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + ") );";
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
+                "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
 
         final String SQL_CREATE_FAVORITES_TABLE = "CREATE TABLE " + ChoresContract.FavoriteEntry.TABLE_NAME + " (" +
@@ -63,22 +63,28 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.LONG_ID + " TEXT, " +
                 ChoresContract.FavoriteEntry.COLUMN_UPDATED_AT + " TEXT, " +
                 ChoresContract.FavoriteEntry.COLUMN_DATE_CREATED + " TEXT, " +
+                ChoresContract.FavoriteEntry.COLUMN_EVENT_ID + " TEXT, " +
+                ChoresContract.FavoriteEntry.COLUMN_USER_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.FavoriteEntry.COLUMN_EVENT_ID + ") REFERENCES " +
-                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.EventEntry._ID + "), " +
+                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.FavoriteEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + ") );";
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
+                "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
         final String SQL_CREATE_FRIENDSHIPS_TABLE = "CREATE TABLE " + ChoresContract.FriendshipEntry.TABLE_NAME + " (" +
                 ChoresContract.FriendshipEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ChoresContract.LONG_ID + " TEXT, " +
                 ChoresContract.FriendshipEntry.COLUMN_UPDATED_AT + " TEXT, " +
                 ChoresContract.FriendshipEntry.COLUMN_DATE_CREATED + " TEXT, " +
+                ChoresContract.FriendshipEntry.COLUMN_USER_ID1 + " TEXT, " +
+                ChoresContract.FriendshipEntry.COLUMN_USER_ID2 + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.FriendshipEntry.COLUMN_USER_ID1 + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.FriendshipEntry.COLUMN_USER_ID2 + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + ") );";
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
+                "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
 
         final String SQL_CREATE_COMMENTS_TABLE = "CREATE TABLE " + ChoresContract.CommentEntry.TABLE_NAME + " (" +
@@ -88,22 +94,28 @@ public class ChoresDbHelper extends SQLiteOpenHelper {
                 ChoresContract.LONG_ID + " TEXT, " +
                 ChoresContract.CommentEntry.COLUMN_UPDATED_AT + " TEXT, " +
                 ChoresContract.CommentEntry.COLUMN_DATE_CREATED + " TEXT, " +
+                ChoresContract.CommentEntry.COLUMN_USER_ID + " TEXT, " +
+                ChoresContract.CommentEntry.COLUMN_EVENT_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.CommentEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + "), " +
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.CommentEntry.COLUMN_EVENT_ID + ") REFERENCES " +
-                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.EventEntry._ID + ") );";
+                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
+                "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
         final String SQL_CREATE_RSVP_TABLE = "CREATE TABLE " + ChoresContract.RSVPEntry.TABLE_NAME + " (" +
                 ChoresContract.RSVPEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 ChoresContract.LONG_ID + " TEXT, " +
                 ChoresContract.RSVPEntry.COLUMN_UPDATED_AT + " TEXT, " +
                 ChoresContract.RSVPEntry.COLUMN_DATE_CREATED + " TEXT, " +
+                ChoresContract.RSVPEntry.COLUMN_EVENT_ID + " TEXT, " +
+                ChoresContract.RSVPEntry.COLUMN_USER_ID + " TEXT, " +
 
                 " FOREIGN KEY (" + ChoresContract.RSVPEntry.COLUMN_EVENT_ID + ") REFERENCES " +
-                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.EventEntry._ID + "), " +
+                ChoresContract.EventEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
                 " FOREIGN KEY (" + ChoresContract.RSVPEntry.COLUMN_USER_ID + ") REFERENCES " +
-                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.UserEntry._ID + ") );";
+                ChoresContract.UserEntry.TABLE_NAME + " (" + ChoresContract.LONG_ID + "), " +
+                "UNIQUE (" +  ChoresContract.LONG_ID + ") ON CONFLICT REPLACE);";
 
 
         sqLiteDatabase.execSQL(SQL_CREATE_USER_TABLE);

@@ -509,6 +509,7 @@ public class ChoresProvider extends ContentProvider {
 
         // User URI's
         matcher.addURI(authority, ChoresContract.PATH_USER, USER);
+
         matcher.addURI(authority, ChoresContract.PATH_USER + "/id/#", USER_WITH_ID);
         matcher.addURI(authority, ChoresContract.PATH_USER + "/us/*", USER_WITH_USERNAME);
         matcher.addURI(authority, ChoresContract.PATH_USER + "/ei/#", USER_WITH_EVENT_ID);
