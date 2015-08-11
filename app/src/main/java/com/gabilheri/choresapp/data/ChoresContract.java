@@ -77,6 +77,14 @@ public class ChoresContract {
                     .appendPath(String.valueOf(eventId))
                     .build();
         }
+
+        public static String getUsernameFromUri(Uri uri){
+            return uri.getPathSegments().get(4);
+        }
+
+        public static Long getIdFromUri(Uri uri){
+            return Long.parseLong(uri.getPathSegments().get(2));
+        }
     }
 
     public static final class EventEntry implements BaseColumns {
@@ -154,6 +162,14 @@ public class ChoresContract {
                     .appendPath("iw")
                     .appendPath(String.valueOf(isWant ? 1 : 0))
                     .build();
+        }
+
+        public static String getDateFromUri(Uri uri){
+            return uri.getPathSegments().get(4);
+        }
+
+        public static String getStartDateFromUri(Uri uri){
+            return uri.getPathSegments().get(2);
         }
     }
 
