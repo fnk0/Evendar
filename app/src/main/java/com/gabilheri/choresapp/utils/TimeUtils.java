@@ -31,6 +31,11 @@ public final class TimeUtils {
         return sBasicSimpleDateFormat.format(time);
     }
 
+    public static String formatShortDate(long time) {
+        String formattedDate = sBasicSimpleDateFormat.format(time);
+        return formattedDate.substring(0, formattedDate.length() - 6);
+    }
+
     // To make it easy to query for the exact date, we normalize all dates that go into
     // the database to the start of the the Julian day at UTC.
     public static long normalizeDate(long startDate){

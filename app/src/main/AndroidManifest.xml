@@ -71,6 +71,39 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version"/>
 
+      <!-- Content Provider -->
+      <provider
+        android:name=".data.ChoresProvider"
+        android:authorities="@string/content_authority"
+        android:exported="false"
+        android:syncable="true"/>
+
+      <!-- SyncAdapter's dummy authentication service -->
+      <service
+        android:name=".sync.ChoresAuthenticatorService"
+        android:exported="true"
+        >
+        <intent-filter>
+          <action android:name="android.accounts.AccountAuthenticator"/>
+        </intent-filter>
+        <meta-data
+          android:name="android.accounts.AccountAuthenticator"
+          android:resource="@xml/authenticator"/>
+      </service>
+
+      <!-- The SyncAdapter service -->
+      <service
+        android:name=".sync.ChoresSyncService"
+        android:exported="true">
+        <intent-filter>
+          <action android:name="android.content.SyncAdapter"/>
+        </intent-filter>
+        <meta-data
+          android:name="android.content.SyncAdapter"
+          android:resource="@xml/syncadapter"/>
+      </service>
+
+
         <!-- Google Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"

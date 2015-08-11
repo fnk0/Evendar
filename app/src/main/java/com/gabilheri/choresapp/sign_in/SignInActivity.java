@@ -2,6 +2,7 @@ package com.gabilheri.choresapp.sign_in;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import com.gabilheri.choresapp.BaseActivity;
 import com.gabilheri.choresapp.BuildConfig;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.utils.Const;
@@ -293,7 +295,10 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
     }
 
     void finishActivity(User user) {
-        // saveUserToDB(user);
+
+        ContentValues userValues = User.toContentValues(user);
+        getContentResolver().insert(ChoresContract.UserEntry.buildUserUri(), userValues);
+
         PrefManager.with(getApplicationContext()).save(Const.USERNAME, user.getUsername());
         PrefManager.with(getApplicationContext()).save(Const.SIGNED_IN, true);
         goToFeedActivity();

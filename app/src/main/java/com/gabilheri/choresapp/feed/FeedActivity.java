@@ -15,6 +15,7 @@ import com.gabilheri.choresapp.new_event.NewEventActivity;
 import com.gabilheri.choresapp.sign_in.SignInActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.PrefManager;
+import com.gabilheri.choresapp.utils.TimeUtils;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
@@ -52,6 +53,10 @@ public class FeedActivity extends BaseDrawerActivity {
             startActivity(new Intent(this, SignInActivity.class));
             finish();
         }
+
+        String today = TimeUtils.formatShortDate(LocalDateTime.now().toDate().getTime());
+
+        setTitle(today);
 
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));

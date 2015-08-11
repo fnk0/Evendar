@@ -3,6 +3,8 @@ package com.gabilheri.choresapp.data.models;
 import android.content.ContentValues;
 import android.database.Cursor;
 
+import com.gabilheri.choresapp.data.ChoresContract;
+
 import static com.gabilheri.choresapp.data.ChoresContract.CommentEntry;
 
 /**
@@ -30,7 +32,7 @@ public class Comment {
             CommentEntry._ID,
             CommentEntry.COLUMN_TEXT,
             CommentEntry.COLUMN_TIME,
-            CommentEntry.COLUMN_LONG_ID,
+            ChoresContract.LONG_ID,
             CommentEntry.COLUMN_UPDATED_AT,
             CommentEntry.COLUMN_DATE_CREATED,
             CommentEntry.COLUMN_USER_ID
@@ -129,7 +131,7 @@ public class Comment {
 
     public static ContentValues toContentValues(Comment comment) {
         ContentValues values = new ContentValues();
-        values.put(CommentEntry.COLUMN_LONG_ID, comment.getId());
+        values.put(ChoresContract.LONG_ID, comment.getId());
         values.put(CommentEntry.COLUMN_TEXT, comment.getText());
         values.put(CommentEntry.COLUMN_TIME, comment.getTime());
         values.put(CommentEntry.COLUMN_UPDATED_AT, comment.getUpdatedAt());

@@ -6,17 +6,15 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 
-import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
-import static com.gabilheri.choresapp.data.ChoresContract.PATH_USER;
-import static com.gabilheri.choresapp.data.ChoresContract.UserEntry;
 import static com.gabilheri.choresapp.data.ChoresContract.CommentEntry;
-import static com.gabilheri.choresapp.data.ChoresContract.RSVPEntry;
-import static com.gabilheri.choresapp.data.ChoresContract.FriendshipEntry;
+import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
 import static com.gabilheri.choresapp.data.ChoresContract.FavoriteEntry;
+import static com.gabilheri.choresapp.data.ChoresContract.FriendshipEntry;
+import static com.gabilheri.choresapp.data.ChoresContract.RSVPEntry;
+import static com.gabilheri.choresapp.data.ChoresContract.UserEntry;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -30,8 +28,6 @@ public class ChoresProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
     private ChoresDbHelper mChoresDbHelper;
 
-    private static final SQLiteQueryBuilder sChores
-
     // User matcher ID's
     public static final int USER = 100;
     private static final int USER_WITH_ID = 101;
@@ -39,7 +35,7 @@ public class ChoresProvider extends ContentProvider {
     private static final int USER_WITH_EVENT_ID = 103;
 
     // Event Mather ID's
-<<<<<<< HEAD
+
     private static final int EVENTS = 200;
     private static final int EVENT_WITH_STARTDATE = 201;
     private static final int EVENT_WITH_ENDDATE = 202;
@@ -62,66 +58,52 @@ public class ChoresProvider extends ContentProvider {
     // Favorites Matcher ID's
     private static final int FAVORITES = 600;
     private static final int FAVORITE_WITH_ID = 601;
-=======
-    public static final int EVENTS = 200;
-
-    // Comments Matcher ID's
-    public static final int COMMENTS = 300;
-
-    // Friendship matcher ID's
-    public static final int FRIENDS = 400;
-
-    // RSVP Matcher ID's
-    public static final int RSVP = 500;
-
-    // Favorites Matcher ID's
-    public static final int FAVORITES = 600;
->>>>>>> 0564f4738d1553fdda51e05cca4e786fb8e19f5e
 
     @Override
     public boolean onCreate() {
-        return false;
+        mChoresDbHelper = new ChoresDbHelper(getContext());
+        return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-       Cursor retCursor;
-        switch(sUriMatcher.match(uri)){
-            case USER_WITH_EVENT_ID:
-            {
-                retCursor =;
-                break;
-            }
-
-            case USER_WITH_USERNAME:
-            {
-                retCursor = ;
-                break;
-            }
-            case USER_WITH_ID:
-            {
-                retCursor = ;
-                break;
-
-            }
-            case USER:
-            {
-                retCursor = null;
-                break;
-            }
-
-            case EVENTS:
-            {
-                retCursor = ;
-                break;
-            }
-            case EVENT_WITH_ENDDATE:
-            {
-                retCursor = ;
-                break;
-
-            }
-        }
+//       Cursor retCursor;
+//        switch(sUriMatcher.match(uri)){
+//            case USER_WITH_EVENT_ID:
+//            {
+//                retCursor =;
+//                break;
+//            }
+//
+//            case USER_WITH_USERNAME:
+//            {
+//                retCursor = ;
+//                break;
+//            }
+//            case USER_WITH_ID:
+//            {
+//                retCursor = ;
+//                break;
+//
+//            }
+//            case USER:
+//            {
+//                retCursor = null;
+//                break;
+//            }
+//
+//            case EVENTS:
+//            {
+//                retCursor = ;
+//                break;
+//            }
+//            case EVENT_WITH_ENDDATE:
+//            {
+//                retCursor = ;
+//                break;
+//
+//            }
+//        }
 
         return null;
     }
@@ -137,7 +119,7 @@ public class ChoresProvider extends ContentProvider {
         Uri returnUri;
         long _id;
 
-        Long appEngineId = values.getAsLong(CommentEntry.COLUMN_LONG_ID);
+        Long appEngineId = values.getAsLong(ChoresContract.LONG_ID);
 
         switch (sUriMatcher.match(uri)) {
             case EVENTS:

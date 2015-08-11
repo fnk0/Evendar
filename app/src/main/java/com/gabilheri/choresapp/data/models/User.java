@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.support.annotation.DrawableRes;
 
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.ChoresContract;
 
 import static com.gabilheri.choresapp.data.ChoresContract.UserEntry;
 
@@ -171,6 +172,7 @@ public class User {
                 .setPicUrl(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_PIC_URL)))
                 .setDateRegistered(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_DATE_REGISTERED)))
                 .setNumEvents(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_EVENTS)))
+                .setId(cursor.getLong(cursor.getColumnIndex(ChoresContract.LONG_ID)))
                 .setNumFavorites(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_FAVORITES)));
 
             if(closeCursor) {

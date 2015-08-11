@@ -13,6 +13,8 @@ public class ChoresContract {
     public static final String CONTENT_AUTHORITY = "com.gabilheri.choresapp.app";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
+    public static final String LONG_ID = "long_id";
+
     // Tables
     public static final String PATH_USER = "users";
     public static final String PATH_EVENT = "events";
@@ -45,8 +47,6 @@ public class ChoresContract {
         public static final String COLUMN_NUM_FAVORITES = "num_favorites";
 
         public static final String COLUMN_PIC_URL = "pic_URL";
-
-        public static final String COLUMN_LONG_ID = "long_id";
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
@@ -170,8 +170,6 @@ public class ChoresContract {
 
         public static final String COLUMN_USER_ID = "user_id";
 
-        public static final String COLUMN_LONG_ID = "long_id";
-
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
@@ -197,8 +195,6 @@ public class ChoresContract {
         public static final String COLUMN_USER_ID1 = "user_id1";
 
         public static final String COLUMN_USER_ID2 = "user_id2";
-
-        public static final String COLUMN_LONG_ID = "long_id";
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
@@ -237,8 +233,6 @@ public class ChoresContract {
 
         public static final String COLUMN_TIME = "time";
 
-        public static final String COLUMN_LONG_ID = "long_id";
-
         public static final String COLUMN_UPDATED_AT = "updated_at";
 
         public static final String COLUMN_DATE_CREATED = "date_created";
@@ -263,8 +257,6 @@ public class ChoresContract {
         public static final String COLUMN_EVENT_ID = "event_id";
 
         public static final String COLUMN_USER_ID = "user_id";
-
-        public static final String COLUMN_LONG_ID = "long_id";
 
         public static final String COLUMN_UPDATED_AT = "updated_at";
 

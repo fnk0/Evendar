@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">ChoresApp</string>
+  <string name="app_name">Revent</string>
 
   <string name="hello_world">Hello world!</string>
   <string name="action_settings">Settings</string>
@@ -8,9 +8,8 @@
 
   <string name="going_to">Going to</string>
   <string name="wants_to">Wants to</string>
-    <string name="title_activity_favorites">Favorites</string>
-    <string name="create_event">New Event</string>
-
+  <string name="title_activity_favorites">Favorites</string>
+  <string name="create_event">New Event</string>
 
 
   <!-- Id's & auth -->
