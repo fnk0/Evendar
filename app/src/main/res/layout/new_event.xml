@@ -1,58 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="8dp"
-    android:orientation="vertical">
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  android:padding="8dp">
 
-<LinearLayout
+  <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
-    <EditText android:id="@+id/enter_event_name"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter Event Name"
-        android:drawableLeft="@drawable/ic_notification_event_note"
-        android:drawablePadding="8dp"/>
-    <TimePicker android:id="@+id/new_event_time"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Time"
-        android:drawableLeft="@drawable/ic_device_access_time"
-        android:drawablePadding="8dp" />
-    <DatePicker android:id="@+id/new_event_date"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Time"
-        android:drawableLeft="@drawable/ic_device_access_time"
-        android:drawablePadding="8dp"/>
-    <EditText android:id="@+id/new_event_location"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Location"
-        android:drawableLeft="@drawable/ic_communication_location_on"
-        android:drawablePadding="8dp"/>
 
-    <EditText android:id="@+id/new_event_details"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Details"
-        android:drawableLeft="@drawable/ic_content_sort"
-        android:drawablePadding="8dp" />
+    <EditText
+      android:id="@+id/enter_event_name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:drawableLeft="@drawable/ic_notification_event_note"
+      android:drawablePadding="8dp"
+      android:hint="@string/new_event"
+      android:padding="8dp"/>
+
+    <TimePicker
+      android:id="@+id/new_event_time"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:drawableLeft="@drawable/ic_device_access_time"
+      android:drawablePadding="8dp"
+      android:hint="@string/time"
+      android:layout_marginTop="8dp"
+    />
+
+    <DatePicker
+      android:id="@+id/new_event_date"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:drawableLeft="@drawable/ic_device_access_time"
+      android:drawablePadding="8dp"
+      android:hint="@string/date"
+      android:layout_marginTop="8dp"
+    />
+
+    <EditText
+      android:id="@+id/new_event_location"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:drawableLeft="@drawable/ic_communication_location_on"
+      android:drawablePadding="8dp"
+      android:hint="@string/location"
+      android:padding="8dp"
+      android:layout_marginTop="8dp"
+    />
+
+    <EditText
+      android:id="@+id/new_event_details"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:drawableLeft="@drawable/ic_content_sort"
+      android:drawablePadding="8dp"
+      android:hint="Details"
+      android:padding="8dp"
+      android:layout_marginTop="8dp"
+    />
 
     <Button
-        android:id="@+id/createEvent"
-        android:text="Create Event"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+      android:id="@+id/createEvent"
+      android:layout_marginTop="16dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentBottom="true"
+      android:text="@string/create_event"
+    />
+  </LinearLayout>
 
 </ScrollView>

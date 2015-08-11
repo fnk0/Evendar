@@ -12,7 +12,9 @@ import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
 import com.gabilheri.choresapp.new_event.NewEventActivity;
+import com.gabilheri.choresapp.sign_in.SignInActivity;
 import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.PrefManager;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 
@@ -45,10 +47,15 @@ public class FeedActivity extends BaseDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if(!PrefManager.with(this).getBoolean(Const.SIGNED_IN, false)) {
+            startActivity(new Intent(this, SignInActivity.class));
+            finish();
+        }
+
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         ButterKnife.bind(this);
-
 //        ChoresSyncAdapter.initializeSyncAdapter(this);
 
         MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());

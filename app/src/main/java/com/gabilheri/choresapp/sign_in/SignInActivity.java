@@ -1,12 +1,13 @@
 package com.gabilheri.choresapp.sign_in;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -15,15 +16,14 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.gabilheri.choresapp.BaseActivity;
+import com.gabilheri.choresapp.BuildConfig;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.models.User;
-import com.gabilheri.choresapp.favorite_events.FavoritesActivity;
 import com.gabilheri.choresapp.feed.FeedActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.PrefManager;
 import com.gabilheri.choresapp.utils.TimeUtils;
-import com.gabilheri.choresapp.BuildConfig;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
@@ -35,7 +35,6 @@ import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,8 +45,6 @@ import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-import static android.app.PendingIntent.getActivity;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -84,6 +81,8 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
     private User mUser;
 
+    ProgressDialog progressDialog;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,12 +112,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
                     @Override
                     public void failure(TwitterException e) {
-                        //TODO show error to the user
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getParent());
-                        builder.setMessage("Unable to register with Twitter!");
-
-                        AlertDialog alert = builder.create();
-                        alert.show();
+                        showErrorDialog();
                     }
                 });
             }
@@ -126,7 +120,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
             @Override
             public void failure(TwitterException exception) {
                 // Do something on failure
-                //TODO show error to the user
+                showErrorDialog();
             }
         });
 
@@ -176,7 +170,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
             @Override
             public void onError(FacebookException e) {
-                //TODO show error to the user
+                showErrorDialog();
             }
         });
     }
@@ -263,7 +257,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
             mUser.setPicUrl(picUrl.substring(0, picUrl.length() - 2) + PROFILE_PIC_SIZE);
             registerUser();
         } else {
-            //TODO show error to the user
+            showErrorDialog();
         }
     }
 
@@ -277,6 +271,13 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
             mUser.setUsername(mUser.getEmail());
         }
         mUser.setDateRegistered(TimeUtils.getToday());
+
+        if(progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Signing in...");
+            progressDialog.show();
+        }
 
         ChoresApp.instance().getApi().insertUser(mUser)
                 .subscribeOn(Schedulers.io())
@@ -323,7 +324,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
-                // TODO show the user a error dialog
+                showErrorDialog();
             }
         }
     }
@@ -344,6 +345,14 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
         }
     }
 
+    private void showErrorDialog() {
+        new MaterialDialog.Builder(this)
+                .title("Oops! Something went wrong!")
+                .content("Wait a couple of miliseconds and retry.")
+                .positiveText("Dismiss")
+                .show();
+    }
+
     @Override
     public int getLayoutResource() {
         return R.layout.activity_sign_in;
@@ -353,12 +362,15 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
         @Override
         public void onCompleted() {
+            if(progressDialog != null && progressDialog.isShowing()) {
+                progressDialog.dismiss();
+            }
             unsubscribe();
         }
 
         @Override
         public void onError(Throwable e) {
-            //TODO show error tho the user
+            showErrorDialog();
             Log.e(LOG_TAG, "Error registering user", e);
         }
 
