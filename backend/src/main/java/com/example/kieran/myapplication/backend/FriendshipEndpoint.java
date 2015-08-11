@@ -78,4 +78,15 @@ public class FriendshipEndpoint {
         return friendship;
     }
 
+    @ApiMethod(name = "getAllFriends", path = "getAllFriends")
+    public CollectionResponse<Friendship> getAllFriends(@Named("id") Long userId) throws NotFoundException {
+        if (findRecord(User.class, userId) == null){
+            throw new NotFoundException("User record does not exist");
+        }
+
+        Query<Friendship> query = ofy().load().type(Friendship.class).filter(ChoresContract.FriendshipEntry.COLUMN_USER_ID1, userId).filter(" OR " + ChoresContract.FriendshipEntry.COLUMN_USER_ID2 + " = ", userId);
+
+        return listByQuery(query, null, null);
+    }
+
 }
