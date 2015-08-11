@@ -4,7 +4,7 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
-  android:padding="8dp">
+  android:padding="16dp">
 
   <LinearLayout
     android:layout_width="match_parent"
@@ -20,6 +20,47 @@
       android:drawablePadding="8dp"
       android:hint="@string/new_event"
       android:padding="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text = "@string/select_category"
+        android:drawableLeft="@drawable/ic_action_dns"
+        android:drawablePadding="8dp"
+        android:textSize="17dp"
+        android:textColor="#575757"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"
+        android:paddingBottom="0dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#999999" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:paddingLeft="50dp">
+
+      <RadioButton
+          android:id="@+id/radio_button_going"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:checked="true"
+          android:text="@string/going_to"
+          android:textColor="#404040" />
+
+      <RadioButton
+          android:id="@+id/radio_button_wants"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:text="@string/wants_to"
+          android:textColor="#404040" />
+    </RadioGroup>
 
     <TimePicker
       android:id="@+id/new_event_time"

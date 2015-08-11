@@ -14,6 +14,7 @@ import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
  */
 public class Event {
 
+    String description;
     Long id;
     String title;
     String createdAt;
@@ -108,6 +109,10 @@ public class Event {
     public Event setNumComments(int numComments) {
         this.numComments = numComments;
         return this;
+    }
+
+    public void setDescription(String d){
+        this.description = d;
     }
 
     public int getNumGoing() {
