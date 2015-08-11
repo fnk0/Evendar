@@ -48,8 +48,7 @@ public class EventEndpoint {
         return list(Event.class, cursorString, count);
     }
 
-    //TODO write code to return only events for a associated user.
-    //Ex: events from his friends
+    //returns the relevant event feed for a user (all the events created by either him/her or his/her friends
     @ApiMethod(name = "listEventsForUsers", path = "allUserEvents")
     public CollectionResponse<Event> listAllEventsForUser(@Named("id") Long userId,
                                                           @Named("date") String updatedAt,
