@@ -17,7 +17,6 @@ import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.gabilheri.choresapp.BaseActivity;
-import com.gabilheri.choresapp.BuildConfig;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.ChoresContract;
@@ -204,12 +203,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
 
     @OnClick(R.id.facebook_sign_in)
     public void signInWithFacebook() {
-        if (BuildConfig.DEBUG) {
-            // do something for a debug build
-            goToFeedActivity();
-        } else {
-            facebookLoginButton.performClick();
-        }
+        facebookLoginButton.performClick();
     }
 
     @OnClick(R.id.twitter_sign_in)

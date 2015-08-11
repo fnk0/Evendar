@@ -36,6 +36,7 @@ import rx.schedulers.Schedulers;
 public class FeedFragment extends BaseCursorListFragment implements ItemCallback{
 
     private static final int FEED_LOADER = 0;
+    private static final int FAVORITES_LOADER = 1;
 
     String sortOrder = ChoresContract.EventEntry.COLUMN_DATE + " DESC";
 
@@ -44,6 +45,7 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     private String endDate = null;
 
     Bundle arguments = null;
+    boolean isFavorites = false;
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -56,9 +58,14 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
         }
 
         if(arguments != null) {
-            startDate = arguments.getString(Const.START_DATE);
-            endDate = arguments.getString(Const.END_DATE);
-            isWant = arguments.getBoolean(Const.BOOLEAN_IS_WANT);
+
+            isFavorites = arguments.getBoolean(Const.IS_FAVORITES);
+
+            if(!isFavorites) {
+                startDate = arguments.getString(Const.START_DATE);
+                endDate = arguments.getString(Const.END_DATE);
+                isWant = arguments.getBoolean(Const.BOOLEAN_IS_WANT);
+            }
 
             mAdapter = new FeedAdapter(null, this);
             initCardsList(mAdapter);
@@ -105,15 +112,28 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // We don't need to worry about the ID here... because there's only 1 loader
-        // in this fragment
-        Uri queryUri = ChoresContract.EventEntry.buildEventUri(startDate, endDate, isWant);
+        Uri queryUri = null;
+        switch (id) {
+            case FEED_LOADER:
+                queryUri = ChoresContract.EventEntry.buildEventUri(startDate, endDate, isWant);
+                break;
+            case FAVORITES_LOADER:
+                queryUri = ChoresContract.EventEntry.buildEventUri(startDate, endDate, isWant);
+                break;
+        }
+
+
         return new CursorLoader(getActivity(), queryUri, null, null, null, sortOrder);
     }
 
     @Override
     protected int[] getLoaders() {
-        return new int[]{FEED_LOADER};
+
+        if(!isFavorites) {
+            return new int[]{FEED_LOADER};
+        } else {
+            return new int[]{FAVORITES_LOADER};
+        }
     }
 
     private void updateEvent(Event event) {
