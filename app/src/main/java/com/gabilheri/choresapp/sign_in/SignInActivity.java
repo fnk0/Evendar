@@ -1,6 +1,7 @@
 package com.gabilheri.choresapp.sign_in;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
@@ -108,6 +109,11 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
                     @Override
                     public void failure(TwitterException e) {
                         //TODO show error to the user
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getParent());
+                        builder.setMessage("Unable to register with Twitter!");
+
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     }
                 });
             }
