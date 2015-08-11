@@ -49,11 +49,6 @@ public class FeedActivity extends BaseDrawerActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if(!PrefManager.with(this).getBoolean(Const.SIGNED_IN, false)) {
-            startActivity(new Intent(this, SignInActivity.class));
-            finish();
-        }
         ButterKnife.bind(this);
         if(getIntent().getExtras() != null) {
             if(getIntent().getExtras().getBoolean(Const.IS_FAVORITES)) {
