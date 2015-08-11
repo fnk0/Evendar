@@ -7,10 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TimePicker;
 
 import com.gabilheri.choresapp.BaseFragment;
+import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.feed.FeedActivity;
 
 import butterknife.Bind;
@@ -43,38 +46,54 @@ public class NewEventFragment extends BaseFragment {
     @Bind(R.id.new_event_details)
     EditText newEventDetails;
 
+    @Bind(R.id.radio_button_going)
+    RadioButton radioButtonGoing;
+
+    @Bind(R.id.radio_button_wants)
+    RadioButton radioButtonWants;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
 
-    @OnClick(R.id.enter_event_name)
-    public void saveEventName( View view ) {
-
-    }
-
-    @OnClick(R.id.new_event_time)
-    public void saveEventTime( View view ) {
-
-    }
-
-    @OnClick(R.id.new_event_time)
-    public void saveEventDate( View view ) {
-
-    }
-
-    @OnClick(R.id.new_event_location)
-    public void saveEventLocation( View view ) {
-
-    }
-
-    @OnClick(R.id.new_event_details)
-    public void saveEventDetails( View view ) {
-
-    }
+//    @OnClick(R.id.enter_event_name)
+//    public void saveEventName( View view ) {
+//
+//    }
+//
+//    @OnClick(R.id.new_event_time)
+//    public void saveEventTime( View view ) {
+//
+//    }
+//
+//    @OnClick(R.id.new_event_time)
+//    public void saveEventDate( View view ) {
+//
+//    }
+//
+//    @OnClick(R.id.new_event_location)
+//    public void saveEventLocation( View view ) {
+//
+//    }
+//
+//    @OnClick(R.id.new_event_details)
+//    public void saveEventDetails( View view ) {
+//
+//    }
 
     @OnClick(R.id.createEvent)
     public void goToNewEventActivity( View view ) {
+        // save details
+        Event newEvent = new Event();
+        newEvent.setTitle(enterEventName.getText().toString());
+        newEvent.setLocation(newEventLocation.getText().toString());
+        newEvent.setIsWant(radioButtonWants.isChecked());
+        newEvent.setTime(newEventTime.getCurrentHour() +":" + newEventTime.getCurrentMinute());
+        newEvent.setTime(newEventDate.getMonth() + ":" + newEventDate.getDayOfMonth() + ":" + newEventDate.getYear());
+
+        ChoresApp.instance().getApi().insertEvent(newEvent);
+
         startActivity(new Intent(getActivity(), FeedActivity.class));
     }
 
