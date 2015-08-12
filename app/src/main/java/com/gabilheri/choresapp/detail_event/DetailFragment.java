@@ -73,7 +73,6 @@ public class DetailFragment extends BaseFragment {
             event = QueryUtils.getEventFromDB(eventId);
 
 
-
         }
     }
 
