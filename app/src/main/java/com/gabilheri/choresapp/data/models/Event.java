@@ -168,6 +168,10 @@ public class Event {
     }
 
     public static Event fromCursor(Cursor cursor, boolean closeCursor) {
+        if(cursor.getPosition() == -1) {
+            cursor.moveToNext();
+        }
+
         Event event = new Event();
         event.setCreatedAt(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE_CREATED)))
                 .setId(cursor.getLong(cursor.getColumnIndex(ChoresContract.LONG_ID)))

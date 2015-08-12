@@ -77,10 +77,9 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
         return new CursorLoader(getActivity(),
                 contentUri,
                 null,
-                ( "" + ChoresContract.CommentEntry.TABLE_NAME + "." + ChoresContract.CommentEntry.COLUMN_EVENT_ID + " = ?"),
-                new String[]{ChoresContract.CommentEntry.getIdFromUri(contentUri)},
+                null,
+                null,
                 null
-
         );
     }
 

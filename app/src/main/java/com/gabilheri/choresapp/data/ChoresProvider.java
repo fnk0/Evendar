@@ -38,7 +38,7 @@ public class ChoresProvider extends ContentProvider {
 
     private static final int EVENTS = 200;
     private static final int EVENT_WITH_STARTDATE = 201;
-    private static final int EVENT_WITH_ENDDATE = 202;
+    private static final int EVENT_WITH_ID = 202;
     private static final int EVENT_WITH_IS_WANT = 203;
 
     // Comments Matcher ID's
@@ -134,12 +134,12 @@ public class ChoresProvider extends ContentProvider {
                 );
                 break;
             }
-            case EVENT_WITH_ENDDATE: {
+            case EVENT_WITH_ID: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
-                        ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE + " = ?"),
-                        new String[]{EventEntry.getDateFromUri(uri)},
+                        ("" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_LONG_ID + " = ?"),
+                        new String[]{uri.getPathSegments().get(2)},
                         null,
                         null,
                         sortOrder
@@ -347,6 +347,9 @@ public class ChoresProvider extends ContentProvider {
             case EVENT_WITH_STARTDATE:
                 return EventEntry.CONTENT_TYPE;
 
+            case EVENT_WITH_ID:
+                return EventEntry.CONTENT_ITEM_TYPE;
+
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -551,7 +554,7 @@ public class ChoresProvider extends ContentProvider {
         // Events URI's
         matcher.addURI(authority, ChoresContract.PATH_EVENT, EVENTS);
         matcher.addURI(authority, ChoresContract.PATH_EVENT + "/s/*/e/#/iw/#", EVENT_WITH_STARTDATE);
-        matcher.addURI(authority, ChoresContract.PATH_EVENT + "/e/*", EVENT_WITH_ENDDATE);
+        matcher.addURI(authority, ChoresContract.PATH_EVENT + "/id/#", EVENT_WITH_ID);
         matcher.addURI(authority, ChoresContract.PATH_EVENT + "/iw/#", EVENT_WITH_IS_WANT);
 
 

@@ -69,7 +69,8 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
         holder.commentsCount.setText(String.valueOf(event.getNumComments()));
         holder.sharesCount.setText(String.valueOf(event.getNumShares()));
         holder.date.setText(TimeUtils.formatShortDate(Long.parseLong(event.getCreatedAt())));
-        holder.itemView.setTag(R.id.eventId, event);
+
+        holder.details.setTag(R.id.eventId, event);
     }
 
     @Override
