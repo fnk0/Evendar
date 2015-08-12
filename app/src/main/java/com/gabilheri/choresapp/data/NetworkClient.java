@@ -32,6 +32,7 @@ public class NetworkClient {
     public static final String  USER_API = "/userApi/" + NetworkClient.API_VERSION;
     public static final String EVENT_API = "/eventApi/" + NetworkClient.API_VERSION;
     public static final String COMMENT_API = "/commentApi/" + NetworkClient.API_VERSION;
+    public static final String FRIENDSHIP_API = "/friendshipApi/" + NetworkClient.API_VERSION;
     private static final String API_ENDPOINT = "https://choresapp-1013.appspot.com/_ah/api";
 
     /**

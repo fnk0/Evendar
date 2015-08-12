@@ -4,6 +4,7 @@ import com.gabilheri.choresapp.data.models.Comment;
 import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.data.models.FeedResponse;
 import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.data.models.Friendship;
 
 import java.util.List;
 
@@ -100,4 +101,9 @@ public interface ChoresApi {
     Observable<Response> deleteComment(
             @Path("id") Long commentId
     );
+
+
+    //favorites section
+    @POST(NetworkClient.FRIENDSHIP_API + "/friendship")
+    Observable<Friendship> insertFriendship(@Body Friendship f);
 }

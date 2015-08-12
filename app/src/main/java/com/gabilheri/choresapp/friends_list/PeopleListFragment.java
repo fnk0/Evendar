@@ -8,6 +8,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.gabilheri.choresapp.data.ChoresApi;
+import com.gabilheri.choresapp.data.models.Friendship;
+import com.gabilheri.choresapp.ChoresApp;
+
+import com.facebook.GraphRequest;
+import com.facebook.HttpMethod;
+import com.facebook.GraphResponse;
+import com.facebook.AccessToken;
+
 import com.gabilheri.choresapp.BaseCursorListFragment;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FriendAdapter;
@@ -17,8 +26,14 @@ import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.IntentUtils;
 import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.TimeUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -39,7 +54,7 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             eventId = getArguments().getLong(Const.EVENT_ID);
         }
 
@@ -47,13 +62,49 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
         initBaseList(mAdapter);
     }
 
+    private void addFriendship(Long id1, Long id2) {
+        Friendship f = new Friendship();
+        f.setUpdatedAt(TimeUtils.getToday());
+        f.setCreatedAt(TimeUtils.getToday());
+        f.setUserId1(id1);
+        f.setUserId2(id2);
+
+        ChoresApp.instance().getApi().insertFriendship(f)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        ;
+    }
+
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        User user = QueryUtils.getAuthenticatedUserFromDB();
+        final User user = QueryUtils.getAuthenticatedUserFromDB();
         Uri queryUri;
 
-        if(eventId == -1L) {
+        if (eventId == -1L) {
             queryUri = ChoresContract.FriendshipEntry.buildFriendsForUser(user.getId());
+
+
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/me/friends",
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            try {
+
+
+                                JSONObject obj = response.getJSONObject();
+
+                                addFriendship(Long.parseLong(obj.getString("id")), user.getId());
+                            } catch (JSONException je) {
+                                je.printStackTrace();
+                            }
+                        }
+                    }
+            ).executeAsync();
+
+
         } else {
             queryUri = ChoresContract.RSVPEntry.buildUsersForEvent(eventId);
         }
@@ -70,6 +121,6 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
 
     @Override
     protected int[] getLoaders() {
-        return new int[] {FRIENDS_LOADER};
+        return new int[]{FRIENDS_LOADER};
     }
 }
