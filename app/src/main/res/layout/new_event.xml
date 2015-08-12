@@ -19,141 +19,128 @@
       android:drawableLeft="@drawable/ic_notification_event_note"
       android:drawablePadding="8dp"
       android:hint="@string/new_event"
-      android:padding="8dp"/>
+      android:padding="16dp"/>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text = "@string/select_category"
-        android:drawableLeft="@drawable/ic_action_dns"
-        android:drawablePadding="8dp"
-        android:textSize="17dp"
-        android:textColor="#575757"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:paddingBottom="0dp"/>
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:drawableLeft="@drawable/ic_action_dns"
+      android:drawablePadding="8dp"
+      android:padding="16dp"
+      android:paddingBottom="0dp"
+      android:text="@string/select_category"
+      android:textColor="#575757"
+      android:textSize="18sp"/>
+
     <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#999999" />
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="#999999"/>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:paddingLeft="50dp">
+
+      <RadioButton
+        android:id="@+id/radio_button_going"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="8dp"
-        android:paddingLeft="50dp">
+        android:layout_weight="1"
+        android:checked="true"
+        android:text="@string/going_to"
+        android:textColor="#404040"/>
 
       <RadioButton
-          android:id="@+id/radio_button_going"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:checked="true"
-          android:text="@string/going_to"
-          android:textColor="#404040" />
-
-      <RadioButton
-          android:id="@+id/radio_button_wants"
-          android:layout_width="0dp"
-          android:layout_height="wrap_content"
-          android:layout_weight="1"
-          android:text="@string/wants_to"
-          android:textColor="#404040" />
+        android:id="@+id/radio_button_wants"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/wants_to"
+        android:textColor="#404040"/>
     </RadioGroup>
 
     <TimePicker
       android:id="@+id/new_event_time"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
       android:layout_weight="1"
       android:drawableLeft="@drawable/ic_device_access_time"
       android:drawablePadding="8dp"
       android:hint="@string/time"
-      android:layout_marginTop="8dp"
-    />
+      />
 
     <DatePicker
       android:id="@+id/new_event_date"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
       android:layout_weight="1"
       android:drawableLeft="@drawable/ic_device_access_time"
       android:drawablePadding="8dp"
       android:hint="@string/date"
-      android:layout_marginTop="8dp"
-    />
+      />
 
-      <AutoCompleteTextView
-          android:id="@+id/autoCompleteTextView"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:text = "Enter Location"
-          android:drawableLeft = "@drawable/ic_communication_location_on"
-          android:drawablePadding="8dp"
-          android:padding="8dp"/>
-      <Button
-          android:id="@+id/button_clear"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center_horizontal"
-          android:text="Clear text" />
-
-      <TextView
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="Selected place"
-          android:textAppearance="?android:attr/textAppearanceMedium" />
-      <TextView
-          android:id="@+id/place_details"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:autoLink="all"
-          android:text=""
-          android:textAppearance="?android:attr/textAppearanceMedium" />
-
-      <TextView
-          android:id="@+id/place_attribution"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:autoLink="all"
-          android:text=""
-          android:paddingTop="0dp"
-          android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <EditText
-      android:id="@+id/new_event_location"
+    <AutoCompleteTextView
+      android:id="@+id/autoCompleteTextView"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_weight="1"
       android:drawableLeft="@drawable/ic_communication_location_on"
       android:drawablePadding="8dp"
-      android:hint="@string/location"
-      android:padding="8dp"
-      android:layout_marginTop="8dp"
-    />
+      android:padding="16dp"
+      android:text="@string/location"
+      />
 
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Selected place"
+      android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <TextView
+      android:id="@+id/place_details"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:autoLink="all"
+      android:text=""
+      android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <TextView
+      android:id="@+id/place_attribution"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:autoLink="all"
+      android:paddingTop="0dp"
+      android:text=""
+      android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <EditText
       android:id="@+id/new_event_details"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
       android:layout_weight="1"
       android:drawableLeft="@drawable/ic_content_sort"
       android:drawablePadding="8dp"
       android:hint="Details"
-      android:padding="8dp"
-      android:layout_marginTop="8dp"
-    />
+      android:padding="16dp"
+      android:lines="3"
+      />
 
     <Button
       android:id="@+id/createEvent"
-      android:layout_marginTop="16dp"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:background="@drawable/orange_button"
+      android:textColor="@color/grey_100"
       android:layout_alignParentBottom="true"
+      android:layout_marginTop="16dp"
       android:text="@string/create_event"
-    />
+      />
   </LinearLayout>
 
 </ScrollView>

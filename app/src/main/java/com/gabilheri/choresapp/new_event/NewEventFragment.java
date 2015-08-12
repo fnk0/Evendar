@@ -37,22 +37,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-import com.google.android.gms.location.places.GeoDataApi;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
-import com.google.android.gms.location.places.PlaceDetectionApi;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
-
 import org.joda.time.LocalDateTime;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -80,9 +73,6 @@ public class NewEventFragment extends BaseFragment
     @Bind(R.id.new_event_date)
     DatePicker newEventDate;
 
-    @Bind(R.id.new_event_location)
-    EditText newEventLocation;
-
     @Bind(R.id.new_event_details)
     EditText newEventDetails;
 
@@ -93,10 +83,10 @@ public class NewEventFragment extends BaseFragment
     RadioButton radioButtonWants;
 
     @Bind(R.id.autoCompleteTextView)
-    AutoCompleteTextView mAutocompleteView;
+    AutoCompleteTextView mLocation;
 
     @Bind(R.id.place_attribution)
-    TextView mPlaceDetailsText ;
+    TextView mPlaceDetailsText;
 
     @Bind(R.id.place_details)
     TextView mPlaceDetailsAttribution;
@@ -107,12 +97,6 @@ public class NewEventFragment extends BaseFragment
 
     static String TAG = "hello";
 
-    //private AutoCompleteTextView mAutocompleteView;
-
-//    private TextView mPlaceDetailsText;
-//
-//    private TextView mPlaceDetailsAttribution;
-
     private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
             new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
 
@@ -122,16 +106,16 @@ public class NewEventFragment extends BaseFragment
     }
 
     @OnClick(R.id.createEvent)
-    public void goToNewEventActivity(View view ) {
+    public void goToNewEventActivity(View view) {
         // save details
 
         String eventTitle = enterEventName.getText().toString();
 
-        if(!eventTitle.isEmpty()) {
+        if (!eventTitle.isEmpty()) {
 
             Event newEvent = new Event();
             newEvent.setTitle(eventTitle);
-            newEvent.setLocation(newEventLocation.getText().toString());
+            newEvent.setLocation("addr://" + mLocation.getText().toString());
             newEvent.setIsWant(radioButtonWants.isChecked());
             newEvent.setDescription(newEventDetails.getText().toString());
             newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
@@ -164,7 +148,7 @@ public class NewEventFragment extends BaseFragment
                             ContentValues values = Event.toContentValues(event);
                             getActivity().getContentResolver().insert(ChoresContract.EventEntry.buildEventUri(), values);
                             ChoresSyncAdapter.syncImmediately(getActivity());
-                            if(event.getTitle() != null) {
+                            if (event.getTitle() != null) {
                                 startActivity(new Intent(getActivity(), FeedActivity.class));
                             } else {
                                 DialogUtils.showErrorDialog(getActivity(), null, null);
@@ -177,7 +161,7 @@ public class NewEventFragment extends BaseFragment
     }
 
     @Override
-    public void onCreate( Bundle savedInstanceState ) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mGoogleApiClient = new GoogleApiClient
@@ -195,7 +179,7 @@ public class NewEventFragment extends BaseFragment
         View returnView = super.onCreateView(inflater, container, savedInstanceState);
 
         // Register a listener that receives callbacks when a suggestion has been selected
-        mAutocompleteView.setOnItemClickListener(mAutocompleteClickListener);
+        mLocation.setOnItemClickListener(mAutocompleteClickListener);
 
         // Retrieve the TextViews that will display details and attributions of the selected place.
 //        mPlaceDetailsText = (TextView) super.getView().findViewById(R.id.list_item);
@@ -205,14 +189,14 @@ public class NewEventFragment extends BaseFragment
         // the entire world.
         mAdapter = new PlaceAutocompleteAdapter(getActivity(), android.R.layout.simple_list_item_1,
                 mGoogleApiClient, BOUNDS_GREATER_SYDNEY, null);
-        mAutocompleteView.setAdapter(mAdapter);
+        mLocation.setAdapter(mAdapter);
 
         // Set up the 'clear text' button that clears the text in the autocomplete view
 //        Button clearButton = (Button) getView().findViewById(R.id.button_clear);
 //        clearButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                mAutocompleteView.setText("");
+//                mLocation.setText("");
 //            }
 //        });
 
@@ -249,13 +233,14 @@ public class NewEventFragment extends BaseFragment
     @Override
     public void onStart() {
         super.onStart();
-        if(mGoogleApiClient != null && !mGoogleApiClient.isConnected() ) {
+        if (mGoogleApiClient != null && !mGoogleApiClient.isConnected()) {
             mGoogleApiClient.connect();
         }
     }
+
     @Override
     public void onStop() {
-        if(mGoogleApiClient != null && mGoogleApiClient.isConnected() ) {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
         super.onStop();
@@ -316,7 +301,7 @@ public class NewEventFragment extends BaseFragment
 
     private static Spanned formatPlaceDetails(Resources res, CharSequence name, String id,
                                               CharSequence address, CharSequence phoneNumber, Uri websiteUri) {
-       Log.e(TAG, res.getString(R.string.place_details, name, id, address, phoneNumber,
+        Log.e(TAG, res.getString(R.string.place_details, name, id, address, phoneNumber,
                 websiteUri));
         return Html.fromHtml(res.getString(R.string.place_details, name, id, address, phoneNumber,
                 websiteUri));
@@ -326,7 +311,7 @@ public class NewEventFragment extends BaseFragment
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
-       Log.e(TAG, "onConnectionFailed: ConnectionResult.getErrorCode() = "
+        Log.e(TAG, "onConnectionFailed: ConnectionResult.getErrorCode() = "
                 + connectionResult.getErrorCode());
 
         Toast.makeText(getActivity(),
