@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.support.v4.util.SparseArrayCompat;
 
 import com.gabilheri.choresapp.ChoresApp;
+import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.Favorite;
 import com.gabilheri.choresapp.data.models.User;
 
 import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
@@ -34,6 +36,12 @@ public final class QueryUtils {
         Context context = ChoresApp.instance().getApplicationContext();
         Cursor userCursor = context.getContentResolver().query(UserEntry.buildUserUri(username), null, null, null, null);
         return User.fromCursor(userCursor, true);
+    }
+
+    public static Favorite getFavoriteFromDB(Long uId){
+        Context context = ChoresApp.instance().getApplicationContext();
+        Cursor favCursor = context.getContentResolver().query(ChoresContract.FavoriteEntry.buildFavoritesForUser(uId), null, null, null, null);
+        return Favorite.fromCursor(favCursor, true);
     }
 
     public static void saveEventToDB(Event event) {
