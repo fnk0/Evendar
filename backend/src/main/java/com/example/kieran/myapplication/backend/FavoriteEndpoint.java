@@ -10,6 +10,8 @@ import com.google.api.server.spi.response.NotFoundException;
 import com.google.appengine.api.datastore.Cursor;
 import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
+import com.sun.tools.corba.se.idl.constExpr.Not;
+
 import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
 import static com.example.kieran.myapplication.backend.QueryUtils.*;
 
@@ -81,6 +83,31 @@ public class FavoriteEndpoint {
         }
         ofy().save().entity(favorite).now();
         return favorite;
+    }
+
+    //get all favorites for a user
+    @ApiMethod(name = "getAllFavoritesForUser", path = "getAllFavoritesForUser")
+    public CollectionResponse<Favorite> getAllFavoritesForUser(User user) throws NotFoundException {
+        if (findByUserId(User.class, user.getId()) == null){
+            throw new NotFoundException("User record not found!");
+        }
+
+        Query<Favorite> query = ofy().load().type(Favorite.class).filter(ChoresContract.FavoriteEntry.COLUMN_USER_ID, user.getId());
+
+        return listByQuery(query, null, null);
+
+    }
+
+    //get all favorites for an event
+    @ApiMethod(name = "getAllFavoritesForAnEvent", path = "getAllFavoritesForAnEvent")
+    public CollectionResponse<Favorite> getAllFavoritesForAnEvent(Event e) throws NotFoundException{
+        if(findRecord(Event.class, e.getId()) == null){
+            throw new NotFoundException("Event record not found!");
+        }
+
+        Query<Favorite> query = ofy().load().type(Favorite.class).filter(ChoresContract.FavoriteEntry.COLUMN_EVENT_ID, e.getId());
+
+        return listByQuery(query, null, null);
     }
 
 
