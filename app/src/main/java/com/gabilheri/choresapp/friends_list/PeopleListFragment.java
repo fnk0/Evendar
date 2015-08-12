@@ -54,7 +54,7 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(getArguments() != null) {
+        if (getArguments() != null) {
             eventId = getArguments().getLong(Const.EVENT_ID);
         }
 
@@ -62,7 +62,7 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
         initBaseList(mAdapter);
     }
 
-    private void addFriendship(Long id1, Long id2){
+    private void addFriendship(Long id1, Long id2) {
         Friendship f = new Friendship();
         f.setUpdatedAt(TimeUtils.getToday());
         f.setCreatedAt(TimeUtils.getToday());
@@ -72,38 +72,37 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
         ChoresApp.instance().getApi().insertFriendship(f)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-               ;
+        ;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-       final  User user = QueryUtils.getAuthenticatedUserFromDB();
+        final User user = QueryUtils.getAuthenticatedUserFromDB();
         Uri queryUri;
 
-        if(eventId == -1L) {
+        if (eventId == -1L) {
             queryUri = ChoresContract.FriendshipEntry.buildFriendsForUser(user.getId());
 
 
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/me/friends",
+                    null,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            try {
 
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/me/friends",
-                        null,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-                                try {
 
+                                JSONObject obj = response.getJSONObject();
 
-                                    JSONObject obj = response.getJSONObject();
-
-                                    addFriendship(Long.parseLong(obj.getString("id")), user.getId());
-                                } catch (JSONException je){
-                                    je.printStackTrace();
-                                }
+                                addFriendship(Long.parseLong(obj.getString("id")), user.getId());
+                            } catch (JSONException je) {
+                                je.printStackTrace();
                             }
                         }
-                ).executeAsync();
+                    }
+            ).executeAsync();
 
 
         } else {
@@ -122,6 +121,6 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
 
     @Override
     protected int[] getLoaders() {
-        return new int[] {FRIENDS_LOADER};
+        return new int[]{FRIENDS_LOADER};
     }
 }
