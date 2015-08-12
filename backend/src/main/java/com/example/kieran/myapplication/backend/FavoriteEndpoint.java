@@ -78,12 +78,12 @@ public class FavoriteEndpoint {
 
     //get all favorites for a user
     @ApiMethod(name = "getAllFavoritesForUser", path = "getAllFavoritesForUser")
-    public CollectionResponse<Favorite> getAllFavoritesForUser(User user) throws NotFoundException {
-        if (findByUserId(User.class, user.getId()) == null){
+    public CollectionResponse<Favorite> getAllFavoritesForUser(@Named("userId") Long id) throws NotFoundException {
+        if (findByUserId(User.class, id) == null){
             throw new NotFoundException("User record not found!");
         }
 
-        Query<Favorite> query = ofy().load().type(Favorite.class).filter(ChoresContract.FavoriteEntry.COLUMN_USER_ID, user.getId());
+        Query<Favorite> query = ofy().load().type(Favorite.class).filter(ChoresContract.FavoriteEntry.COLUMN_USER_ID, id);
 
         return listByQuery(query, null, null);
 
@@ -91,12 +91,12 @@ public class FavoriteEndpoint {
 
     //get all favorites for an event
     @ApiMethod(name = "getAllFavoritesForAnEvent", path = "getAllFavoritesForAnEvent")
-    public CollectionResponse<Favorite> getAllFavoritesForAnEvent(Event e) throws NotFoundException{
-        if(findRecord(Event.class, e.getId()) == null){
+    public CollectionResponse<Favorite> getAllFavoritesForAnEvent( @Named("eventId") Long id) throws NotFoundException{
+        if(findRecord(Event.class, id) == null){
             throw new NotFoundException("Event record not found!");
         }
 
-        Query<Favorite> query = ofy().load().type(Favorite.class).filter(ChoresContract.FavoriteEntry.COLUMN_EVENT_ID, e.getId());
+        Query<Favorite> query = ofy().load().type(Favorite.class).filter(ChoresContract.FavoriteEntry.COLUMN_EVENT_ID, id);
 
         return listByQuery(query, null, null);
     }
