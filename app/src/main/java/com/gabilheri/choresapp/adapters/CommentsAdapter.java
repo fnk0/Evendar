@@ -14,6 +14,7 @@ import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.models.Comment;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.SocialUtils;
 import com.gabilheri.choresapp.utils.TimeUtils;
 
 import java.util.Random;
@@ -62,14 +63,14 @@ public class CommentsAdapter extends CursorRecyclerAdapter<CommentsAdapter.ViewH
     @Override
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
         Comment c = Comment.fromCursor(cursor, false);
-        User user = QueryUtils.getUserFromDB(c.getUserId());
+        User user = QueryUtils.getUserFromDB(Long.parseLong(c.getUserId()));
         Glide.with(holder.itemView.getContext())
                 .load(user.getPicUrl())
                 .centerCrop()
                 .crossFade()
                 .into(holder.userPicture);
 
-        holder.userName.setText(user.getUsername());
+        holder.userName.setText(SocialUtils.getFirstLastName(user.getFullName()));
 //        holder.favoritesCount.setText("" + c.getFavoritesCount());
         holder.comment.setText(c.getText());
         holder.date.setText(TimeUtils.formatBasicDate(Long.parseLong(c.getCreatedAt())));

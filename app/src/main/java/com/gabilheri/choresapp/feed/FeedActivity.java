@@ -2,6 +2,7 @@ package com.gabilheri.choresapp.feed;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,7 +12,6 @@ import android.widget.FrameLayout;
 
 import com.gabilheri.choresapp.BaseDrawerActivity;
 import com.gabilheri.choresapp.R;
-import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
 import com.gabilheri.choresapp.new_event.NewEventActivity;
 import com.gabilheri.choresapp.sync.ChoresSyncAdapter;
 import com.gabilheri.choresapp.utils.Const;
@@ -31,6 +31,7 @@ public class FeedActivity extends BaseDrawerActivity {
     @Bind(R.id.tabs)
     TabLayout tabLayout;
 
+    @Nullable
     @Bind(R.id.viewpager)
     ViewPager viewPager;
 
@@ -61,21 +62,20 @@ public class FeedActivity extends BaseDrawerActivity {
 
         String today = TimeUtils.formatShortDate(LocalDateTime.now().toDate().getTime());
         setTitle(today);
-
         ChoresSyncAdapter.initializeSyncAdapter(this);
-
-        MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());
-
-        FeedFragment goingTo = new FeedFragment();
         FeedFragment wantsTo = new FeedFragment();
-        goingTo.setArguments(getArgumentsBundle(false));
-        wantsTo.setArguments(getArgumentsBundle(true));
+        wantsTo.setArguments(getArgumentsBundle(false));
+        addFragmentToContainer(wantsTo, "feed");
 
-        adapter.addFragment(goingTo, getString(R.string.going_to));
-        adapter.addFragment(wantsTo, getString(R.string.wants_to));
 
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+//        MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());
+//        FeedFragment goingTo = new FeedFragment();
+//        goingTo.setArguments(getArgumentsBundle(false));
+//        adapter.addFragment(goingTo, getString(R.string.going_to));
+//        adapter.addFragment(wantsTo, getString(R.string.wants_to));
+//        viewPager.setAdapter(adapter);
+//        tabLayout.setupWithViewPager(viewPager);
+
         mNavigationView.getMenu().getItem(0).setChecked(true);
     }
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <integer name="event_num_cols">4</integer>
+    <integer name="event_num_cols">3</integer>
 
 </resources>

@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.models.Friendship;
 import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.utils.QueryUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,10 +29,12 @@ public class FriendAdapter extends CursorRecyclerAdapter<FriendAdapter.ViewHolde
 
 
     ItemCallback callback;
+    private User mAuthenticatedUser;
 
     public FriendAdapter(Cursor c, ItemCallback callback) {
         super(c);
         this.callback = callback;
+        mAuthenticatedUser = QueryUtils.getAuthenticatedUserFromDB();
     }
 
     @Override
@@ -45,7 +49,14 @@ public class FriendAdapter extends CursorRecyclerAdapter<FriendAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
-        User user = User.fromCursor(cursor, false);
+        Friendship friendship = Friendship.fromCursor(cursor, false);
+        User user;
+        if(friendship.getUserId1().equals(mAuthenticatedUser.getId())) {
+            user = QueryUtils.getUserFromDB(friendship.getUserId1());
+        } else {
+            user = QueryUtils.getUserFromDB(friendship.getUserId2());
+        }
+
         if(user != null) {
             Glide.with(holder.itemView.getContext())
                     .load(user.getPicUrl())
@@ -62,7 +73,6 @@ public class FriendAdapter extends CursorRecyclerAdapter<FriendAdapter.ViewHolde
             holder.itemView.setTag(R.id.userName, user.getUsername());
             holder.itemView.setTag(R.id.userPicture, user.getPicUrl());
         }
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

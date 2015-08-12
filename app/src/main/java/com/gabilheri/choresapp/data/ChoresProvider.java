@@ -100,14 +100,13 @@ public class ChoresProvider extends ContentProvider {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         UserEntry.TABLE_NAME,
                         projection,
-                        ("" + UserEntry.TABLE_NAME + "." + UserEntry._ID + " = ?"),
-                        new String[]{UserEntry.getIdFromUri(uri) + ""},
+                        UserEntry.TABLE_NAME + "." + ChoresContract.LONG_ID + " = ?",
+                        new String[]{String.valueOf(UserEntry.getIdFromUri(uri))},
                         null,
                         null,
                         sortOrder
                 );
                 break;
-
             }
             case USER: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(

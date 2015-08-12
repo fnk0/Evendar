@@ -21,6 +21,30 @@
       android:hint="@string/new_event"
       android:padding="16dp"/>
 
+    <AutoCompleteTextView
+      android:id="@+id/autoCompleteTextView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:drawableLeft="@drawable/ic_communication_location_on"
+      android:drawablePadding="8dp"
+      android:padding="16dp"
+      android:hint="@string/location"
+      />
+
+    <EditText
+      android:id="@+id/new_event_details"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:layout_weight="1"
+      android:drawableLeft="@drawable/ic_content_sort"
+      android:drawablePadding="8dp"
+      android:hint="@string/details"
+      android:lines="2"
+      android:padding="16dp"
+      />
+
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
@@ -31,19 +55,24 @@
       android:paddingBottom="0dp"
       android:text="@string/select_category"
       android:textColor="#575757"
-      android:textSize="18sp"/>
+      android:textSize="18sp"
+      android:visibility="gone"
+      />
 
     <View
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="#999999"/>
+      android:background="#999999"
+      android:visibility="gone"/>
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
-                android:paddingLeft="50dp">
+    <RadioGroup
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:orientation="horizontal"
+      android:paddingLeft="50dp"
+      android:visibility="gone">
 
       <RadioButton
         android:id="@+id/radio_button_going"
@@ -85,21 +114,14 @@
       android:hint="@string/date"
       />
 
-    <AutoCompleteTextView
-      android:id="@+id/autoCompleteTextView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:drawableLeft="@drawable/ic_communication_location_on"
-      android:drawablePadding="8dp"
-      android:padding="16dp"
-      android:text="@string/location"
-      />
+
 
     <TextView
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:text="Selected place"
-      android:textAppearance="?android:attr/textAppearanceMedium"/>
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:visibility="gone"/>
 
     <TextView
       android:id="@+id/place_details"
@@ -107,7 +129,8 @@
       android:layout_height="wrap_content"
       android:autoLink="all"
       android:text=""
-      android:textAppearance="?android:attr/textAppearanceMedium"/>
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:visibility="gone"/>
 
     <TextView
       android:id="@+id/place_attribution"
@@ -116,30 +139,20 @@
       android:autoLink="all"
       android:paddingTop="0dp"
       android:text=""
-      android:textAppearance="?android:attr/textAppearanceSmall"/>
+      android:textAppearance="?android:attr/textAppearanceSmall"
+      android:visibility="gone"/>
 
-    <EditText
-      android:id="@+id/new_event_details"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="8dp"
-      android:layout_weight="1"
-      android:drawableLeft="@drawable/ic_content_sort"
-      android:drawablePadding="8dp"
-      android:hint="Details"
-      android:padding="16dp"
-      android:lines="3"
-      />
+
 
     <Button
       android:id="@+id/createEvent"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:background="@drawable/orange_button"
-      android:textColor="@color/grey_100"
       android:layout_alignParentBottom="true"
       android:layout_marginTop="16dp"
+      android:background="@drawable/orange_button"
       android:text="@string/create_event"
+      android:textColor="@color/grey_100"
       />
   </LinearLayout>
 

@@ -113,14 +113,19 @@ public class Comment {
     }
 
     public static Comment fromCursor(Cursor cursor, boolean shouldClose) {
+
+        if(cursor.getPosition() == -1) {
+            cursor.moveToNext();
+        }
+
         Comment comment = new Comment();
-        comment.setAutoID(cursor.getLong(ID_PROJECTION));
-        comment.setId(cursor.getLong(LONG_ID_PROJECTION));
-        comment.setText(cursor.getString(TEXT_PROJECTION));
-        comment.setUserId(cursor.getString(USER_ID_PROJECTION));
-        comment.setCreatedAt(cursor.getString(CREATED_AT_PROJECTION));
-        comment.setUpdatedAt(cursor.getString(UPDATED_AT_PROJECTION));
-        comment.setTime(cursor.getString(TIME_PROJECTION));
+        comment.setAutoID(cursor.getLong(cursor.getColumnIndex(CommentEntry._ID)));
+        comment.setId(cursor.getLong(cursor.getColumnIndex(ChoresContract.LONG_ID)));
+        comment.setText(cursor.getString(cursor.getColumnIndex(CommentEntry.COLUMN_TEXT)));
+        comment.setUserId(cursor.getString(cursor.getColumnIndex(CommentEntry.COLUMN_USER_ID)));
+        comment.setCreatedAt(cursor.getString(cursor.getColumnIndex(CommentEntry.COLUMN_DATE_CREATED)));
+        comment.setUpdatedAt(cursor.getString(cursor.getColumnIndex(CommentEntry.COLUMN_UPDATED_AT)));
+        comment.setTime(cursor.getString(cursor.getColumnIndex(CommentEntry.COLUMN_TIME)));
 
         if(shouldClose) {
             cursor.close();

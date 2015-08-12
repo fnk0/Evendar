@@ -36,7 +36,7 @@ import rx.schedulers.Schedulers;
  * @version 1.0
  * @since 7/20/15.
  */
-public class FeedFragment extends BaseCursorListFragment implements ItemCallback{
+public class FeedFragment extends BaseCursorListFragment implements ItemCallback {
 
     private static final int FEED_LOADER = 0;
     private static final int FAVORITES_LOADER = 1;
@@ -58,21 +58,21 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if(getActivity() instanceof FeedActivity) {
+        if (getActivity() instanceof FeedActivity) {
             mCurrentUser = ((FeedActivity) getActivity()).getActiveUser();
         }
 
         arguments = getArguments();
 
-        if(arguments == null) {
+        if (arguments == null) {
             arguments = savedInstanceState;
         }
 
-        if(arguments != null) {
+        if (arguments != null) {
 
             isFavorites = arguments.getBoolean(Const.IS_FAVORITES);
 
-            if(!isFavorites) {
+            if (!isFavorites) {
                 startDate = arguments.getString(Const.START_DATE);
                 endDate = arguments.getString(Const.END_DATE);
                 isWant = arguments.getBoolean(Const.BOOLEAN_IS_WANT);
@@ -85,17 +85,9 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
         }
     }
 
-    private boolean favExists(Event e, User u){
-       Favorite f =  QueryUtils.getFavoriteFromDB(u.getId());
-
-        if (f.getId() == null){
-            
-            return false;
-        } else{
-
-            return true;
-        }
-
+    private boolean favExists(Event e, User u) {
+        Favorite f = QueryUtils.getFavoriteFromDB(u.getId());
+        return f != null && f.getId() != null;
     }
 
     @Override
@@ -105,12 +97,10 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
         Event event = (Event) view.getTag(R.id.eventId);
         switch (view.getId()) {
             case R.id.favorites:
-                if(favExists(event, mCurrentUser)){
-                }
-                else{
+                if (favExists(event, mCurrentUser)) {
+
+                } else {
                     event.setNumFavorites(event.getNumFavorites() + 1);
-
-
                 }
                 break;
 
@@ -134,7 +124,7 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
                 break;
         }
 
-        if(intent != null) {
+        if (intent != null) {
             intent.putExtra(Const.EVENT_ID, event.getId());
             startActivity(intent);
         } else {
@@ -150,7 +140,7 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
                 queryUri = ChoresContract.EventEntry.buildEventUri(startDate, endDate, isWant);
                 break;
             case FAVORITES_LOADER:
-                if(mCurrentUser != null) {
+                if (mCurrentUser != null) {
                     queryUri = ChoresContract.FavoriteEntry.buildFavoritesForUser(mCurrentUser.getId());
                 }
                 break;
@@ -162,7 +152,7 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     @Override
     protected int[] getLoaders() {
 
-        if(!isFavorites) {
+        if (!isFavorites) {
             return new int[]{FEED_LOADER};
         } else {
             return new int[]{FAVORITES_LOADER};

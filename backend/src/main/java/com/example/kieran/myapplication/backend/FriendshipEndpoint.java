@@ -2,6 +2,7 @@ package com.example.kieran.myapplication.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
+import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
@@ -81,6 +82,13 @@ public class FriendshipEndpoint {
                 .filter(ChoresContract.FriendshipEntry.COLUMN_USER_ID2, userId);
 
         return listByQuery(query, null, null);
+    }
+
+    @ApiMethod(name = "listAllFriendShips", path = "listAllFriendShips")
+    public CollectionResponse<Friendship> listAllFriendShips(@Nullable @Named("cursor") String cursorString,
+                                                             @Nullable @Named("count") Integer count) throws NotFoundException {
+
+        return QueryUtils.list(Friendship.class, cursorString, count);
     }
 
 }

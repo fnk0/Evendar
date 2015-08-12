@@ -1,14 +1,17 @@
 package com.gabilheri.choresapp.detail_event;
 
+import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.os.Bundle;
-import android.view.View;
-
 import android.net.Uri;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
-
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.gabilheri.choresapp.BaseCursorListFragment;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
@@ -17,10 +20,17 @@ import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Comment;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.IntentUtils;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
+import org.joda.time.LocalDateTime;
+
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -39,6 +49,14 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
 
     Event event;
 
+    @Bind(R.id.fab)
+    FloatingActionButton comment;
+
+    MaterialDialog mShareDialog;
+    EditText messageText;
+
+    User mAutheticatedUser;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -47,6 +65,44 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
             Long eventId = getArguments().getLong(Const.EVENT_ID);
             event = QueryUtils.getEventFromDB(eventId);
         }
+
+        mAutheticatedUser = QueryUtils.getAuthenticatedUserFromDB();
+
+        mShareDialog = new MaterialDialog.Builder(getActivity())
+                .customView(R.layout.dialog_comment, false)
+                .positiveColor(getResources().getColor(R.color.primary))
+                .neutralColor(getResources().getColor(R.color.accent_color))
+                .positiveText("Submit")
+
+                .neutralText("Dismiss")
+                .callback(new MaterialDialog.ButtonCallback() {
+                    @Override
+                    public void onPositive(MaterialDialog dialog) {
+                        super.onPositive(dialog);
+
+                        Comment c = new Comment();
+                        c.setText(messageText.getText().toString());
+                        LocalDateTime now = LocalDateTime.now();
+                        String time = String.valueOf(now.toDate().getTime());
+                        c.setCreatedAt(time);
+                        c.setUpdatedAt(time);
+                        c.setUserId(String.valueOf(mAutheticatedUser.getId()));
+                        insertComment(c);
+                    }
+
+                    @Override
+                    public void onNeutral(MaterialDialog dialog) {
+                        super.onNeutral(dialog);
+                        dialog.dismiss();
+                    }
+                })
+                .build();
+
+        if(mShareDialog.getCustomView() != null) {
+            messageText = (EditText) mShareDialog.getCustomView().findViewById(R.id.image_caption);
+
+        }
+
         mAdapter = new CommentsAdapter(null, this);
         initCardsList(mAdapter);
     }
@@ -72,7 +128,6 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        //TODO implement query
         Uri contentUri = ChoresContract.CommentEntry.CONTENT_URI;
         return new CursorLoader(getActivity(),
                 contentUri,
@@ -81,6 +136,11 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
                 null,
                 null
         );
+    }
+
+    @OnClick(R.id.fab)
+    public void comment(View v) {
+        mShareDialog.show();
     }
 
     @Override
@@ -102,10 +162,10 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
                 .subscribe(new CommentSubscriber());
     }
 
-    private class CommentSubscriber extends Subscriber<Comment> {
+    private class CommentListSubscriber extends Subscriber<List<Comment>> {
         @Override
         public void onCompleted() {
-            unsubscribe();
+
         }
 
         @Override
@@ -114,8 +174,28 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
         }
 
         @Override
-        public void onNext(Comment comment) {
+        public void onNext(List<Comment> comments) {
 
+        }
+    }
+
+    private class CommentSubscriber extends Subscriber<Comment> {
+        @Override
+        public void onCompleted() {
+            unsubscribe();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            Log.e("CommentFragment", "Error inserting comment", e);
+        }
+
+        @Override
+        public void onNext(Comment comment) {
+            if(comment != null) {
+                ContentValues commentValues = Comment.toContentValues(comment);
+                getActivity().getContentResolver().insert(ChoresContract.CommentEntry.CONTENT_URI, commentValues);
+            }
         }
     }
 
