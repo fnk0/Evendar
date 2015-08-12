@@ -17,6 +17,7 @@ import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.friends_list.PeopleListActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.SocialUtils;
 
 import java.util.List;
 
@@ -51,6 +52,11 @@ public class DetailFragment extends BaseFragment {
     @Bind(R.id.whoName)
     TextView whoName;
 
+    @Bind(R.id.title)
+    TextView title;
+
+    @Bind(R.id.detailsText)
+    TextView detailsText;
 
     Long eventId;
 
@@ -79,7 +85,19 @@ public class DetailFragment extends BaseFragment {
 
             event = QueryUtils.getEventFromDB(eventId);
 
+            User eventUser = QueryUtils.getUserFromDB(event.getUsername());
 
+            title.setText(event.getTitle());
+            whoName.setText(SocialUtils.getFirstLastName(eventUser.getFullName()));
+
+            String[] address = event.getLocation().split("//");
+            String prettyAddr = address[address.length -1];
+
+            whereAddress.setText(prettyAddr);
+
+            if(event.getDescription() != null) {
+                detailsText.setText(event.getDescription());
+            }
         }
     }
 

@@ -33,6 +33,7 @@ public class Event {
     int numComments;
     int numGoing;
     int numShares;
+    String description;
 
     String location;
 
@@ -43,8 +44,6 @@ public class Event {
     String createdAt;
 
     public Event() {}
-
-
 
     public Long getId() {
         return id;
@@ -153,6 +152,15 @@ public class Event {
 
     public Event setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Event setDescription(String description) {
+        this.description = description;
         return this;
     }
 

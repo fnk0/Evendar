@@ -113,17 +113,18 @@ public class DetailActivity extends BaseActivity implements OnMapReadyCallback {
 
         LatLng latLng = null;
 
+        String[] coords = new String[2];
+
         if(location.contains("geo://")) {
-            String[] coords = location.substring(6).split(",");
-            latLng = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
+            coords = location.substring(6).split(",");
         } else {
-            //TODO get the latLng for the specific address
+            String placeLatLng = location.split("//")[1];
+            coords = placeLatLng.split(",");
         }
 
-        if(latLng != null) {
-            map.addMarker(new MarkerOptions().position(latLng).title(event.getTitle()));
-            map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        }
+        latLng = new LatLng(Double.parseDouble(coords[0]), Double.parseDouble(coords[1]));
+        map.addMarker(new MarkerOptions().position(latLng).title(event.getTitle()));
+        map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     @Override

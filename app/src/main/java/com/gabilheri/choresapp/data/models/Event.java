@@ -114,8 +114,9 @@ public class Event {
         return this;
     }
 
-    public void setDescription(String d){
-        this.description = d;
+    public Event setDescription(String description) {
+        this.description = description;
+        return this;
     }
 
     public int getNumGoing() {
@@ -182,6 +183,7 @@ public class Event {
                 .setLocation(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_LOC)))
                 .setNumComments(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_COMMENTS)))
                 .setNumFavorites(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_FAV)))
+                .setDescription(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DESCRIPTION)))
                 .setNumGoing(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_GOING)))
                 .setNumShares(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_NUM_SHARES)))
                 .setUsername(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID)));
@@ -207,6 +209,7 @@ public class Event {
         values.put(EventEntry.COLUMN_NUM_GOING, event.getNumGoing());
         values.put(EventEntry.COLUMN_USER_ID, event.getUsername());
         values.put(EventEntry.COLUMN_NUM_SHARES, event.getNumShares());
+        values.put(EventEntry.COLUMN_DESCRIPTION, event.getDescription());
         return values;
     }
 
