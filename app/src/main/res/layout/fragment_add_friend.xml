@@ -1,0 +1,19 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    tools:context="com.gabilheri.choresapp.add_user.AddFriendActivityFragment">
+
+    <EditText
+        android:id="@+id/enter_event_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableLeft="@drawable/ic_action_account_box"
+        android:drawablePadding="8dp"
+        android:hint="@string/enter_email_friend"
+        android:padding="8dp"
+        android:layout_marginTop="8dp"/>
+
+</LinearLayout>
