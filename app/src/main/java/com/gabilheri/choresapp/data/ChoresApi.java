@@ -44,8 +44,8 @@ public interface ChoresApi {
             @Path("id") Long id
     );
 
-    @GET("/user")
-    Observable<Response> getuser(
+    @GET(NetworkClient.USER_API + "/user")
+    Observable<User> getuser(
             @Query("username") String username
     );
 
