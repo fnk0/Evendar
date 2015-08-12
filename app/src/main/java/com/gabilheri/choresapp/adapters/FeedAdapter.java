@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.R;
+import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.QueryUtils;
@@ -18,8 +19,6 @@ import com.gabilheri.choresapp.utils.TimeUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
 
 /**
  * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
@@ -31,6 +30,13 @@ import static com.gabilheri.choresapp.data.ChoresContract.EventEntry;
 public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
 
     ItemCallback callback;
+    private boolean isFavorites = false;
+
+    public FeedAdapter(Cursor c, ItemCallback callback, boolean isFavorites) {
+        super(c);
+        this.callback = callback;
+        this.isFavorites = isFavorites;
+    }
 
     public FeedAdapter(Cursor c, ItemCallback callback) {
         super(c);
@@ -39,7 +45,15 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
-        String username = cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID));
+        Event event = null;
+        if(isFavorites) {
+            long eventId = cursor.getLong(cursor.getColumnIndex(ChoresContract.FavoriteEntry.COLUMN_EVENT_ID));
+            event = QueryUtils.getEventFromDB(eventId);
+        } else {
+            event = Event.fromCursor(cursor, false);
+        }
+
+        String username = event.getUsername();
         User user = QueryUtils.getUserFromDB(username);
         Glide.with(holder.itemView.getContext())
                 .load(user.getPicUrl())
@@ -49,8 +63,6 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
 
         holder.itemView.setTag(R.id.userName, username);
         holder.userPicture.setTag(R.id.userProfile, user.getPicUrl());
-
-        Event event = Event.fromCursor(cursor, false);
 
         holder.feedTitle.setText(event.getTitle());
         holder.favoritesCount.setText(String.valueOf(event.getNumFavorites()));
