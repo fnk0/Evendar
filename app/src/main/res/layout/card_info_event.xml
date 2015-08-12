@@ -23,7 +23,7 @@
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:padding="8dp"
-            android:text="@string/info"
+            android:text="info"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/white_light_grey"
             android:textStyle="bold"/>
