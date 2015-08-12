@@ -212,6 +212,13 @@ public class ChoresContract {
                     .build();
         }
 
+        public static Uri buildFavoritesForUser(Long userId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("userId")
+                    .appendPath(String.valueOf(userId))
+                    .build();
+        }
+
         public static String getUserIdFromUri(Uri uri) {
             return uri.getPathSegments().get(4);
         }

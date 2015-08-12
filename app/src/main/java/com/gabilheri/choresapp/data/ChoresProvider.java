@@ -59,6 +59,7 @@ public class ChoresProvider extends ContentProvider {
     private static final int FAVORITES = 600;
     private static final int FAVORITE_WITH_ID = 601;
     private static final int FAVORITE_WITH_USER_ID = 602;
+    private static final int FAVORITES_FOR_USER = 603;
 
     @Override
     public boolean onCreate() {
@@ -295,7 +296,7 @@ public class ChoresProvider extends ContentProvider {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         FavoriteEntry.TABLE_NAME,
                         projection,
-                        ("" + FavoriteEntry.TABLE_NAME + "." + FavoriteEntry._ID + " = ?"),
+                        FavoriteEntry.TABLE_NAME + "." + FavoriteEntry._ID + " = ?",
                         new String[]{FavoriteEntry.getIdFromUri(uri)},
                         null,
                         null,
@@ -310,6 +311,19 @@ public class ChoresProvider extends ContentProvider {
                         projection,
                         selection,
                         selectionArgs,
+                        null,
+                        null,
+                        sortOrder
+                );
+                break;
+            }
+
+            case FAVORITES_FOR_USER: {
+                retCursor = mChoresDbHelper.getReadableDatabase().query(
+                        FavoriteEntry.TABLE_NAME,
+                        projection,
+                        FavoriteEntry.TABLE_NAME + "." + FavoriteEntry.COLUMN_USER_ID + " = ?",
+                        new String[]{uri.getPathSegments().get(2)},
                         null,
                         null,
                         sortOrder
@@ -547,6 +561,7 @@ public class ChoresProvider extends ContentProvider {
 
         // Favorites URI's
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES, FAVORITES);
+        matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/userId/#", FAVORITES_FOR_USER);
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/favId/#", FAVORITE_WITH_ID);
         matcher.addURI(authority, ChoresContract.PATH_FAVORITES + "/favId/uId/#", FAVORITE_WITH_USER_ID);
 

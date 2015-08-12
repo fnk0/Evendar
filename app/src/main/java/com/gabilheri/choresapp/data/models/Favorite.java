@@ -1,41 +1,34 @@
-package com.example.kieran.myapplication.backend;
-
-
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Index;
-
+package com.gabilheri.choresapp.data.models;
 
 /**
- * Created by kieran on 8/5/15.
+ * Created by <a href="mailto:marcusandreog@gmail.com">Marcus Gabilheri</a>
+ *
+ * @author Marcus Gabilheri
+ * @version 1.0
+ * @since 8/12/15.
  */
-
-@Entity
 public class Favorite {
 
-    @Id
     Long id;
 
-    @Index
     String updatedAt;
 
-    @Index
     String createdAt;
 
-    @Index
     Long eventId;
 
-    @Index
     Long userId;
 
-    public Favorite(){}
+    public Favorite() {
+    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Favorite setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getUpdatedAt() {
@@ -72,16 +65,5 @@ public class Favorite {
     public Favorite setUserId(Long userId) {
         this.userId = userId;
         return this;
-    }
-
-    @Override
-    public String toString() {
-        return "Favorite{" +
-                "id=" + id +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", eventId=" + eventId +
-                ", userId=" + userId +
-                '}';
     }
 }

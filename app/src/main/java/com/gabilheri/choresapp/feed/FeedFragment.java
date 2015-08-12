@@ -16,6 +16,7 @@ import com.gabilheri.choresapp.adapters.FeedAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.detail_event.DetailActivity;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.IntentUtils;
@@ -47,9 +48,15 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     Bundle arguments = null;
     boolean isFavorites = false;
 
+    private User mCurrentUser;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if(getActivity() instanceof FeedActivity) {
+            mCurrentUser = ((FeedActivity) getActivity()).getActiveUser();
+        }
 
         arguments = getArguments();
 
@@ -65,9 +72,12 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
                 startDate = arguments.getString(Const.START_DATE);
                 endDate = arguments.getString(Const.END_DATE);
                 isWant = arguments.getBoolean(Const.BOOLEAN_IS_WANT);
+                mAdapter = new FeedAdapter(null, this);
+            } else {
+                mAdapter = new FeedAdapter(null, this, true);
             }
 
-            mAdapter = new FeedAdapter(null, this);
+
             initCardsList(mAdapter);
         }
     }
@@ -118,7 +128,9 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
                 queryUri = ChoresContract.EventEntry.buildEventUri(startDate, endDate, isWant);
                 break;
             case FAVORITES_LOADER:
-                queryUri = ChoresContract.EventEntry.buildEventUri(startDate, endDate, isWant);
+                if(mCurrentUser != null) {
+                    queryUri = ChoresContract.FavoriteEntry.buildFavoritesForUser(mCurrentUser.getId());
+                }
                 break;
         }
 
