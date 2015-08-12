@@ -326,9 +326,10 @@ public class ChoresProvider extends ContentProvider {
                         new String[]{uri.getPathSegments().get(2)},
                         null,
                         null,
-                        sortOrder
+                        FavoriteEntry.COLUMN_DATE_CREATED + " DESC"
                 );
                 break;
+
             }
 
             default:
