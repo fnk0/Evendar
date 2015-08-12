@@ -84,6 +84,43 @@
       android:layout_marginTop="8dp"
     />
 
+      <AutoCompleteTextView
+          android:id="@+id/autoCompleteTextView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text = "Enter Location"
+          android:drawableLeft = "@drawable/ic_communication_location_on"
+          android:drawablePadding="8dp"
+          android:padding="8dp"/>
+      <Button
+          android:id="@+id/button_clear"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_horizontal"
+          android:text="Clear text" />
+
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Selected place"
+          android:textAppearance="?android:attr/textAppearanceMedium" />
+      <TextView
+          android:id="@+id/place_details"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:autoLink="all"
+          android:text=""
+          android:textAppearance="?android:attr/textAppearanceMedium" />
+
+      <TextView
+          android:id="@+id/place_attribution"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:autoLink="all"
+          android:text=""
+          android:paddingTop="0dp"
+          android:textAppearance="?android:attr/textAppearanceSmall" />
+
     <EditText
       android:id="@+id/new_event_location"
       android:layout_width="match_parent"
@@ -95,6 +132,7 @@
       android:padding="8dp"
       android:layout_marginTop="8dp"
     />
+
 
     <EditText
       android:id="@+id/new_event_details"

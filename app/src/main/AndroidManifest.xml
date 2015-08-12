@@ -82,7 +82,6 @@
         android:exported="false"
         android:syncable="true"/>
 
-      <!-- SyncAdapter's dummy authentication service -->
       <service
         android:name=".sync.ChoresAuthenticatorService"
         android:exported="true"

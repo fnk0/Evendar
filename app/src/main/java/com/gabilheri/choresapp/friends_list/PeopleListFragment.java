@@ -5,8 +5,11 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import rx.Subscriber;
 
 import com.gabilheri.choresapp.data.ChoresApi;
 import com.gabilheri.choresapp.data.models.Friendship;
@@ -72,8 +75,28 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
         ChoresApp.instance().getApi().insertFriendship(f)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new FriendshipSubscriber())
         ;
     }
+
+    private class FriendshipSubscriber extends Subscriber<Friendship> {
+        @Override
+        public void onCompleted() {
+
+            unsubscribe();
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onNext(Friendship f) {
+
+        }
+    }
+
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {

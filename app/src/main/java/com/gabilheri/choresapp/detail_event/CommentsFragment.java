@@ -1,9 +1,13 @@
 package com.gabilheri.choresapp.detail_event;
 
+import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+
+import android.net.Uri;
+
 
 import com.gabilheri.choresapp.BaseCursorListFragment;
 import com.gabilheri.choresapp.ChoresApp;
