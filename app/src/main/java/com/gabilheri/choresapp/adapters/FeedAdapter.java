@@ -84,7 +84,12 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        ItemCallback callback;
+        ItemCallback callback = new ItemCallback() {
+            @Override
+            public void onItemClick(View view) {
+
+            }
+        };
 
         @Bind(R.id.createdAt)
         public TextView date;
