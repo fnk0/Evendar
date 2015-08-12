@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 
+
 import com.gabilheri.choresapp.BaseCursorListFragment;
 import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
@@ -68,6 +69,11 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //TODO implement query
+        ChoresApp.instance().getApi().getAllCommentsForEvent(event.getId(), event.getUpdatedAt())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+
+
         return null;
     }
 
