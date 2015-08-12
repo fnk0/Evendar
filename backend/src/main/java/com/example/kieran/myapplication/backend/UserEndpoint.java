@@ -111,7 +111,6 @@ public class UserEndpoint {
 
 
         return listByQuery(query, null, null);
-
     }
 
 

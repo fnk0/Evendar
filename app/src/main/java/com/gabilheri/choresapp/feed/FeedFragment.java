@@ -77,7 +77,6 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
                 mAdapter = new FeedAdapter(null, this, true);
             }
 
-
             initCardsList(mAdapter);
         }
     }
