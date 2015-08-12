@@ -31,9 +31,6 @@ public interface ChoresApi {
     @POST(NetworkClient.USER_API + "/user")
     Observable<User> insertUser(@Body User user);
 
-    @POST(NetworkClient.FRIENDSHIP_API + "/friendship")
-    Observable<Friendship> insertFriendship(@Body Friendship f);
-
     @PUT(NetworkClient.USER_API + "/update")
     Observable<User> updateUser(@Body User user);
 
@@ -104,4 +101,9 @@ public interface ChoresApi {
     Observable<Response> deleteComment(
             @Path("id") Long commentId
     );
+
+
+    //favorites section
+    @POST(NetworkClient.FRIENDSHIP_API + "/friendship")
+    Observable<Friendship> insertFriendship(@Body Friendship f);
 }
