@@ -36,6 +36,9 @@
   <string name="add_friend">Add a Friend</string>
   <string name="enter_email_friend">Enter email of friend</string>
   <string name="done">Done</string>
+  <string name="who">Who:</string>
+  <string name="where">Where:</string>
+  <string name="address">Address:</string>
 
 
   <!-- Generated from code section -->

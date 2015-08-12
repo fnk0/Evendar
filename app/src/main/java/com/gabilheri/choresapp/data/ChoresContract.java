@@ -302,6 +302,13 @@ public class ChoresContract {
                     .build();
         }
 
+        public static Uri buildCommentsUriForEvent(Long eventId) {
+            return CONTENT_URI.buildUpon()
+                    .appendPath("eventId")
+                    .appendPath(String.valueOf(eventId))
+                    .build();
+        }
+
         public static String getIdFromUri(Uri uri) {
             return uri.getPathSegments().get(2);
         }

@@ -13,6 +13,7 @@ import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.MyFragmentAdapter;
 import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.utils.Const;
+import com.gabilheri.choresapp.utils.QueryUtils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -67,6 +68,10 @@ public class DetailActivity extends BaseActivity implements OnMapReadyCallback {
         if(extras != null) {
             isComment = extras.getBoolean(Const.IS_COMMENT);
             eventId = extras.getLong(Const.EVENT_ID);
+        }
+
+        if(eventId != -1) {
+            event = QueryUtils.getEventFromDB(eventId);
         }
 
         mapView.onCreate(savedInstanceState);

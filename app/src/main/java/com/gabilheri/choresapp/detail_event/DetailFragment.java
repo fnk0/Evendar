@@ -45,6 +45,13 @@ public class DetailFragment extends BaseFragment {
     @Bind(R.id.overflowFriends)
     TextView overflowFriends;
 
+    @Bind(R.id.whereAddress)
+    TextView whereAddress;
+
+    @Bind(R.id.whoName)
+    TextView whoName;
+
+
     Long eventId;
 
     Event event;
@@ -71,7 +78,6 @@ public class DetailFragment extends BaseFragment {
             }
 
             event = QueryUtils.getEventFromDB(eventId);
-
 
 
         }
