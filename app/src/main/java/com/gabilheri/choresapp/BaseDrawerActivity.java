@@ -115,9 +115,6 @@ public abstract class BaseDrawerActivity extends BaseActivity {
     }
 
     private Intent getFeedActivity() {
-        if (this instanceof FeedActivity) {
-            return null;
-        }
         return new Intent(this, FeedActivity.class);
     }
 
@@ -157,6 +154,10 @@ public abstract class BaseDrawerActivity extends BaseActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public User getActiveUser() {
+        return mActiveUser;
     }
 
     @Override

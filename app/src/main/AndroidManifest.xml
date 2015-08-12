@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gabilheri.choresapp" >
+<manifest package="com.gabilheri.choresapp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <!-- Permissions required by the sync adapter -->
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
     <!-- My Location -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <!-- Permissions for sign in with Google -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -21,7 +21,7 @@
     <!-- Maps API needs OpenGL ES 2.0. -->
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true" />
+        android:required="true"/>
 
     <!-- End of copy. -->
     <application
@@ -29,27 +29,27 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.ChoresApp" >
+        android:theme="@style/Theme.ChoresApp">
         <activity
             android:name=".feed.FeedActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".friends_list.PeopleListActivity"
             android:label="@string/app_name"
-            android:theme="@style/Base.Theme.OrangeActivity" />
+            android:theme="@style/Base.Theme.OrangeActivity"/>
         <activity
             android:name=".new_event.NewEventActivity"
             android:label="@string/app_name"
             android:theme="@style/Base.Theme.BlueIndigoActivity" />
         <activity
             android:name=".detail_event.DetailActivity"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"/>
         <activity
             android:name=".sign_in.SignInActivity"
             android:label="@string/app_name" />
@@ -64,63 +64,62 @@
         <activity
             android:name=".user_profile.UserProfileActivity"
             android:label="@string/app_name"
-            android:theme="@style/Base.Theme.BlueIndigoActivity" />
+            android:theme="@style/Base.Theme.BlueIndigoActivity"/>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
-        <!-- Content Provider -->
-        <provider
-            android:name=".data.ChoresProvider"
-            android:authorities="@string/content_authority"
-            android:exported="false"
-            android:syncable="true" />
+      <!-- Content Provider -->
+      <provider
+        android:name=".data.ChoresProvider"
+        android:authorities="@string/content_authority"
+        android:exported="false"
+        android:syncable="true"/>
 
-        <service
-            android:name=".sync.ChoresAuthenticatorService"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator" />
-            </intent-filter>
+      <service
+        android:name=".sync.ChoresAuthenticatorService"
+        android:exported="true"
+        >
+        <intent-filter>
+          <action android:name="android.accounts.AccountAuthenticator"/>
+        </intent-filter>
+        <meta-data
+          android:name="android.accounts.AccountAuthenticator"
+          android:resource="@xml/authenticator"/>
+      </service>
 
-            <meta-data
-                android:name="android.accounts.AccountAuthenticator"
-                android:resource="@xml/authenticator" />
-        </service>
-
-        <!-- The SyncAdapter service -->
-        <service
-            android:name=".sync.ChoresSyncService"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="android.content.SyncAdapter" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.content.SyncAdapter"
-                android:resource="@xml/syncadapter" />
-        </service>
+      <!-- The SyncAdapter service -->
+      <service
+        android:name=".sync.ChoresSyncService"
+        android:exported="true">
+        <intent-filter>
+          <action android:name="android.content.SyncAdapter"/>
+        </intent-filter>
+        <meta-data
+          android:name="android.content.SyncAdapter"
+          android:resource="@xml/syncadapter"/>
+      </service>
 
         <!-- Google Key -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAS9_hwY1regUzMQ7BEZMDKT94EtXCuALw" />
+            android:value="AIzaSyAS9_hwY1regUzMQ7BEZMDKT94EtXCuALw"/>
 
         <!-- Twitter Key -->
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="0f1bbd3b27cae435eff5f9d6857577615f5b0d62" />
+            android:value="0f1bbd3b27cae435eff5f9d6857577615f5b0d62"/>
 
         <!-- Facebook Key -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id" />
+            android:value="@string/facebook_app_id"/>
 
         <activity
             android:name=".add_user.AddFriendActivity"
