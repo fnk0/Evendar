@@ -31,8 +31,8 @@
     </style>
 
     <style name="Base.Theme.YellowActivity" parent="Theme.ChoresApp">
-        <item name="colorPrimary">@color/yellow_700</item>
-        <item name="colorPrimaryDark">@color/yellow_900</item>
+        <item name="colorPrimary">@color/yellow_600</item>
+        <item name="colorPrimaryDark">@color/yellow_800</item>
         <item name="colorAccent">@color/blue_100</item>
         <item name="android:windowBackground">@color/window_background</item>
     </style>
