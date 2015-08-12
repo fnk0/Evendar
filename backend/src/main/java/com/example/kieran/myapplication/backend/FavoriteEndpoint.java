@@ -3,28 +3,19 @@ package com.example.kieran.myapplication.backend;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
-import com.google.appengine.api.datastore.Cursor;
-import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
-import com.sun.tools.corba.se.idl.constExpr.Not;
-
-import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
-import static com.example.kieran.myapplication.backend.QueryUtils.*;
-
-
-
-import static com.example.kieran.myapplication.backend.OfyService.ofy;
-import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
 
 import javax.inject.Named;
+
+import static com.example.kieran.myapplication.backend.OfyService.ofy;
+import static com.example.kieran.myapplication.backend.QueryUtils.deleteObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.findByUserId;
+import static com.example.kieran.myapplication.backend.QueryUtils.findRecord;
+import static com.example.kieran.myapplication.backend.QueryUtils.getObject;
+import static com.example.kieran.myapplication.backend.QueryUtils.listByQuery;
 
 
 /**

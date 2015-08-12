@@ -44,7 +44,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Who:"
+                    android:text="@string/who"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_800"
                     />
@@ -72,7 +72,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Where:"
+                    android:text="@string/where"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_800"
                     />
@@ -84,7 +84,7 @@
                     android:layout_weight="7"
                     android:paddingLeft="@dimen/activity_vertical_margin"
                     android:singleLine="true"
-                    android:text="Chipotle"
+                    tools:text="Chipotle"
                     android:textColor="@color/grey_800"
                     android:textSize="16sp"
                     />
@@ -101,7 +101,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="3"
-                    android:text="Address:"
+                    android:text="@string/address"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/grey_800"
                     />
@@ -115,7 +115,7 @@
                     android:maxLines="3"
                     android:paddingBottom="4dp"
                     android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:text="501 West 7th Street, Austin TX. This text is here so we can simulate a long address"
+                    tools:text="501 West 7th Street, Austin TX. This text is here so we can simulate a long address"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey_800"
                     />
