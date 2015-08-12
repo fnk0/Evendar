@@ -63,7 +63,6 @@ public class FeedActivity extends BaseDrawerActivity {
         setTitle(today);
 
         ChoresSyncAdapter.initializeSyncAdapter(this);
-        ChoresSyncAdapter.syncImmediately(this);
 
         MyFragmentAdapter adapter = new MyFragmentAdapter(getFragmentManager());
 

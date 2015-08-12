@@ -147,13 +147,12 @@ public class ChoresProvider extends ContentProvider {
 
             }
             case EVENT_WITH_STARTDATE: {
+                String startDate = EventEntry.getStartDateFromUri(uri);
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
                         EventEntry.TABLE_NAME,
                         projection,
-//                        (EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE_CREATED + " >= ? AND " + EventEntry.COLUMN_IS_WANT + " = ?"),
-//                        new String[]{EventEntry.getStartDateFromUri(uri), EventEntry.getIsWantFromUri(uri)},
-                        null,
-                        null,
+                        "CAST(" + EventEntry.TABLE_NAME + "." + EventEntry.COLUMN_DATE_CREATED + " AS INTEGER)" + " >= ? AND " + EventEntry.COLUMN_IS_WANT + " = ?",
+                        new String[]{startDate, EventEntry.getIsWantFromUri(uri)},
                         null,
                         null,
                         sortOrder

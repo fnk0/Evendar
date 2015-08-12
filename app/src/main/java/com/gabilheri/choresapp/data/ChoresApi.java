@@ -56,7 +56,7 @@ public interface ChoresApi {
             @Path("updatedAt") String updatedAt
     );
 
-    @POST(NetworkClient.EVENT_API + "/allUserEvents")
+    @GET(NetworkClient.EVENT_API + "/allUserEvents")
     Observable<FeedResponse> getAllUserEvents(
             @Query("date") Long userId,
             @Query("id") String updatedAt

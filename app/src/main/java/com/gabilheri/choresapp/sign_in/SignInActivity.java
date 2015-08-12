@@ -228,7 +228,7 @@ public class SignInActivity extends BaseActivity implements GoogleApiClient.Conn
     @Override
     public void onConnected(Bundle bundle) {
         mShouldResolve = false;
-            Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+        Person person = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
         if(person != null) {
             mUser = new User();

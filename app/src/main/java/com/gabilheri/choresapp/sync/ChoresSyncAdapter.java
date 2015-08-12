@@ -56,12 +56,14 @@ public class ChoresSyncAdapter extends AbstractThreadedSyncAdapter{
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         User authenticatedUser = QueryUtils.getAuthenticatedUserFromDB();
-        String eventUpdatedAt = PrefManager.with(getContext())
-                .getString(Const.EVENT_UPDATED_AT, String.valueOf(LocalDateTime.now().minusDays(100).toDate().getTime()));
-        ChoresApp.instance().getApi().getAllUserEvents(authenticatedUser.getId(), eventUpdatedAt)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(eventsSubscriber);
+        if(authenticatedUser != null) {
+            String eventUpdatedAt = PrefManager.with(getContext())
+                    .getString(Const.EVENT_UPDATED_AT, String.valueOf(LocalDateTime.now().minusDays(100).toDate().getTime()));
+            ChoresApp.instance().getApi().getAllUserEvents(authenticatedUser.getId(), eventUpdatedAt)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(eventsSubscriber);
+        }
     }
 
     Subscriber<FeedResponse> eventsSubscriber = new Subscriber<FeedResponse>() {

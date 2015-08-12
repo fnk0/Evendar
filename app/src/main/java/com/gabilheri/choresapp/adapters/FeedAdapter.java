@@ -13,6 +13,7 @@ import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.QueryUtils;
+import com.gabilheri.choresapp.utils.TimeUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +39,6 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
-
         String username = cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_USER_ID));
         User user = QueryUtils.getUserFromDB(username);
         Glide.with(holder.itemView.getContext())
@@ -56,6 +56,7 @@ public class FeedAdapter extends CursorRecyclerAdapter<FeedAdapter.ViewHolder> {
         holder.favoritesCount.setText(String.valueOf(event.getNumFavorites()));
         holder.commentsCount.setText(String.valueOf(event.getNumComments()));
         holder.sharesCount.setText(String.valueOf(event.getNumShares()));
+        holder.date.setText(TimeUtils.formatShortDate(Long.parseLong(event.getCreatedAt())));
         holder.itemView.setTag(R.id.eventId, event);
     }
 

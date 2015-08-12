@@ -21,6 +21,7 @@ public class Event {
     String title;
     String createdAt;
     String time;
+    String date;
     boolean isWant;
     int numFavorites;
     int numComments;
@@ -153,10 +154,24 @@ public class Event {
         return this;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public Event setDate(String date) {
+        this.date = date;
+        return this;
+    }
+
     public static Event fromCursor(Cursor cursor, boolean closeCursor) {
         Event event = new Event();
-        event.setCreatedAt(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE)))
+        event.setCreatedAt(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE_CREATED)))
                 .setId(cursor.getLong(cursor.getColumnIndex(ChoresContract.LONG_ID)))
+                .setDate(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_DATE)))
                 .setTime(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_TIME)))
                 .setTitle(cursor.getString(cursor.getColumnIndex(EventEntry.COLUMN_TITLE)))
                 .setIsWant(cursor.getInt(cursor.getColumnIndex(EventEntry.COLUMN_IS_WANT)) == 1)
@@ -177,7 +192,8 @@ public class Event {
     public static ContentValues toContentValues(Event event) {
         ContentValues values = new ContentValues();
         values.put(EventEntry.COLUMN_LONG_ID, event.getId());
-        values.put(EventEntry.COLUMN_DATE, event.getCreatedAt());
+        values.put(EventEntry.COLUMN_DATE, event.getDate());
+        values.put(EventEntry.COLUMN_DATE_CREATED, event.getCreatedAt());
         values.put(EventEntry.COLUMN_TIME, event.getTime());
         values.put(EventEntry.COLUMN_TITLE, event.getTitle());
         values.put(EventEntry.COLUMN_IS_WANT, event.isWant());

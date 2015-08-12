@@ -22,6 +22,8 @@ import com.gabilheri.choresapp.sync.ChoresSyncAdapter;
 import com.gabilheri.choresapp.utils.DialogUtils;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
+import org.joda.time.LocalDateTime;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.Subscriber;
@@ -80,7 +82,12 @@ public class NewEventFragment extends BaseFragment {
             newEvent.setIsWant(radioButtonWants.isChecked());
             newEvent.setDescription(newEventDetails.getText().toString());
             newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
-            newEvent.setTime(newEventDate.getMonth() + ":" + newEventDate.getDayOfMonth() + ":" + newEventDate.getYear());
+
+            String date = newEventDate.getMonth() + "-" + newEventDate.getDayOfMonth() + "-" + newEventDate.getYear();
+            String now = String.valueOf(LocalDateTime.now().toDate().getTime());
+            newEvent.setDate(date);
+            newEvent.setCreatedAt(now);
+            newEvent.setUpdatedAt(now);
             User user = QueryUtils.getAuthenticatedUserFromDB();
             newEvent.setUsername(user.getUsername());
 

@@ -18,9 +18,11 @@ public final class TimeUtils {
     private TimeUtils() {}
 
     public static final SimpleDateFormat sBasicSimpleDateFormat;
+    public static final SimpleDateFormat sDateFormatter;
 
     static  {
         sBasicSimpleDateFormat = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.US);
+        sDateFormatter = new SimpleDateFormat("MM-dd-yyyy", Locale.US);
     }
 
     public static String getToday() {
@@ -34,6 +36,10 @@ public final class TimeUtils {
     public static String formatShortDate(long time) {
         String formattedDate = sBasicSimpleDateFormat.format(time);
         return formattedDate.substring(0, formattedDate.length() - 6);
+    }
+
+    public static String getDateForEvent(String date) {
+        return sDateFormatter.format(date);
     }
 
     // To make it easy to query for the exact date, we normalize all dates that go into
