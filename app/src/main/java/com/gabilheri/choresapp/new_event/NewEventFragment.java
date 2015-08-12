@@ -97,6 +97,8 @@ public class NewEventFragment extends BaseFragment
 
     static String TAG = "hello";
 
+    private String placeLatLng;
+
     private static final LatLngBounds BOUNDS_GREATER_SYDNEY = new LatLngBounds(
             new LatLng(-34.041458, 150.790100), new LatLng(-33.682247, 151.383362));
 
@@ -115,7 +117,10 @@ public class NewEventFragment extends BaseFragment
 
             Event newEvent = new Event();
             newEvent.setTitle(eventTitle);
-            newEvent.setLocation("addr://" + mLocation.getText().toString());
+            if(placeLatLng != null) {
+                newEvent.setLocation("addr://" + placeLatLng +"//" + mLocation.getText().toString());
+            }
+
             newEvent.setIsWant(radioButtonWants.isChecked());
             newEvent.setDescription(newEventDetails.getText().toString());
             newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
@@ -261,13 +266,11 @@ public class NewEventFragment extends BaseFragment
 
     }
 
-
     /**
      * Callback for results from a Places Geo Data API query that shows the first place result in
      * the details view on screen.
      */
-    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
-            = new ResultCallback<PlaceBuffer>() {
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
         @Override
         public void onResult(PlaceBuffer places) {
             if (!places.getStatus().isSuccess()) {
@@ -277,7 +280,8 @@ public class NewEventFragment extends BaseFragment
                 return;
             }
             // Get the Place object from the buffer.
-            final Place place = places.get(0);
+            Place place = places.get(0);
+            placeLatLng = place.getLatLng().latitude + "," + place.getLatLng().longitude;
 
             // Format details of the place for display and show it in a TextView.
             mPlaceDetailsText.setText(formatPlaceDetails(getResources(), place.getName(),

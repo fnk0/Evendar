@@ -44,9 +44,9 @@ public interface ChoresApi {
             @Path("id") Long id
     );
 
-    @GET("/{username}")
+    @GET("/user")
     Observable<Response> getuser(
-            @Path("username") String username
+            @Query("username") String username
     );
 
     // Events section
