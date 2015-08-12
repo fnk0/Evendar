@@ -15,7 +15,9 @@ import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FeedAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.data.ChoresContract;
+import com.gabilheri.choresapp.data.ChoresProvider;
 import com.gabilheri.choresapp.data.models.Event;
+import com.gabilheri.choresapp.data.models.Favorite;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.detail_event.DetailActivity;
 import com.gabilheri.choresapp.utils.Const;
@@ -44,6 +46,8 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
     private boolean isWant = false;
     private String startDate = null;
     private String endDate = null;
+
+    private ChoresProvider cp = new ChoresProvider();
 
     Bundle arguments = null;
     boolean isFavorites = false;
@@ -81,6 +85,19 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
         }
     }
 
+    private boolean favExists(Event e, User u){
+       Favorite f =  QueryUtils.getFavoriteFromDB(u.getId());
+
+        if (f.getId() == null){
+            
+            return false;
+        } else{
+
+            return true;
+        }
+
+    }
+
     @Override
     public void onItemClick(View view) {
         Intent intent = null;
@@ -88,7 +105,13 @@ public class FeedFragment extends BaseCursorListFragment implements ItemCallback
         Event event = (Event) view.getTag(R.id.eventId);
         switch (view.getId()) {
             case R.id.favorites:
-                event.setNumFavorites(event.getNumFavorites() + 1);
+                if(favExists(event, mCurrentUser)){
+                }
+                else{
+                    event.setNumFavorites(event.getNumFavorites() + 1);
+
+
+                }
                 break;
 
             case R.id.userPicture:

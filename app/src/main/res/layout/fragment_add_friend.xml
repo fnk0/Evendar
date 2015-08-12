@@ -6,7 +6,7 @@
     tools:context="com.gabilheri.choresapp.add_user.AddFriendActivityFragment">
 
     <EditText
-        android:id="@+id/enter_event_name"
+        android:id="@+id/enter_email_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
