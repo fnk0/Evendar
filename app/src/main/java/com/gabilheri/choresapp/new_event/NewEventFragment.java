@@ -45,6 +45,8 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import org.joda.time.LocalDateTime;
 
+import java.util.Calendar;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 import rx.Subscriber;
@@ -125,7 +127,12 @@ public class NewEventFragment extends BaseFragment
             newEvent.setDescription(newEventDetails.getText().toString());
             newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
 
-            String date = String.valueOf(newEventDate.getCalendarView().getDate());//newEventDate.getMonth() + "-" + newEventDate.getDayOfMonth() + "-" + newEventDate.getYear();
+            Calendar c = Calendar.getInstance();
+            c.set(Calendar.DAY_OF_MONTH, newEventDate.getDayOfMonth());
+            c.set(Calendar.MONTH, newEventDate.getMonth());
+            c.set(Calendar.YEAR, newEventDate.getYear());
+
+            String date = String.valueOf(c.getTime().getTime());
             String now = String.valueOf(LocalDateTime.now().toDate().getTime());
 
             newEvent.setDate(date);
