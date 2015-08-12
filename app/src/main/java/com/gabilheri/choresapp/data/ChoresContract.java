@@ -246,6 +246,10 @@ public class ChoresContract {
 
         public static final String COLUMN_DATE_CREATED = "date_created";
 
+        public static Uri buildAllFriends() {
+            return CONTENT_URI;
+        }
+
         public static Uri buildFriendship(Long friendshipID) {
             return CONTENT_URI.buildUpon()
                     .appendPath("fId")

@@ -1,4 +1,10 @@
 package com.gabilheri.choresapp;
+import android.content.ContentValues;
+import android.content.Context;
+
+import com.gabilheri.choresapp.data.ChoresContract;
+import com.gabilheri.choresapp.data.models.User;
+
 import java.util.Random;
 
 /**
@@ -120,6 +126,26 @@ public class MockUtils {
             "In dolor libero, rutrum quis ligula a, malesuada fringilla ligula. Donec commodo massa nisi. Nunc accumsan dictum libero, at tristique mauris tincidunt nec. Nunc quis nibh a erat pharetra porta. Cras non egestas urna, ac fermentum ex. Quisque eleifend, nisi sit amet hendrerit pulvinar, libero erat finibus nisi, et finibus est nulla eu sapien. Sed viverra sed ligula nec lobortis.",
             "Suspendisse erat leo, luctus et vestibulum viverra, congue eget quam. Nullam facilisis erat nibh, a rutrum nunc sollicitudin id. Nulla eu erat diam. Fusce et nunc neque. Nam ac molestie est. Morbi condimentum interdum augue. Nunc ac viverra orci. Sed dolor erat, semper nec eros vitae, varius scelerisque ligula. Sed porttitor blandit purus. Fusce hendrerit id turpis in dignissim. Quisque eu blandit neque."
     };
+
+    public static void insertMockUsers(Context context, int num) {
+        ContentValues[] values = new ContentValues[num];
+        for(int i = 0; i < num; i++) {
+            User user = generateMockUser();
+            values[i] = User.toContentValues(user);
+        }
+
+        context.getContentResolver().bulkInsert(ChoresContract.UserEntry.buildUserUri(), values);
+    }
+
+    public static User generateMockUser() {
+        int random = new Random().nextInt();
+        User user = new User();
+        String name = getUserName(random);
+        user.setFullName(name);
+        user.setUsername(name);
+        user.setPicUrl(getUserPicture(random));
+        return user;
+    }
 
     public static String getUserPicture(int r) {
         if(r % 2 == 0) {

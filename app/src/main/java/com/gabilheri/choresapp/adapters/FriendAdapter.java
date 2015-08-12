@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.gabilheri.choresapp.R;
-import com.gabilheri.choresapp.data.models.Friendship;
 import com.gabilheri.choresapp.data.models.User;
 import com.gabilheri.choresapp.utils.QueryUtils;
 
@@ -49,13 +48,15 @@ public class FriendAdapter extends CursorRecyclerAdapter<FriendAdapter.ViewHolde
 
     @Override
     public void onBindViewHolder(ViewHolder holder, Cursor cursor) {
-        Friendship friendship = Friendship.fromCursor(cursor, false);
-        User user;
-        if(friendship.getUserId1().equals(mAuthenticatedUser.getId())) {
-            user = QueryUtils.getUserFromDB(friendship.getUserId1());
-        } else {
-            user = QueryUtils.getUserFromDB(friendship.getUserId2());
-        }
+//        Friendship friendship = Friendship.fromCursor(cursor, false);
+//        User user;
+//        if(friendship.getUserId1().equals(mAuthenticatedUser.getId())) {
+//            user = QueryUtils.getUserFromDB(friendship.getUserId1());
+//        } else {
+//            user = QueryUtils.getUserFromDB(friendship.getUserId2());
+//        }
+
+        User user = User.fromCursor(cursor, false);
 
         if(user != null) {
             Glide.with(holder.itemView.getContext())

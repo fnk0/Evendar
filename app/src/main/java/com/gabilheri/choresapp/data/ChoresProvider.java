@@ -226,7 +226,7 @@ public class ChoresProvider extends ContentProvider {
 
             case FRIENDS: {
                 retCursor = mChoresDbHelper.getReadableDatabase().query(
-                        FriendshipEntry.TABLE_NAME,
+                        UserEntry.TABLE_NAME,
                         projection,
                         selection,
                         selectionArgs,

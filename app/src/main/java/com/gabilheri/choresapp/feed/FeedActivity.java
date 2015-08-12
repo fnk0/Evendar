@@ -7,10 +7,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
 import com.gabilheri.choresapp.BaseDrawerActivity;
+import com.gabilheri.choresapp.MockUtils;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.new_event.NewEventActivity;
 import com.gabilheri.choresapp.sync.ChoresSyncAdapter;
@@ -24,6 +27,10 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FeedActivity extends BaseDrawerActivity {
+
+    private static final int MOCK_USERS = 0;
+    private static final int MOCK_EVENTS = 1;
+    private static final int MOCK_COMMENTS = 2;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -89,6 +96,26 @@ public class FeedActivity extends BaseDrawerActivity {
         args.putString(Const.END_DATE, end);
         args.putBoolean(Const.BOOLEAN_IS_WANT, isWant);
         return args;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        menu.add(0, MOCK_USERS, 0, "Mock users");
+        menu.add(0, MOCK_COMMENTS, 0, "Mock Comments");
+        menu.add(0, MOCK_EVENTS, 0, "Mock Events");
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case MOCK_USERS:
+                MockUtils.insertMockUsers(this, 20);
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

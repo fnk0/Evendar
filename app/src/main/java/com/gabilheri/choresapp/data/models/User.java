@@ -161,9 +161,13 @@ public class User {
     }
 
     public static User fromCursor(Cursor cursor, boolean closeCursor) {
-        if(cursor.moveToFirst()) {
-            User user = new User();
-            user.setUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_USERNAME)))
+
+        if (cursor.getPosition() == -1) {
+            cursor.moveToNext();
+        }
+
+        User user = new User();
+        user.setUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_USERNAME)))
                 .setEmail(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_EMAIL)))
                 .setFullName(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_FULL_NAME)))
                 .setFacebookUsername(cursor.getString(cursor.getColumnIndex(UserEntry.COLUMN_FACEBOOK_USERNAME)))
@@ -175,22 +179,21 @@ public class User {
                 .setId(cursor.getLong(cursor.getColumnIndex(ChoresContract.LONG_ID)))
                 .setNumFavorites(cursor.getInt(cursor.getColumnIndex(UserEntry.COLUMN_NUM_FAVORITES)));
 
-            if(closeCursor) {
-                cursor.close();
-            }
-
-            return user;
-        } else {
-            return null;
+        if (closeCursor) {
+            cursor.close();
         }
+
+        return user;
     }
 
-    public @DrawableRes int getSocialMedia() {
-        if(googleUsername != null) {
+    public
+    @DrawableRes
+    int getSocialMedia() {
+        if (googleUsername != null) {
             return R.drawable.ic_google;
-        } else if(facebookUsername == null) {
+        } else if (facebookUsername == null) {
             return R.drawable.ic_facebook;
-        } else if(twitterUsername == null) {
+        } else if (twitterUsername == null) {
             return R.drawable.ic_twitter;
         } else {
             return R.mipmap.ic_launcher;

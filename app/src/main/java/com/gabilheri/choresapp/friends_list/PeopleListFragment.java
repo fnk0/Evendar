@@ -5,36 +5,22 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import rx.Subscriber;
-
-import com.gabilheri.choresapp.data.ChoresApi;
-import com.gabilheri.choresapp.data.models.Friendship;
-import com.gabilheri.choresapp.ChoresApp;
-
-import com.facebook.GraphRequest;
-import com.facebook.HttpMethod;
-import com.facebook.GraphResponse;
-import com.facebook.AccessToken;
-
 import com.gabilheri.choresapp.BaseCursorListFragment;
+import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.FriendAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
 import com.gabilheri.choresapp.data.ChoresContract;
-import com.gabilheri.choresapp.data.models.User;
+import com.gabilheri.choresapp.data.models.Friendship;
 import com.gabilheri.choresapp.utils.Const;
 import com.gabilheri.choresapp.utils.IntentUtils;
-import com.gabilheri.choresapp.utils.QueryUtils;
 import com.gabilheri.choresapp.utils.TimeUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import de.hdodenhof.circleimageview.CircleImageView;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -97,37 +83,13 @@ public class PeopleListFragment extends BaseCursorListFragment implements ItemCa
         }
     }
 
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        final User user = QueryUtils.getAuthenticatedUserFromDB();
+//        final User user = QueryUtils.getAuthenticatedUserFromDB();
         Uri queryUri;
 
-        if (eventId == -1L) {
-            queryUri = ChoresContract.FriendshipEntry.buildFriendsForUser(user.getId());
-
-
-            new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/me/friends",
-                    null,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            try {
-
-
-                                JSONObject obj = response.getJSONObject();
-
-                                addFriendship(Long.parseLong(obj.getString("id")), user.getId());
-                            } catch (JSONException je) {
-                                je.printStackTrace();
-                            }
-                        }
-                    }
-            ).executeAsync();
-
-
+        if (eventId == -1L || eventId == 0) {
+            queryUri = ChoresContract.FriendshipEntry.buildAllFriends();
         } else {
             queryUri = ChoresContract.RSVPEntry.buildUsersForEvent(eventId);
         }
