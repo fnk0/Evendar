@@ -35,7 +35,7 @@ public final class TimeUtils {
 
     public static String formatShortDate(long time) {
         String formattedDate = sBasicSimpleDateFormat.format(time);
-        return formattedDate.substring(0, formattedDate.length() - 6);
+        return formattedDate.substring(0, formattedDate.length() - 5);
     }
 
     public static String getDateForEvent(String date) {
