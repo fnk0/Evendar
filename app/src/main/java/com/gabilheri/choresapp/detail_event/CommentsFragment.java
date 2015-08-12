@@ -118,5 +118,10 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
 
         }
     }
+
+    @Override
+    public int getLayoutResource() {
+        return R.layout.comment_list_fragment;
+    }
 }
 

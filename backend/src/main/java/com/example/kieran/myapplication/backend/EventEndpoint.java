@@ -8,6 +8,7 @@ import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.CollectionResponse;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
+import com.google.appengine.api.datastore.QueryResultIterator;
 import com.googlecode.objectify.cmd.Query;
 
 import java.util.ArrayList;
@@ -98,7 +99,6 @@ public class EventEndpoint {
         return event;
     }
 
-
     @ApiMethod(name = "getEvent")
     public Event getEvent(@Named("id") Long id) throws NotFoundException {
         return getObject(Event.class, id);
@@ -113,5 +113,18 @@ public class EventEndpoint {
         Query<Event> query = ofy().load().type(Event.class).filter(ChoresContract.EventEntry.COLUMN_USER_ID, id);
 
         return listByQuery(query, null, null);
+    }
+
+    @ApiMethod(name = "removeAllEvents", path = "removeAllEventsForUser")
+    public void deleteAllEventsForUser(@Named("username") String username) {
+        Query<Event> query = ofy().load().type(Event.class);
+        QueryResultIterator<Event> iterator = query.iterator();
+        while (iterator.hasNext()) {
+            Event e = iterator.next();
+            if(e.getUsername().equals(username)) {
+                ofy().delete().entity(e).now();
+            }
+
+        }
     }
 }

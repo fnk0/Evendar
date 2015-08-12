@@ -125,8 +125,9 @@ public class NewEventFragment extends BaseFragment
             newEvent.setDescription(newEventDetails.getText().toString());
             newEvent.setTime(newEventTime.getCurrentHour() + ":" + newEventTime.getCurrentMinute());
 
-            String date = newEventDate.getMonth() + "-" + newEventDate.getDayOfMonth() + "-" + newEventDate.getYear();
+            String date = String.valueOf(newEventDate.getCalendarView().getDate());//newEventDate.getMonth() + "-" + newEventDate.getDayOfMonth() + "-" + newEventDate.getYear();
             String now = String.valueOf(LocalDateTime.now().toDate().getTime());
+
             newEvent.setDate(date);
             newEvent.setCreatedAt(now);
             newEvent.setUpdatedAt(now);
