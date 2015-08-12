@@ -14,6 +14,7 @@ import com.gabilheri.choresapp.ChoresApp;
 import com.gabilheri.choresapp.R;
 import com.gabilheri.choresapp.adapters.CommentsAdapter;
 import com.gabilheri.choresapp.adapters.ItemCallback;
+import com.gabilheri.choresapp.data.ChoresContract;
 import com.gabilheri.choresapp.data.models.Comment;
 import com.gabilheri.choresapp.data.models.Event;
 import com.gabilheri.choresapp.utils.Const;
@@ -72,7 +73,15 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //TODO implement query
-        return null;
+        Uri contentUri = ChoresContract.CommentEntry.CONTENT_URI;
+        return new CursorLoader(getActivity(),
+                contentUri,
+                null,
+                ( "" + ChoresContract.CommentEntry.TABLE_NAME + "." + ChoresContract.CommentEntry.COLUMN_EVENT_ID + " = ?"),
+                new String[]{ChoresContract.CommentEntry.getIdFromUri(contentUri)},
+                null
+
+        );
     }
 
     @Override

@@ -84,7 +84,7 @@ public class FriendshipEndpoint {
             throw new NotFoundException("User record does not exist");
         }
 
-        Query<Friendship> query = ofy().load().type(Friendship.class).filter(ChoresContract.FriendshipEntry.COLUMN_USER_ID1, userId).filter(" OR " + ChoresContract.FriendshipEntry.COLUMN_USER_ID2 + " = ", userId);
+        Query<Friendship> query = ofy().load().type(Friendship.class).filter(ChoresContract.FriendshipEntry.COLUMN_USER_ID1, userId);
 
         return listByQuery(query, null, null);
     }
