@@ -1,9 +1,12 @@
 package com.gabilheri.choresapp.detail_event;
 
+import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+
+import android.net.Uri;
 
 
 import com.gabilheri.choresapp.BaseCursorListFragment;
@@ -69,11 +72,6 @@ public class CommentsFragment extends BaseCursorListFragment implements ItemCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         //TODO implement query
-        ChoresApp.instance().getApi().getAllCommentsForEvent(event.getId(), event.getUpdatedAt())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
-
-
         return null;
     }
 
